@@ -1,5 +1,6 @@
 from pico2d import *
 
+
 class Game2DGP:
     def __init__(self):
         self.running = True
@@ -20,7 +21,6 @@ class Game2DGP:
 
         close_canvas()
 
+
 program = Game2DGP()
 program.Run()
-
-

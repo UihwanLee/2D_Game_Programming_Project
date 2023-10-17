@@ -1,11 +1,20 @@
+from pico2d import load_image
+
+
 class GameObject:
-    def __init__(self, order, pos, layout):
+    sprite = None
+
+    def __init__(self, scene, pos, sprite, layout, bActive):
+        self.scene = scene
         self.pos = pos
         self.layout = layout
-        pass
+        self.bActive = bActive
 
-    def update(self):
+        if GameObject.sprite == None:
+            GameObject.sprite = load_image(sprite)
+
+    def Update(self):
         pass
 
     def Draw(self):
-        pass
+        self.image.draw(self.pos.x, self.pos.y)

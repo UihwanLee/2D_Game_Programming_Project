@@ -6,6 +6,6 @@ class GameEngine:
     def BuildScenes(self):
         pass
 
-    def BuildObjects(self):
+    def DrawsScenes(self):
         pass
 

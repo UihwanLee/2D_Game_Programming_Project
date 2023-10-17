@@ -16,5 +16,5 @@ class GameObject:
     def Update(self):
         pass
 
-    def Draw(self):
-        self.image.draw(self.pos.x, self.pos.y)
+    def Render(self):
+        self.sprite.draw(self.pos[0], self.pos[1])

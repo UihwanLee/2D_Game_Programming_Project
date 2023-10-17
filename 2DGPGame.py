@@ -1,9 +1,11 @@
 from pico2d import *
 
+from gameEngine import GameEngine
 
 class Game2DGP:
     def __init__(self):
         self.running = True
+        self.gameEngine = GameEngine()
 
     def Handle_events(self):
         events = get_events()
@@ -15,8 +17,9 @@ class Game2DGP:
 
     def Run(self):
         open_canvas()
+        self.gameEngine.BuildScenes()
         while self.running:
-            clear_canvas()
+            self.gameEngine.RenderScenes()
             self.Handle_events()
 
         close_canvas()

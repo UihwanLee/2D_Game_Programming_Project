@@ -33,7 +33,7 @@ player_Anim = []
 player_IDLE = anim_frame()
 player_IDLE.posX = [275, 275, 275]
 player_IDLE.posY = [200, 200, 200]
-player_IDLE.delay = [0.5, 0.3, 0.5]
+player_IDLE.delay = [200, 250, 150]
 
 player_Anim.append(player_IDLE)
 

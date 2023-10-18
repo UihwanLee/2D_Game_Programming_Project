@@ -1,6 +1,5 @@
 from Define import player_Anim
 from gameObject import *
-from pico2d import delay
 
 '''
     Player 클래스 : GameObject 상속
@@ -12,14 +11,17 @@ class Player(GameObject):
     def __init__(self, scene, pos, sprite, type, layout, bActive, frame):
         super().__init__(scene, pos, sprite, type, layout, bActive)
         self.frame = frame
+        self.time = 0
         self.action = 0
 
     def Update(self):
-        self.frame = (self.frame + 1) % 3
+        self.time += 1
 
-        # 애니메이션의 다이나믹을 위해 delay 추가
+        # 애니메이션의 다이나믹을 위해 delay : delay 함수를 호출하면 Frame이 떨어지므로 time으로 구현
         time = player_Anim[self.action].delay[self.frame]
-        delay(time)
+        if self.time > time:
+            self.frame = (self.frame + 1) % 3
+            self.time = 0
 
     def Render(self):
         pos = super().Get('pos')

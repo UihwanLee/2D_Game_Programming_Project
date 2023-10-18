@@ -17,4 +17,4 @@ class Player(GameObject):
     def Render(self):
         pos = super().Get('pos')
         sprite = super().Get('sprite')
-        sprite.clip_draw(self.frame * 100, 0, 100, 100, pos[0], pos[1])
+        sprite.clip_draw(self.frame * 100, 0, 100, 100, pos[0], pos[1], 300, 300)

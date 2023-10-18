@@ -3,6 +3,10 @@ from Define import BOTTOM
 
 '''
     2DGP 게임에서 야구 시스템을 동작하는 클래스
+    
+    야구 룰
+    야구 애니메이션
+    
 '''
 
 

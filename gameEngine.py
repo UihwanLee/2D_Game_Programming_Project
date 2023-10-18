@@ -35,5 +35,3 @@ class GameEngine:
             self.RenderScenes()
             self.Handle_events()
         close_canvas()
-
-

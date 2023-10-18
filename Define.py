@@ -17,6 +17,10 @@ player_pos = (275, 200)
 player_img = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
 player_type = DYNAMIC
 
+''' System'''
+TOP = 0
+BOTTOM = 1
+
 
 ''' Animation '''
 class anim_frame():

@@ -12,7 +12,7 @@ class Player(GameObject):
         self.frame = frame
 
     def Update(self):
-        pass
+        self.frame = (self.frame + 1) % 3
 
     def Render(self):
         pos = super().Get('pos')

@@ -18,5 +18,6 @@ class Scene:
     def Render(self):
         clear_canvas()
         for object in self.gameObjects:
+            object.Update()
             object.Render()
         update_canvas()

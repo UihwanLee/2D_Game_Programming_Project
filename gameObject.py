@@ -12,7 +12,6 @@ class GameObject:
 
 
     def Update(self):
-        print('Hello')
         pass
 
     def Render(self):

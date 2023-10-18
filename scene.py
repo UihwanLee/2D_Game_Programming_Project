@@ -12,7 +12,8 @@ class Scene:
         self.gameObjects.append(GameObject(self.order, pos, sprite, type, layout, bActive))
 
     def CreatePlayer(self, pos, sprite, type, layout, bActive):
-        self.gameObjects.append(Player(self.order, pos, sprite, type, layout, bActive))
+        self.gameObjects.append(Player(self.order, pos, sprite, type, layout, bActive, 0))
+
 
     def Render(self):
         clear_canvas()

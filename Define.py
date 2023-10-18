@@ -14,5 +14,6 @@ background_type = STATIC
 
 #Player
 player_pos = (400, 300)
-player_img = None
+player_img = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
 player_type = DYNAMIC
+

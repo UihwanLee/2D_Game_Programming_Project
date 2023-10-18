@@ -17,3 +17,16 @@ player_pos = (275, 200)
 player_img = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
 player_type = DYNAMIC
 
+
+''' Animation '''
+class anim_frame():
+    posX = []
+    posY = []
+    delay = []
+
+player_IDLE = anim_frame()
+player_IDLE.posX = [275, 275, 275]
+player_IDLE.posY = [200, 200, 200]
+player_IDLE.delay = [0.5, 0.3, 0.5]
+
+

@@ -12,8 +12,8 @@ class Player(GameObject):
         super().type = type
         super().bActive = bActive
 
-    def update(self):
+    def Update(self):
         pass
 
-    def draw(self):
+    def Render(self):
         print('player 클래스입니다')

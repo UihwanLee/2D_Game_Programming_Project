@@ -22,6 +22,7 @@ class GameEngine:
 
     def BuildScenes(self):
         self.scene_01.CreateObject(background_pos, background_img, background_type, 0, True)
+        self.scene_01.CreatePlayer(player_pos, player_img, player_type, 1, True)
         pass
 
     def RenderScenes(self):

@@ -12,3 +12,7 @@ background_pos = (400, 300)
 background_img = 'Sprites/BG_Base.png'
 background_type = STATIC
 
+#Player
+player_pos = (400, 300)
+player_img = None
+player_type = DYNAMIC

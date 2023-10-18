@@ -4,9 +4,10 @@ from pico2d import load_image
 class GameObject:
     sprite = None
 
-    def __init__(self, scene, pos, sprite, layout, bActive):
+    def __init__(self, scene, pos, sprite, type, layout, bActive):
         self.scene = scene
         self.pos = pos
+        self.type = type
         self.layout = layout
         self.bActive = bActive
 

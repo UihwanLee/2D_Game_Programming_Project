@@ -7,8 +7,8 @@ class Scene:
         self.order = order
         self.gameObjects = []
 
-    def CreateObject(self, pos, sprite, layout, bActive):
-        self.gameObjects.append(GameObject(self.order, pos, sprite, layout, bActive))
+    def CreateObject(self, pos, sprite, type, layout, bActive):
+        self.gameObjects.append(GameObject(self.order, pos, sprite, type, layout, bActive))
 
     def Render(self):
         clear_canvas()

@@ -1,4 +1,6 @@
 from pico2d import *
+
+from Define import *
 from scene import Scene
 
 
@@ -19,7 +21,7 @@ class GameEngine:
                 self.running = False
 
     def BuildScenes(self):
-        self.scene_01.CreateObject((400, 300), 'Sprites/BG_Base.png', 0, True)
+        self.scene_01.CreateObject(background_pos, background_img, background_type, 0, True)
         pass
 
     def RenderScenes(self):

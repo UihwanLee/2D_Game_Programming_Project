@@ -17,8 +17,9 @@ TOP = 0
 BOTTOM = 1
 
 ''' PlayModeInfo '''
-class PlayMode():
+class PlayMode_Info():
     pos = []
+    size = []
     sprite_sheet = None
     type = None
     anim = {}
@@ -41,8 +42,10 @@ Hitter_IDLE.delay = [200, 250, 150]
 
 Hitter_Anim.append(Hitter_IDLE)
 
-Hitter = PlayMode()
+# Hitter 구조체
+Hitter = PlayMode_Info()
 Hitter.pos = [275, 200]
+Hitter.size = [300, 300]
 Hitter.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
 Hitter.type = DYNAMIC
 Hitter.anim = Hitter_Anim
@@ -53,8 +56,17 @@ Pitcher_Anim = []
 
 # IDLE
 
+# Pitcher 구조체
+Pitcher = PlayMode_Info()
+Pitcher.pos = [400, 300]
+Pitcher.size = [100, 100]
+Pitcher.sprite_sheet = 'Sprites/Pitcher/Sprite_Sheet_Pitcher.png'
+Pitcher.type = DYNAMIC
+
 
 ''' PlayMode'''
-
+HITTER = 0
+PITCHER = 1
+PlayMode = {HITTER: Hitter, PITCHER: Pitcher}
 
 

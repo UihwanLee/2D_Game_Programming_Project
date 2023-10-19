@@ -24,9 +24,9 @@ class GameEngine:
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 self.running = False
             else:
-                if(self.player):
-                    print('EXITST')
-                    self.player.handle_event(event)
+                if(self.player != None):
+                    print('EXIST')
+                    #self.player.handle_event(event)
 
     # scene을 생성하는 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):
@@ -45,6 +45,7 @@ class GameEngine:
     def run(self):
         open_canvas()
         self.create_scenes()
+        self.player = self.game_world.fine_object('player')
         while self.running:
             self.render_scenes()
             self.handle_events()

@@ -35,9 +35,10 @@ class Idle:
 class Hit:
     @staticmethod
     def enter(player, e):
-        print('SPACE 키 누름')
-        #player.frame = 0
-        #player.action = 1
+        player.frame = 0
+        player.action = 1
+        player.time = 0
+        player.max_frame = len(player.playMode.anim[player.action].posX) # max_frame 수정
 
     @staticmethod
     def exit(player, e):
@@ -48,7 +49,8 @@ class StateMachine_Player:
         self.player = player
         self.cur_state = Idle
         self.transitions = {
-            Idle : {space_down: Hit}
+            Idle: {space_down: Hit},
+            Hit: {}
         }
 
     def start(self):
@@ -60,9 +62,9 @@ class StateMachine_Player:
     def handle_event(self, e):
         for check_event, next_state in self.transitions[self.cur_state].items():
             if check_event(e):
-                self.cur_state.exit(self.boy, e)
+                self.cur_state.exit(self.player, e)
                 self.cur_state = next_state
-                self.cur_state.enter(self.boy, e)
+                self.cur_state.enter(self.player, e)
                 return True
 
         return False

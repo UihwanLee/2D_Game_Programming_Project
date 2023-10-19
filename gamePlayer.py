@@ -28,7 +28,8 @@ class Player(GameObject):
         self.frame = frame
         self.time = 0
         self.action = 0
-        self.state_machine = StateMachine_Player
+        self.state_machine = StateMachine_Player(self)
+        self.max_frame = len(playMode.anim[self.action].posX)
 
     # player 이벤트 처리 함수. 이벤트에 따른 애니메이션/동작을 StateMachine을 통해 처리한다.
     def handle_event(self, event):
@@ -44,7 +45,7 @@ class Player(GameObject):
         # 애니메이션의 다이나믹을 위해 delay : delay 함수를 호출하면 Frame이 떨어지므로 time으로 구현
         time = self.play_Anim[self.action].delay[self.frame]
         if self.time > time:
-            self.frame = (self.frame + 1) % 3
+            self.frame = (self.frame + 1) % self.max_frame
             self.time = 0
 
     # player 렌더링. player_Anim 리스트를 기준으로 렌더링 한다.
@@ -56,4 +57,4 @@ class Player(GameObject):
         sprite = super().get_object_var('sprite')
         posX, posY = self.play_Anim[self.action].posX[self.frame], self.play_Anim[self.action].posY[self.frame]
         sizeX, sizeY = self.playMode.size[0], self.playMode.size[1]
-        sprite.clip_draw(self.frame * 100, 0, 100, 100, posX, posY, sizeX, sizeY)
+        sprite.clip_draw(self.frame * 100, self.action * 100, 100, 100, posX, posY, sizeX, sizeY)

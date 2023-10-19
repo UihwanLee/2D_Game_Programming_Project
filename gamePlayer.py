@@ -8,7 +8,7 @@ from gameStateMachine import StateMachine_Player
     Player 객체는 2가지로 수행 된다.
 
     <class Player>
-     - 야구 게임에서 타자/투수를 수행
+     - 야구 게임에서 scene_01에서 타자/투수를 수행
 
     <class SystemPlayer>
      - 안타/홈런을 치고 scene_02 에서 수행될 Player 객체

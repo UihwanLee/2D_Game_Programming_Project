@@ -25,7 +25,8 @@ class GameEngine:
                 self.running = False
             else:
                 if(self.player != None):
-                    self.player.handle_event(event)
+                    if(self.player.bActive):
+                        self.player.handle_event(event)
 
     # scene을 생성하는 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):

@@ -11,9 +11,12 @@ class GameObject:
         self.bActive = bActive
 
     def update(self):
+        if self.bActive is False: return
         pass
 
     def render(self):
+        if self.bActive is False: return
+
         self.sprite.draw(self.pos[0], self.pos[1])
 
     def get(self, var):

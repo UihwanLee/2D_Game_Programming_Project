@@ -24,6 +24,9 @@ class Player(GameObject):
             self.time = 0
 
     def render(self):
+        bActive = super().get('bActive')
+        if bActive is False: return
+
         pos = super().get('pos')
         sprite = super().get('sprite')
         posX, posY = player_Anim[self.action].posX[self.frame], player_Anim[self.action].posY[self.frame]

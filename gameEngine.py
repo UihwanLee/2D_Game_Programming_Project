@@ -1,7 +1,7 @@
 from pico2d import *
 
 from Define import *
-from scene import Scene
+from gameScene import Scene
 
 
 # 게임 내 모든 씬, 오브젝트, 시스템 관리할 클래스

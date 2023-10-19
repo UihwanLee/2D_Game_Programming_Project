@@ -1,8 +1,16 @@
-from Define import Hitter_Anim
 from gameObject import *
 
 '''
     Player 클래스 : GameObject 상속
+    
+    2DGP 야구 게임에서 사용자가 플레이할 Player.
+    Player 객체는 2가지로 수행 된다.
+
+    <class Player>
+     - 야구 게임에서 타자/투수를 수행
+
+    <class SystemPlayer>
+     - 안타/홈런을 치고 scene_02 에서 수행될 Player 객체
     
 '''
 
@@ -11,12 +19,12 @@ class Player(GameObject):
 
     # Player 클래스 초기화. 상속 받은 GameObject 클래스 초기화.
     # player의 frame, time, action, player_Anim 초기화 한다.
-    def __init__(self, scene, pos, sprite, type, layer, bActive, frame):
-        super().__init__(scene, pos, sprite, type, layer, bActive)
+    def __init__(self, scene, playMode, layer, bActive, frame):
+        super().__init__(scene, playMode.pos, playMode.sprite_sheet, playMode.type, layer, bActive)
+        self.player_Anim = playMode.anim
         self.frame = frame
         self.time = 0
         self.action = 0
-        self.player_Anim = Hitter_Anim
 
     # player 업데이트. time 변수를 기준으로 각족 이벤트를 처리한다.
     def update(self):

@@ -12,15 +12,16 @@ background_pos = (400, 300)
 background_img = 'Sprites/BG_Base.png'
 background_type = STATIC
 
-#Player
-player_pos = (275, 200)
-player_img = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
-player_type = DYNAMIC
-
 ''' System'''
 TOP = 0
 BOTTOM = 1
 
+''' PlayModeInfo '''
+class PlayMode():
+    pos = []
+    sprite_sheet = None
+    type = None
+    anim = {}
 
 ''' Animation '''
 class anim_frame():
@@ -29,6 +30,7 @@ class anim_frame():
     delay = []
 
 ''' Hitter '''
+
 Hitter_Anim = []
 
 # IDLE
@@ -39,11 +41,20 @@ Hitter_IDLE.delay = [200, 250, 150]
 
 Hitter_Anim.append(Hitter_IDLE)
 
+Hitter = PlayMode()
+Hitter.pos = [275, 200]
+Hitter.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
+Hitter.type = DYNAMIC
+Hitter.anim = Hitter_Anim
+
 ''' Pitcher '''
+
 Pitcher_Anim = []
 
 # IDLE
 
+
+''' PlayMode'''
 
 
 

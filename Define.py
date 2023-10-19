@@ -28,13 +28,22 @@ class anim_frame():
     posY = []
     delay = []
 
-player_Anim = []
+''' Hitter '''
+Hitter_Anim = []
 
-player_IDLE = anim_frame()
-player_IDLE.posX = [275, 275, 275]
-player_IDLE.posY = [200, 200, 200]
-player_IDLE.delay = [200, 250, 150]
+# IDLE
+Hitter_IDLE = anim_frame()
+Hitter_IDLE.posX = [275, 275, 275]
+Hitter_IDLE.posY = [200, 200, 200]
+Hitter_IDLE.delay = [200, 250, 150]
 
-player_Anim.append(player_IDLE)
+Hitter_Anim.append(Hitter_IDLE)
+
+''' Pitcher '''
+Pitcher_Anim = []
+
+# IDLE
+
+
 
 

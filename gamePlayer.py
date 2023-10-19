@@ -1,4 +1,4 @@
-from Define import player_Anim
+from Define import Hitter_Anim
 from gameObject import *
 
 '''
@@ -16,7 +16,7 @@ class Player(GameObject):
         self.frame = frame
         self.time = 0
         self.action = 0
-        self.player_Anim = player_Anim
+        self.player_Anim = Hitter_Anim
 
     # player 업데이트. time 변수를 기준으로 각족 이벤트를 처리한다.
     def update(self):

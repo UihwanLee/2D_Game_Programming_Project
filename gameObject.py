@@ -10,13 +10,13 @@ class GameObject:
         self.layout = layout
         self.bActive = bActive
 
-    def Update(self):
+    def update(self):
         pass
 
-    def Render(self):
+    def render(self):
         self.sprite.draw(self.pos[0], self.pos[1])
 
-    def Get(self, var):
+    def get(self, var):
         if hasattr(self, var):
             return getattr(self, var)
         else:

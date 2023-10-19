@@ -24,7 +24,7 @@ class GameSystem:
     def __int__(self):
         pass
 
-    def ResetSystem(self):
+    def reset_system(self):
         GameSystem.INNING = 0
         GameSystem.INNING_STATE = TOP
 

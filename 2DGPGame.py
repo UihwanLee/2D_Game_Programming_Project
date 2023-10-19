@@ -4,9 +4,9 @@ class Game2DGP:
     def __init__(self):
         self.gameEngine = GameEngine()
 
-    def Run(self):
-        self.gameEngine.Run()
+    def run(self):
+        self.gameEngine.run()
 
 
 program = Game2DGP()
-program.Run()
+program.run()

@@ -9,15 +9,15 @@ class Scene:
         self.order = order
         self.gameObjects = []
 
-    def CreateObject(self, pos, sprite, type, layout, bActive):
+    def create_object(self, pos, sprite, type, layout, bActive):
         self.gameObjects.append(GameObject(self.order, pos, sprite, type, layout, bActive))
 
-    def CreatePlayer(self, pos, sprite, type, layout, bActive):
+    def create_player(self, pos, sprite, type, layout, bActive):
         self.gameObjects.append(Player(self.order, pos, sprite, type, layout, bActive, 0))
 
-    def Render(self):
+    def render_objects(self):
         clear_canvas()
         for object in self.gameObjects:
-            object.Update()
-            object.Render()
+            object.update()
+            object.render()
         update_canvas()

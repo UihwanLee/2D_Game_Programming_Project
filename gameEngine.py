@@ -26,7 +26,9 @@ class GameEngine:
         pass
 
     def render_scenes(self):
+        clear_canvas()
         self.game_world.render_objects()
+        update_canvas()
 
     def run(self):
         open_canvas()

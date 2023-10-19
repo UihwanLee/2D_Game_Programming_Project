@@ -1,5 +1,3 @@
-from pico2d import clear_canvas, update_canvas
-
 from gameObject import GameObject
 from gamePlayer import Player
 
@@ -16,8 +14,6 @@ class Scene:
         self.game_objects.append(Player(self.order, pos, sprite, type, layout, bActive, 0))
 
     def render_objects(self):
-        clear_canvas()
         for object in self.game_objects:
             object.update()
             object.render()
-        update_canvas()

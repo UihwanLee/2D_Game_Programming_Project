@@ -35,3 +35,7 @@ class GameSystem:
 
         GameSystem.SCORE_TEAM_01 = 0
         GameSystem.SCORE_TEAM_02 = 0
+    
+    # Player 공/수 선택 공->타자 / 수->투수로 시스템 설정 하기
+    def SetPlayMode(self):
+        pass

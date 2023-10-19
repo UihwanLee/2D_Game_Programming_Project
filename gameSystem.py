@@ -24,6 +24,7 @@ class GameSystem:
     def __int__(self):
         pass
 
+    # GameSystem 리셋. 모든 System 변수를 초기화 한다.
     def reset_system(self):
         GameSystem.INNING = 0
         GameSystem.INNING_STATE = TOP

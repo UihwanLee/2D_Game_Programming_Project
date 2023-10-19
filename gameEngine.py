@@ -27,6 +27,7 @@ class GameEngine:
     def create_scenes(self):
         self.scene_01.create_object(background_pos, background_img, background_type, 0, True)
         self.scene_01.create_player(Hitter, 1, True,  0)
+        self.scene_01.create_playerAI(Pitcher, 1, True, 0)
         pass
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.

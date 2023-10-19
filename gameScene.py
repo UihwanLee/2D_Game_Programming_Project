@@ -1,5 +1,6 @@
 from gameObject import GameObject
 from gamePlayer import Player
+from gameAI import GamePlayerAI
 
 
 class Scene:
@@ -14,8 +15,12 @@ class Scene:
         self.game_objects.append(GameObject(self.order, pos, sprite, type, layout, bActive))
 
     # Player 생성. game_objects 리스트에 Player 추가한다.
-    def create_player(self, playMode, layout, bActive, frame):
-        self.game_objects.append(Player(self.order, playMode, layout, bActive, 0))
+    def create_player(self, playMode, layer, bActive, frame):
+        self.game_objects.append(Player(self.order, playMode, layer, bActive, frame))
+
+    # PlayerAI 생성. game_objects 리스트에 PlayerAI 추가한다.
+    def create_playerAI(self, playMode, layer, bActive, frame):
+        self.game_objects.append(GamePlayerAI(self.order, playMode, layer, bActive, frame))
 
     # Scene 렌더링. scene 안에 담겨있는 모든 GameObjects를 game_objects 리스트를 통해 렌더링 한다.
     def render_objects(self):

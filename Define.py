@@ -55,13 +55,20 @@ Hitter.anim = Hitter_Anim
 Pitcher_Anim = []
 
 # IDLE
+Pitcher_IDLE = anim_frame()
+Pitcher_IDLE.posX = [400, 400, 400, 400, 400]
+Pitcher_IDLE.posY = [270, 270, 270, 270, 270]
+Pitcher_IDLE.delay = [100, 100, 100, 100, 100]
+
+Pitcher_Anim.append(Pitcher_IDLE)
 
 # Pitcher 구조체
 Pitcher = PlayMode_Info()
-Pitcher.pos = [400, 300]
+Pitcher.pos = [400, 270]
 Pitcher.size = [100, 100]
 Pitcher.sprite_sheet = 'Sprites/Pitcher/Sprite_Sheet_Pitcher.png'
 Pitcher.type = DYNAMIC
+Pitcher.anim = Pitcher_Anim
 
 
 ''' PlayMode'''

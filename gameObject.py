@@ -4,8 +4,9 @@ from pico2d import load_image
 class GameObject:
 
     # 게임 오브젝트 초기화 (씬 정보, 위치, 이미지, 타입, 레이어, 활성화) 정보를 초기화 한다.
-    def __init__(self, scene, pos, sprite, type, layer, bActive):
+    def __init__(self, scene, name, pos, sprite, type, layer, bActive):
         self.scene = scene
+        self.name = name
         self.pos = pos
         self.sprite = load_image(sprite)
         self.type = type

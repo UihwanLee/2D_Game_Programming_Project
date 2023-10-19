@@ -35,8 +35,9 @@ class Idle:
 class Hit:
     @staticmethod
     def enter(player, e):
-        player.frame = 0
-        player.action = 1
+        print('SPACE 키 누름')
+        #player.frame = 0
+        #player.action = 1
 
     @staticmethod
     def exit(player, e):

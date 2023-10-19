@@ -1,4 +1,5 @@
 from gameObject import *
+from gameStateMachine import StateMachine_Player
 
 '''
     Player 클래스 : GameObject 상속
@@ -18,14 +19,20 @@ from gameObject import *
 class Player(GameObject):
 
     # Player 클래스 초기화. 상속 받은 GameObject 클래스 초기화.
-    # player의 frame, time, action, player_Anim 초기화 한다.
-    def __init__(self, scene, playMode, layer, bActive, frame):
-        super().__init__(scene, playMode.pos, playMode.sprite_sheet, playMode.type, layer, bActive)
+    # player의 playMode를 통해 GameObject, play_Anim 등을 초기화 한다.
+    # player StateMachine을 받아 처리할 수 있도록 한다.
+    def __init__(self, scene, name, playMode, layer, bActive, frame):
+        super().__init__(scene, name, playMode.pos, playMode.sprite_sheet, playMode.type, layer, bActive)
         self.playMode = playMode
         self.play_Anim = playMode.anim
         self.frame = frame
         self.time = 0
         self.action = 0
+        self.state_machine = StateMachine_Player
+
+    # player 이벤트 처리 함수. 이벤트에 따른 애니메이션/동작을 StateMachine을 통해 처리한다.
+    def handle_event(self, event):
+        self.state_machine.handle_event(('INPUT', event))
 
     # player 업데이트. time 변수를 기준으로 각족 이벤트를 처리한다.
     def update(self):

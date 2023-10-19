@@ -12,6 +12,7 @@ class GameEngine:
         self.running = True
         self.scene_01 = Scene(1)
         self.game_world = self.scene_01
+        self.player = None
         pass
 
     # 이벤트 처리 함수. gamePlayer와 gameSystem 모듈로 전달하여 이벤틍에 적절한 동작을 수행한다.
@@ -22,12 +23,16 @@ class GameEngine:
                 self.running = False
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 self.running = False
+            else:
+                if(self.player):
+                    print('EXITST')
+                    self.player.handle_event(event)
 
     # scene을 생성하는 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):
-        self.scene_01.create_object(background_pos, background_img, background_type, 0, True)
-        self.scene_01.create_player(Hitter, 1, True,  0)
-        self.scene_01.create_playerAI(Pitcher, 1, True, 0)
+        self.scene_01.create_object(background_name, background_pos, background_img, background_type, 0, True)
+        self.scene_01.create_player(player_name, Hitter, 1, True,  0)
+        self.scene_01.create_playerAI(playerAI_name, Pitcher, 1, True, 0)
         pass
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.

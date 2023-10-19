@@ -8,9 +8,16 @@ STATIC = 0
 DYNAMIC = 1
 
 #BackGround
+background_name = 'BackGround'
 background_pos = (400, 300)
 background_img = 'Sprites/BG_Base.png'
 background_type = STATIC
+
+#Player
+player_name = 'player'
+
+#AI
+playerAI_name = 'playerAI'
 
 ''' System'''
 TOP = 0

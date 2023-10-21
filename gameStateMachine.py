@@ -29,6 +29,10 @@ class Idle:
         player.action = 0
 
     @staticmethod
+    def do(player):
+        print('IDLE 상태')
+
+    @staticmethod
     def exit(player, e):
         pass
 
@@ -41,6 +45,10 @@ class Hit:
         player.max_frame = len(player.playMode.anim[player.action].posX) # max_frame 수정
 
     @staticmethod
+    def do(player):
+        print('Hit 상태')
+
+    @staticmethod
     def exit(player, e):
         pass
 
@@ -50,14 +58,14 @@ class StateMachine_Player:
         self.cur_state = Idle
         self.transitions = {
             Idle: {space_down: Hit},
-            Hit: {}
+            Hit: {time_out: Idle}
         }
 
     def start(self):
         self.cur_state.enter(self.player, ('NONE', 0))
 
     def update(self):
-        pass
+        self.cur_state.do(self.player)
 
     def handle_event(self, e):
         for check_event, next_state in self.transitions[self.cur_state].items():

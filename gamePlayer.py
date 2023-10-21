@@ -37,8 +37,12 @@ class Player(GameObject):
 
     # player 업데이트. time 변수를 기준으로 각족 이벤트를 처리한다.
     def update(self):
+        # player가 활성화 할 때만 시행
         bActive = super().get_object_var('bActive')
         if bActive is False: return
+
+        # player state_machine 업데이트
+        self.state_machine.update()
 
         self.time += 1
 

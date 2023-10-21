@@ -49,9 +49,9 @@ Hitter_IDLE.delay = [200, 250, 150]
 
 # HIT
 Hitter_HIT = anim_frame()
-Hitter_HIT.posX = [275, 275, 275, 275, 275, 275]
+Hitter_HIT.posX = [275, 275, 275, 345, 345, 275]
 Hitter_HIT.posY = [200, 200, 200, 200, 200, 200]
-Hitter_HIT.delay = [50, 50, 50, 10, 10, 20]
+Hitter_HIT.delay = [5, 5, 5, 50, 50, 70]
 Hitter_HIT.max_frame = 6
 
 Hitter_Anim.append(Hitter_IDLE)

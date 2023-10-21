@@ -1,4 +1,4 @@
-from pico2d import SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE
+from pico2d import SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, get_time
 
 '''
 
@@ -27,6 +27,8 @@ class Idle:
     def enter(player, e):
         player.frame = 0
         player.action = 0
+        player.time = 0
+        player.max_frame = len(player.playMode.anim[player.action].posX)  # max_frame 수정
 
     @staticmethod
     def do(player):
@@ -43,10 +45,15 @@ class Hit:
         player.action = 1
         player.time = 0
         player.max_frame = len(player.playMode.anim[player.action].posX) # max_frame 수정
+        player.start_time = get_time()
 
     @staticmethod
     def do(player):
         print('Hit 상태')
+        # Hit 애니메이션 끝난 이벤트를 시간으로 체크하여 Idle로 돌아가기
+        if get_time() - player.start_time > 0.3:
+            print('Hit 상태 끝!')
+            player.state_machine.handle_event(('TIME_OUT', 0))
 
     @staticmethod
     def exit(player, e):

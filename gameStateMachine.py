@@ -14,15 +14,19 @@ from pico2d import SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, get_time
 
 '''
 
+
 def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
+
 
 def time_out(e):
     return e[0] == 'TIME_OUT'
 
+
 ''' Player StateMachine '''
 
-class Idle:
+
+class Idle_Hitter:
     @staticmethod
     def enter(player, e):
         player.frame = 0
@@ -38,13 +42,28 @@ class Idle:
     def exit(player, e):
         pass
 
+
+class Idle_Pitcher:
+    @staticmethod
+    def enter(player, e):
+        pass
+
+    @staticmethod
+    def do(player):
+        pass
+
+    @staticmethod
+    def exit(player, e):
+        pass
+
+
 class Hit:
     @staticmethod
     def enter(player, e):
         player.frame = 0
         player.action = 1
         player.time = 0
-        player.max_frame = len(player.playMode.anim[player.action].posX) # max_frame 수정
+        player.max_frame = len(player.playMode.anim[player.action].posX)  # max_frame 수정
         player.start_time = get_time()
 
     @staticmethod
@@ -59,13 +78,27 @@ class Hit:
     def exit(player, e):
         pass
 
+class Throw:
+    @staticmethod
+    def enter(player, e):
+        pass
+
+    @staticmethod
+    def do(player):
+        pass
+
+    @staticmethod
+    def exit(player, e):
+        pass
+
+
 class StateMachine_Player:
     def __init__(self, player):
         self.player = player
-        self.cur_state = Idle
+        self.cur_state = Idle_Hitter
         self.transitions = {
-            Idle: {space_down: Hit},
-            Hit: {time_out: Idle}
+            Idle_Hitter: {space_down: Hit},
+            Hit: {time_out: Idle_Hitter}
         }
 
     def start(self):

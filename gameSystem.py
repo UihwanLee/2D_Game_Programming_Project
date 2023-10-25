@@ -24,6 +24,8 @@ class GameSystem:
 
     def __int__(self):
         self.playerAI = None
+        self.throw_target = None
+        self.throw_target_effect = None
 
     # GameSystem 리셋. 모든 System 변수를 초기화 한다.
     def reset_system(self):
@@ -46,4 +48,15 @@ class GameSystem:
         self.playerAI.throw_ball()
 
     def generate_random_throw_target(self):
-        pass
+        # 던진 공 위치는 게임 내 사각 박스 내에 랜덤으로 생성
+        pos_x = random.randint(360, 450)
+        pos_y = random.randint(90, 210)
+
+        self.throw_target.pos = [pos_x, pos_y]
+
+        self.throw_target_effect.pos = [pos_x, pos_y]
+        self.throw_target_effect.size = [300, 300]
+
+        # 공 위치를 표시하고 이펙트를 나타낼 오브젝트 활성화
+        self.throw_target.bActive = True
+        self.throw_target_effect.bActive = True

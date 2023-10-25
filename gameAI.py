@@ -1,5 +1,6 @@
 from gameObject import GameObject
 from gameStateMachine import StateMachine_PlayerAI
+import random
 
 '''
     2DGP 야구 게임에서 활용될 AI 모듈.
@@ -29,6 +30,8 @@ class GamePlayerAI(GameObject):
         self.state_machine = StateMachine_PlayerAI(self)
         self.max_frame = len(playMode.anim[self.action].posX)
 
+        self.game_system = None
+
     def update(self):
         bActive = super().get_object_var('bActive')
         if bActive is False: return
@@ -57,6 +60,13 @@ class GamePlayerAI(GameObject):
 
     def throw_ball(self):
         self.state_machine.handle_event(('THROW', 0))
+
+    # 투수 AI가 던진 공 위치 생성
+    def generate_random_throw_target(self):
+        print('던짐!!!')
+        if self.game_system:
+            self.game_system.generate_random_throw_target()
+
 
 class GameSystemAI:
 

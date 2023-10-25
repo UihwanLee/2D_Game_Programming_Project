@@ -35,8 +35,8 @@ class GameEngine:
         self.scene_01.create_object(background_name, background_pos, background_img, background_size,background_type, 0, True)
         self.scene_01.create_player(player_name, Hitter, 1, True,  0)
         self.scene_01.create_playerAI(playerAI_name, Pitcher, 1, True, 0)
-        self.scene_01.create_object(throw_target_name, throw_target_pos, throw_target_img, throw_target_size, DYNAMIC, 1, True)
-        self.scene_01.create_object(throw_target_effect_name, throw_target_effect_pos, throw_target_effect_img, throw_target_effect_size, DYNAMIC, 1, True)
+        self.scene_01.create_object(throw_target_name, throw_target_pos, throw_target_img, throw_target_size, DYNAMIC, 1, False)
+        self.scene_01.create_object(throw_target_effect_name, throw_target_effect_pos, throw_target_effect_img, throw_target_effect_size, DYNAMIC, 1, False)
         pass
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
@@ -45,13 +45,22 @@ class GameEngine:
         self.game_world.render_objects()
         update_canvas()
 
+    def init_setting(self):
+        self.game_system.playerAI = self.game_world.fine_object('playerAI')
+        self.game_system.throw_ball()
+        self.game_system.throw_target = self.game_world.fine_object(throw_target_name)
+        self.game_system.throw_target_effect = self.game_world.fine_object(throw_target_effect_name)
+
+        self.player = self.game_world.fine_object(player_name)
+
+        self.playerAI = self.game_system.playerAI
+        self.playerAI.game_system = self.game_system
+
     # 게임을 실행하는 함수. 모든 scene을 render하고 이벤트를 지속적으로 받는다.
     def run(self):
         open_canvas()
         self.create_scenes()
-        self.player = self.game_world.fine_object('player')
-        self.game_system.playerAI = self.game_world.fine_object('playerAI')
-        self.game_system.throw_ball()
+        self.init_setting()
         while self.running:
             self.render_scenes()
             self.handle_events()

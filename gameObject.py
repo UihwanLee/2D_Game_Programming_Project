@@ -27,7 +27,6 @@ class GameObject:
         if self.type == STATIC:
             self.sprite.draw(self.pos[0], self.pos[1])
         elif self.type == DYNAMIC:
-            print('DYNAMIC')
             self.sprite.clip_draw(0, 0, 100, 100, self.pos[0], self.pos[1], self.size[0], self.size[1])
 
     # 게임 오브젝트 멤버변수 get 함수. GameObject 클래스를 상속 받은 클래스가 GameObject 멤버 변수에 접근할 때 사용 한다.

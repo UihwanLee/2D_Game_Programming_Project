@@ -11,8 +11,8 @@ DYNAMIC = 1
 
 #BackGround
 background_name = 'BackGround'
-background_pos = (400, 300)
-background_size = (800, 600)
+background_pos = [400, 300]
+background_size = [800, 600]
 background_img = 'Sprites/BG_Base.png'
 background_type = STATIC
 
@@ -24,13 +24,13 @@ playerAI_name = 'playerAI'
 
 #Throw_Target
 throw_target_name = 'Throw_Target'
-throw_target_pos = (400, 300)
-throw_target_size = (200, 200)
+throw_target_pos = [400, 300]       # x: 360 ~ 450, y : 90 ~ 210
+throw_target_size = [200, 200]
 throw_target_img = 'Sprites/Throw_Target.png'
 
 throw_target_effect_name = 'Throw_Target_Effect'
-throw_target_effect_pos = (400, 300)
-throw_target_effect_size = (200, 200)
+throw_target_effect_pos = [400, 300]
+throw_target_effect_size = [200, 200]
 throw_target_effect_img = 'Sprites/Throw_Target_Effect.png'
 
 ''' [ System ] '''

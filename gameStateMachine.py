@@ -56,7 +56,7 @@ class Idle_Pitcher:
 
     @staticmethod
     def do(player):
-        print('AI : IDLE 상태')
+        pass
 
     @staticmethod
     def exit(player, e):
@@ -90,13 +90,20 @@ class Throw:
         player.time = 0
         player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
         player.start_time = get_time()
+        player.throw_event = False
 
     @staticmethod
     def do(player):
-        print('AI : Throw 상태')
         # Throw 애니메이션 끝난 이벤트를 시간으로 체크하여 Idle로 돌아가기
         if get_time() - player.start_time > 1.8:
             player.state_machine.handle_event(('TIME_OUT', 0))
+
+        # 던진 특정 순간 공 위치 생성 : 투수가 playerAI 기준
+        if get_time() - player.start_time > 0.8:
+            if player.throw_event == False:
+                player.generate_random_throw_target()
+                player.throw_event = True
+
 
     @staticmethod
     def exit(player, e):

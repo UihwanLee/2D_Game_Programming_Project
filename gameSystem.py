@@ -44,3 +44,6 @@ class GameSystem:
     # 투수 AI 공 던지기
     def throw_ball(self):
         self.playerAI.throw_ball()
+
+    def generate_random_throw_target(self):
+        pass

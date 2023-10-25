@@ -11,8 +11,8 @@ class Scene:
         self.game_objects = []
 
     # GameObject 생성. game_objects 리스트에 GameObject를 추가한다.
-    def create_object(self, name, pos, sprite, type, layout, bActive):
-        self.game_objects.append(GameObject(self.order, name, pos, sprite, type, layout, bActive))
+    def create_object(self, name, pos, sprite, size, type, layout, bActive):
+        self.game_objects.append(GameObject(self.order, name, pos, sprite, size, type, layout, bActive))
 
     # Player 생성. game_objects 리스트에 Player 추가한다.
     def create_player(self, name, playMode, layer, bActive, frame):

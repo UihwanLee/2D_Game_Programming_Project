@@ -22,7 +22,7 @@ class Player(GameObject):
     # player의 playMode를 통해 GameObject, play_Anim 등을 초기화 한다.
     # player StateMachine을 받아 처리할 수 있도록 한다.
     def __init__(self, scene, name, playMode, layer, bActive, frame):
-        super().__init__(scene, name, playMode.pos, playMode.sprite_sheet, playMode.type, layer, bActive)
+        super().__init__(scene, name, playMode.pos, playMode.sprite_sheet, playMode.size, playMode.type, layer, bActive)
         self.play_mode = playMode
         self.play_anim = playMode.anim
         self.frame = frame

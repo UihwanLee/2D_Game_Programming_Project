@@ -32,9 +32,11 @@ class GameEngine:
 
     # scene을 생성하는 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):
-        self.scene_01.create_object(background_name, background_pos, background_img, background_type, 0, True)
+        self.scene_01.create_object(background_name, background_pos, background_img, background_size,background_type, 0, True)
         self.scene_01.create_player(player_name, Hitter, 1, True,  0)
         self.scene_01.create_playerAI(playerAI_name, Pitcher, 1, True, 0)
+        self.scene_01.create_object(throw_target_name, throw_target_pos, throw_target_img, throw_target_size, DYNAMIC, 1, True)
+        self.scene_01.create_object(throw_target_effect_name, throw_target_effect_pos, throw_target_effect_img, throw_target_effect_size, DYNAMIC, 1, True)
         pass
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.

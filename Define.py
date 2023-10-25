@@ -3,6 +3,8 @@
     게임 오브젝트 정보, 다른 객체의 정보를 저장한다.
 '''
 
+''' [ Object Info ] '''
+
 #Object Type
 STATIC = 0
 DYNAMIC = 1
@@ -10,6 +12,7 @@ DYNAMIC = 1
 #BackGround
 background_name = 'BackGround'
 background_pos = (400, 300)
+background_size = (800, 600)
 background_img = 'Sprites/BG_Base.png'
 background_type = STATIC
 
@@ -19,7 +22,18 @@ player_name = 'player'
 #AI
 playerAI_name = 'playerAI'
 
-''' System'''
+#Throw_Target
+throw_target_name = 'Throw_Target'
+throw_target_pos = (400, 300)
+throw_target_size = (200, 200)
+throw_target_img = 'Sprites/Throw_Target.png'
+
+throw_target_effect_name = 'Throw_Target_Effect'
+throw_target_effect_pos = (400, 300)
+throw_target_effect_size = (200, 200)
+throw_target_effect_img = 'Sprites/Throw_Target_Effect.png'
+
+''' [ System ] '''
 TOP = 0
 BOTTOM = 1
 

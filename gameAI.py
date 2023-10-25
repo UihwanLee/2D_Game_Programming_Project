@@ -63,7 +63,6 @@ class GamePlayerAI(GameObject):
 
     # 투수 AI가 던진 공 위치 생성
     def generate_random_throw_target(self):
-        print('던짐!!!')
         if self.game_system:
             self.game_system.generate_random_throw_target()
 

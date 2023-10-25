@@ -113,3 +113,12 @@ PITCHER = 1
 PlayMode = {HITTER: Hitter, PITCHER: Pitcher}
 
 
+
+'''///////////////////////////////////////////////////////////////////////////////'''
+
+''' 능력치가 바뀔 시 조정해야 하는 변수 정의 '''
+
+''' GameSystem Class '''
+# def check_throw_event_by_hit(self) : decrease_size
+
+

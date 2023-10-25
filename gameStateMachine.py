@@ -101,7 +101,7 @@ class Throw:
         # 던진 특정 순간 공 위치 생성 : 투수가 playerAI 기준
         if get_time() - player.start_time > 0.8:
             if player.throw_event == False:
-                player.generate_random_throw_target()
+                player.start_throw_event()
                 player.throw_event = True
 
 

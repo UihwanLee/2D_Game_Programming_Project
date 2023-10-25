@@ -61,10 +61,13 @@ class GamePlayerAI(GameObject):
     def throw_ball(self):
         self.state_machine.handle_event(('THROW', 0))
 
-    # 투수 AI가 던진 공 위치 생성
-    def generate_random_throw_target(self):
+    # 투수 AI가 공을 던지면 throw_event 시작
+    def start_throw_event(self):
         if self.game_system:
+            # 공 위치 생성
             self.game_system.generate_random_throw_target()
+
+            # 공 애니메이션 시작
 
 
 class GameSystemAI:

@@ -17,6 +17,18 @@ class GameEngine:
         self.player = None
         pass
 
+    # 게임 내에서 사용할 game_system, player, playerAI 등을 초기화
+    def init_setting(self):
+        self.game_system.playerAI = self.game_world.fine_object('playerAI')
+        self.game_system.throw_target = self.game_world.fine_object(throw_target_name)
+        self.game_system.throw_target_effect = self.game_world.fine_object(throw_target_effect_name)
+
+        self.player = self.game_world.fine_object(player_name)
+        self.player.game_system = self.game_system
+
+        self.playerAI = self.game_system.playerAI
+        self.playerAI.game_system = self.game_system
+
     # 이벤트 처리 함수. gamePlayer와 gameSystem 모듈로 전달하여 이벤틍에 적절한 동작을 수행한다.
     def handle_events(self):
         events = get_events()
@@ -45,16 +57,10 @@ class GameEngine:
         self.game_world.render_objects()
         update_canvas()
 
-    def init_setting(self):
-        self.game_system.playerAI = self.game_world.fine_object('playerAI')
-        self.game_system.throw_target = self.game_world.fine_object(throw_target_name)
-        self.game_system.throw_target_effect = self.game_world.fine_object(throw_target_effect_name)
-
-        self.player = self.game_world.fine_object(player_name)
-        self.player.game_system = self.game_system
-
-        self.playerAI = self.game_system.playerAI
-        self.playerAI.game_system = self.game_system
+    # 게임 시스템을 계속해서 업데이트 하는 함수
+    def update_system(self):
+        if self.game_system:
+            self.game_system.update()
 
     # 게임을 실행하는 함수. 모든 scene을 render하고 이벤트를 지속적으로 받는다.
     def run(self):
@@ -62,6 +68,7 @@ class GameEngine:
         self.create_scenes()
         self.init_setting()
         while self.running:
+            self.update_system()
             self.render_scenes()
             self.handle_events()
         close_canvas()

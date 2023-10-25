@@ -68,10 +68,8 @@ class Hit:
 
     @staticmethod
     def do(player):
-        print('Hit 상태')
         # Hit 애니메이션 끝난 이벤트를 시간으로 체크하여 Idle로 돌아가기
-        if get_time() - player.start_time > 0.3:
-            print('Hit 상태 끝!')
+        if get_time() - player.start_time > 0.5:
             player.state_machine.handle_event(('TIME_OUT', 0))
 
     @staticmethod
@@ -116,3 +114,16 @@ class StateMachine_Player:
                 return True
 
         return False
+
+class StateMachine_PlayerAI:
+    def __int__(self):
+        pass
+
+    def start(self):
+        pass
+
+    def update(self):
+        pass
+
+    def handel_event(self):
+        pass

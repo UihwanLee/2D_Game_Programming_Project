@@ -23,8 +23,8 @@ class Player(GameObject):
     # player StateMachine을 받아 처리할 수 있도록 한다.
     def __init__(self, scene, name, playMode, layer, bActive, frame):
         super().__init__(scene, name, playMode.pos, playMode.sprite_sheet, playMode.type, layer, bActive)
-        self.playMode = playMode
-        self.play_Anim = playMode.anim
+        self.play_mode = playMode
+        self.play_anim = playMode.anim
         self.frame = frame
         self.time = 0
         self.action = 0
@@ -47,7 +47,7 @@ class Player(GameObject):
         self.time += 1
 
         # 애니메이션의 다이나믹을 위해 delay : delay 함수를 호출하면 Frame이 떨어지므로 time으로 구현
-        time = self.play_Anim[self.action].delay[self.frame]
+        time = self.play_anim[self.action].delay[self.frame]
         if self.time > time:
             self.frame = (self.frame + 1) % self.max_frame
             self.time = 0
@@ -59,6 +59,6 @@ class Player(GameObject):
 
         pos = super().get_object_var('pos')
         sprite = super().get_object_var('sprite')
-        posX, posY = self.play_Anim[self.action].posX[self.frame], self.play_Anim[self.action].posY[self.frame]
-        sizeX, sizeY = self.playMode.size[0], self.playMode.size[1]
+        posX, posY = self.play_anim[self.action].posX[self.frame], self.play_anim[self.action].posY[self.frame]
+        sizeX, sizeY = self.play_mode.size[0], self.play_mode.size[1]
         sprite.clip_draw(self.frame * 100, self.action * 100, 100, 100, posX, posY, sizeX, sizeY)

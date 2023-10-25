@@ -49,7 +49,7 @@ class GameEngine:
         self.create_scenes()
         self.player = self.game_world.fine_object('player')
         self.game_system.playerAI = self.game_world.fine_object('playerAI')
-        self.game_system.Throw_Ball()
+        self.game_system.throw_ball()
         while self.running:
             self.render_scenes()
             self.handle_events()

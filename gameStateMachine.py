@@ -35,7 +35,7 @@ class Idle_Hitter:
         player.frame = 0
         player.action = 0
         player.time = 0
-        player.max_frame = len(player.playMode.anim[player.action].posX)  # max_frame 수정
+        player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
 
     @staticmethod
     def do(player):
@@ -52,7 +52,7 @@ class Idle_Pitcher:
         player.frame = 0
         player.action = 0
         player.time = 0
-        player.max_frame = len(player.playMode.anim[player.action].posX)  # max_frame 수정
+        player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
 
     @staticmethod
     def do(player):
@@ -69,7 +69,7 @@ class Hit:
         player.frame = 0
         player.action = 1
         player.time = 0
-        player.max_frame = len(player.playMode.anim[player.action].posX)  # max_frame 수정
+        player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
         player.start_time = get_time()
 
     @staticmethod
@@ -85,11 +85,18 @@ class Hit:
 class Throw:
     @staticmethod
     def enter(player, e):
-        pass
+        player.frame = 0
+        player.action = 1
+        player.time = 0
+        player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
+        player.start_time = get_time()
 
     @staticmethod
     def do(player):
         print('AI : Throw 상태')
+        # Throw 애니메이션 끝난 이벤트를 시간으로 체크하여 Idle로 돌아가기
+        if get_time() - player.start_time > 1.8:
+            player.state_machine.handle_event(('TIME_OUT', 0))
 
     @staticmethod
     def exit(player, e):

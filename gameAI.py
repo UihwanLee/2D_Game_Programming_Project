@@ -55,6 +55,9 @@ class GamePlayerAI(GameObject):
         sizeX, sizeY = self.play_Mode.size[0], self.play_Mode.size[1]
         sprite.clip_draw(self.frame * 100, self.action * 100, 100, 100, posX, posY, sizeX, sizeY)
 
+    def throw_ball(self):
+        self.state_machine.handle_event(('THROW', 0))
+
 class GameSystemAI:
 
     # 게임에서 활용될 GamePlayerAI 클래스 초기화:

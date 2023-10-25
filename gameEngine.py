@@ -2,6 +2,7 @@ from pico2d import *
 
 from Define import *
 from gameScene import Scene
+from gameSystem import GameSystem
 
 
 # 게임 내 모든 씬, 오브젝트, 시스템 관리할 클래스
@@ -12,6 +13,7 @@ class GameEngine:
         self.running = True
         self.scene_01 = Scene(1)
         self.game_world = self.scene_01
+        self.game_system = GameSystem()
         self.player = None
         pass
 
@@ -46,6 +48,8 @@ class GameEngine:
         open_canvas()
         self.create_scenes()
         self.player = self.game_world.fine_object('player')
+        self.game_system.playerAI = self.game_world.fine_object('playerAI')
+        self.game_system.Throw_Ball()
         while self.running:
             self.render_scenes()
             self.handle_events()

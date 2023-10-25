@@ -23,7 +23,7 @@ def time_out(e):
     return e[0] == 'TIME_OUT'
 
 def AI_throw(e):
-    return e[0] == 'AI_THROW'
+    return e[0] == 'THROW'
 
 
 ''' Player StateMachine '''
@@ -89,7 +89,7 @@ class Throw:
 
     @staticmethod
     def do(player):
-        pass
+        print('AI : Throw 상태')
 
     @staticmethod
     def exit(player, e):
@@ -137,7 +137,7 @@ class StateMachine_PlayerAI:
     def update(self):
         self.cur_state.do(self.playerAI)
 
-    def handel_event(self, e):
+    def handle_event(self, e):
         for check_event, next_state in self.transitions[self.cur_state].items():
             if check_event(e):
                 self.cur_state.exit(self.playerAI, e)

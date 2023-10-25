@@ -1,4 +1,5 @@
 from Define import TOP
+from gameAI import *
 from Define import BOTTOM
 
 '''
@@ -22,7 +23,7 @@ class GameSystem:
     SCORE_TEAM_02 = 0  # 팀2 점수
 
     def __int__(self):
-        pass
+        self.playerAI = None
 
     # GameSystem 리셋. 모든 System 변수를 초기화 한다.
     def reset_system(self):
@@ -39,3 +40,7 @@ class GameSystem:
     # Player 공/수 선택 공->타자 / 수->투수로 시스템 설정 하기
     def SetPlayMode(self):
         pass
+
+    # 투수 AI 공 던지기
+    def throw_ball(self):
+        self.playerAI.throw_ball()

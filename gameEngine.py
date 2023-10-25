@@ -47,11 +47,11 @@ class GameEngine:
 
     def init_setting(self):
         self.game_system.playerAI = self.game_world.fine_object('playerAI')
-        self.game_system.throw_ball()
         self.game_system.throw_target = self.game_world.fine_object(throw_target_name)
         self.game_system.throw_target_effect = self.game_world.fine_object(throw_target_effect_name)
 
         self.player = self.game_world.fine_object(player_name)
+        self.player.game_system = self.game_system
 
         self.playerAI = self.game_system.playerAI
         self.playerAI.game_system = self.game_system

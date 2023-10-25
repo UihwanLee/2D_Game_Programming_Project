@@ -1,3 +1,5 @@
+from sdl2 import SDL_KEYDOWN, SDLK_s
+
 from gameObject import *
 from gameStateMachine import StateMachine_Player
 
@@ -31,9 +33,17 @@ class Player(GameObject):
         self.state_machine = StateMachine_Player(self)
         self.max_frame = len(playMode.anim[self.action].posX)
 
+        self.game_system = None
+
     # player 이벤트 처리 함수. 이벤트에 따른 애니메이션/동작을 StateMachine을 통해 처리한다.
     def handle_event(self, event):
         self.state_machine.handle_event(('INPUT', event))
+
+        # 임시
+        if self.game_system:
+            if event.type == SDL_KEYDOWN and event.key == SDLK_s:
+                self.game_system.throw_ball()
+
 
     # player 업데이트. time 변수를 기준으로 각족 이벤트를 처리한다.
     def update(self):

@@ -22,6 +22,9 @@ def space_down(e):
 def time_out(e):
     return e[0] == 'TIME_OUT'
 
+def AI_throw(e):
+    return e[0] == 'AI_THROW'
+
 
 ''' Player StateMachine '''
 
@@ -36,7 +39,7 @@ class Idle_Hitter:
 
     @staticmethod
     def do(player):
-        print('IDLE 상태')
+        pass
 
     @staticmethod
     def exit(player, e):
@@ -46,11 +49,14 @@ class Idle_Hitter:
 class Idle_Pitcher:
     @staticmethod
     def enter(player, e):
-        pass
+        player.frame = 0
+        player.action = 0
+        player.time = 0
+        player.max_frame = len(player.playMode.anim[player.action].posX)  # max_frame 수정
 
     @staticmethod
     def do(player):
-        pass
+        print('AI : IDLE 상태')
 
     @staticmethod
     def exit(player, e):
@@ -116,14 +122,27 @@ class StateMachine_Player:
         return False
 
 class StateMachine_PlayerAI:
-    def __int__(self):
+    def __init__(self, player_AI):
+        self.playerAI = player_AI
+        self.cur_state = Idle_Pitcher
+        self.transitions = {
+            Idle_Pitcher: {AI_throw: Throw},
+            Throw: {time_out: Idle_Pitcher}
+        }
         pass
 
     def start(self):
-        pass
+        self.cur_state.enter(self.playerAI, ('NONE', 0))
 
     def update(self):
-        pass
+        self.cur_state.do(self.playerAI)
 
-    def handel_event(self):
-        pass
+    def handel_event(self, e):
+        for check_event, next_state in self.transitions[self.cur_state].items():
+            if check_event(e):
+                self.cur_state.exit(self.playerAI, e)
+                self.cur_state = next_state
+                self.cur_state.enter(self.playerAI, e)
+                return True
+
+        return False

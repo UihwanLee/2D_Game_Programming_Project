@@ -33,6 +33,12 @@ throw_target_effect_pos = [400, 300]
 throw_target_effect_size = [200, 200]
 throw_target_effect_img = 'Sprites/Throw_Target_Effect.png'
 
+#Base Ball
+base_ball_name = 'base_ball'
+base_ball_pos = [400, 300]
+base_ball_size = [100, 100]
+base_ball_img = 'Sprites/BaseBall.png'
+
 ''' [ System ] '''
 TOP = 0
 BOTTOM = 1

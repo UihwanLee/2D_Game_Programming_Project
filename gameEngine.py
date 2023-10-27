@@ -49,7 +49,7 @@ class GameEngine:
         self.scene_01.create_playerAI(playerAI_name, Pitcher, 1, True, 0)
         self.scene_01.create_object(throw_target_name, throw_target_pos, throw_target_img, throw_target_size, DYNAMIC, 1, False)
         self.scene_01.create_object(throw_target_effect_name, throw_target_effect_pos, throw_target_effect_img, throw_target_effect_size, DYNAMIC, 1, False)
-        pass
+        self.scene_01.create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 2, False)
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
     def render_scenes(self):

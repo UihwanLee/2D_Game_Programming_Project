@@ -22,6 +22,7 @@ class GameEngine:
         self.game_system.playerAI = self.game_world.fine_object('playerAI')
         self.game_system.throw_target = self.game_world.fine_object(throw_target_name)
         self.game_system.throw_target_effect = self.game_world.fine_object(throw_target_effect_name)
+        self.game_system.base_ball = self.game_world.fine_object(base_ball_name)
 
         self.player = self.game_world.fine_object(player_name)
         self.player.game_system = self.game_system

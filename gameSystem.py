@@ -1,3 +1,5 @@
+import math
+
 from Define import TOP
 from gameAI import *
 from Define import BOTTOM
@@ -26,16 +28,31 @@ class GameSystem:
         self.playerAI = None
         self.throw_target = None
         self.throw_target_effect = None
+        self.base_ball = None
 
         # 공 박자 변수
         self.is_check_throw_event_by_hit = False
         self.throw_event_rate = 0
         self.throw_hit_offset = 0.0
 
+        # 야구공 초기위치와 타켓 위치
+        self.is_throw_ball_to_target_anim = False
+        self.base_ball_pos_x = 400
+        self.base_ball_pos_y = 300
+        self.base_ball_target_x = 0
+        self.base_ball_target_y = 0
+        self.throw_angle = 0
+        self.throw_speed = 0
+
+        self.temp = 0
+
     # GameSystem update 함수 특정 이벤트를 검사하는 일을 수행한다.
     def update(self):
         if self.is_check_throw_event_by_hit:
             self.check_throw_event_by_hit()
+
+        if self.is_throw_ball_to_target_anim:
+            self.throw_ball_to_target_anim()
 
     # GameSystem 리셋. 모든 System 변수를 초기화 한다.
     def reset_system(self):
@@ -77,15 +94,56 @@ class GameSystem:
 
         self.is_check_throw_event_by_hit = True
 
+        # 야구공 활성화 및 타겟 위치 세팅
+        self.base_ball.bActive = True
+        self.throw_ball_to_target_anim()
+
+        self.base_ball_pos_x = 380
+        self.base_ball_pos_y = 300
+        self.base_ball_target_x = pos_x
+        self.base_ball_target_y = pos_y
+        self.base_ball.size = [60, 60]
+
+        self.is_throw_ball_to_target_anim = True
+        self.throw_angle = self.calculate_throw_angle()
+
+    # 지정된 공 위치에 따른 공 던지는 각도 계산
+    def calculate_throw_angle(self):
+        distance = math.sqrt((self.base_ball_target_x - self.base_ball_pos_x) ** 2 + (self.base_ball_target_y - self.base_ball_pos_y) ** 2)
+        self.throw_speed = distance/1000
+        angle = math.atan2(self.base_ball_target_y - self.base_ball_pos_y, self.base_ball_target_x - self.base_ball_pos_x)
+        return angle
+
     # 생성된 공 위치로 이동하는 애니메이션 진행
     def throw_ball_to_target_anim(self):
-        pass
+        angle = self.throw_angle
+        distance = math.sqrt((self.base_ball_target_x - self.base_ball_pos_x) ** 2 + (
+                    self.base_ball_target_y - self.base_ball_pos_y) ** 2)
+
+        self.base_ball_pos_x += self.throw_speed * math.cos(angle)
+        self.base_ball_pos_y += self.throw_speed * math.sin(angle)
+
+        self.base_ball.pos[0] = int(self.base_ball_pos_x)
+        self.base_ball.pos[1] = int(self.base_ball_pos_y)
+
+        self.temp += 1
+
+        if self.base_ball.size[0] < 110:
+            self.base_ball.size[0] += 1
+            self.base_ball.size[1] += 1
+
+        # 타켓 위치로 왔을 때 종료
+        if distance < 5:
+            print("야구 공 도착!")
+            print(self.temp)
+            self.is_throw_ball_to_target_anim = False
+            return
 
     # 공의 박자와 Hit하는 순간을 체크하는 함수.
     def check_throw_event_by_hit(self):
         decrease_size = 0.1 # [능력치]에 따라 조정
 
-        self.throw_event_rate += 1
+        # self.throw_event_rate += 1
 
         # 공의 박자 offset은 계속 줄어듬
         size = self.throw_target_effect.size[0] - decrease_size

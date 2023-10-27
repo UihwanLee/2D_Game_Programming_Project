@@ -100,19 +100,25 @@ class GameSystem:
 
         self.base_ball_pos_x = 380
         self.base_ball_pos_y = 300
-        self.base_ball_target_x = pos_x
-        self.base_ball_target_y = pos_y
         self.base_ball.size = [60, 60]
 
-        self.is_throw_ball_to_target_anim = True
-        self.throw_angle = self.calculate_throw_angle()
+        self.calculate_throw_angle(pos_x, pos_y)
 
-    # 지정된 공 위치에 따른 공 던지는 각도 계산
-    def calculate_throw_angle(self):
-        distance = math.sqrt((self.base_ball_target_x - self.base_ball_pos_x) ** 2 + (self.base_ball_target_y - self.base_ball_pos_y) ** 2)
-        self.throw_speed = distance/1000
-        angle = math.atan2(self.base_ball_target_y - self.base_ball_pos_y, self.base_ball_target_x - self.base_ball_pos_x)
-        return angle
+        self.is_throw_ball_to_target_anim = True
+
+    # 지정된 공 위치에 따른 공 던지는 각도, 위치 등 계산
+    def calculate_throw_angle(self, pos_x, pos_y):
+        # 지정된 공 위치에 따라 조금 벗어난 위치로 설정
+        offset_x, offset_y = 0, -10
+        if(pos_x > 420): offset_x = 10
+        elif(pos_x <= 390) : offset_x = -10
+        self.base_ball_target_x = pos_x + offset_x
+        self.base_ball_target_y = pos_y + offset_y
+
+        distance = math.sqrt((self.base_ball_target_x - self.base_ball_pos_x) ** 2 + (
+                    self.base_ball_target_y - self.base_ball_pos_y) ** 2)
+        self.throw_speed = distance/1151
+        self.throw_angle = math.atan2(self.base_ball_target_y - self.base_ball_pos_y, self.base_ball_target_x - self.base_ball_pos_x)
 
     # 생성된 공 위치로 이동하는 애니메이션 진행
     def throw_ball_to_target_anim(self):
@@ -126,7 +132,7 @@ class GameSystem:
         self.base_ball.pos[0] = int(self.base_ball_pos_x)
         self.base_ball.pos[1] = int(self.base_ball_pos_y)
 
-        self.temp += 1
+        #self.temp += 1
 
         if self.base_ball.size[0] < 110:
             self.base_ball.size[0] += 1
@@ -134,8 +140,6 @@ class GameSystem:
 
         # 타켓 위치로 왔을 때 종료
         if distance < 5:
-            print("야구 공 도착!")
-            print(self.temp)
             self.is_throw_ball_to_target_anim = False
             return
 
@@ -143,7 +147,7 @@ class GameSystem:
     def check_throw_event_by_hit(self):
         decrease_size = 0.1 # [능력치]에 따라 조정
 
-        # self.throw_event_rate += 1
+        #self.throw_event_rate += 1
 
         # 공의 박자 offset은 계속 줄어듬
         size = self.throw_target_effect.size[0] - decrease_size

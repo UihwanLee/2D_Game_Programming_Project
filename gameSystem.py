@@ -1,6 +1,6 @@
 import math
 
-from Define import TOP
+from Define import *
 from gameAI import *
 from Define import BOTTOM
 
@@ -27,6 +27,7 @@ class GameSystem:
     def __init__(self):
         self.playerAI = None
         self.throw_target = None
+        self.throw_target_end = None
         self.throw_target_effect = None
         self.base_ball = None
 
@@ -43,6 +44,9 @@ class GameSystem:
         self.base_ball_target_y = 0
         self.throw_angle = 0
         self.throw_speed = 0
+
+        # 클래스
+        self.ui_manager = None
 
         self.temp = 0
 
@@ -80,10 +84,12 @@ class GameSystem:
 
     def generate_random_throw_target(self):
         # 던진 공 위치는 게임 내 사각 박스 내에 랜덤으로 생성
-        pos_x = random.randint(360, 450)
-        pos_y = random.randint(90, 210)
+        pos_x = random.randint(THROW_MIN_X, THROW_MAX_X)
+        pos_y = random.randint(THROW_MIN_Y, THROW_MAX_Y)
 
         self.throw_target.pos = [pos_x, pos_y]
+        self.throw_target_end.pos = [pos_x, pos_y]
+        self.throw_target_end.bActive = False
 
         self.throw_target_effect.pos = [pos_x, pos_y]
         self.throw_target_effect.size = [200, 200]
@@ -153,9 +159,42 @@ class GameSystem:
         size = self.throw_target_effect.size[0] - decrease_size
         self.throw_target_effect.size = [size, size]
 
-        # 박자가 끝난 후에는 스트라이크 처리
+        # 박자가 끝난 후에는 관련 ui를 비활성 후 스트라이크/볼 체크 처리
         if(size < 75) :
+            self.throw_target.bActive = False
+            self.throw_target_end.bActive = True
             self.is_check_throw_event_by_hit = False
             self.throw_target_effect.bActive = False
-            print('스트라이크!')
+            self.check_throw_result()
             return
+
+    # 포수가 공을 잡은 뒤 스트라이크/볼인지 체크하는 함수
+     # 1) 스트라이크 존 안에 있으면 스트라이크 아니면 볼
+    def check_throw_result(self):
+        IS_STRIKE = False
+        if (STRIKE_MIN_X < self.throw_target.pos[0] < STRIKE_MAX_X) and (STRIKE_MIN_Y < self.throw_target.pos[1] < STRIKE_MAX_Y):
+            IS_STRIKE = True
+
+        if IS_STRIKE:
+            self.strike()
+        else:
+            self.ball()
+
+
+    # 히트 시 안타/파울/스트라이크인지 체크하는 함수
+     # 1) 히트 존 안에 있어야 함
+     # 2) 히트 offset에 따라 안타/파울/스트라이크 판정
+    def check_hit_result(self):
+        pass
+
+    # 스트라이크 판정 시 작동하는 함수
+    def strike(self):
+        strike_ui = self.ui_manager.find_ui(message_strike)
+        strike_ui.bActive = True
+
+    # 볼 판정 시 작동하는 함수
+    def ball(self):
+        ball_ui = self.ui_manager.find_ui(message_ball)
+        ball_ui.bActive = True
+
+

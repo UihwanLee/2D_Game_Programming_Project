@@ -22,26 +22,74 @@ player_name = 'player'
 #AI
 playerAI_name = 'playerAI'
 
-#Throw_Target
-throw_target_name = 'Throw_Target'
-throw_target_pos = [400, 300]       # x: 360 ~ 450, y : 90 ~ 210
-throw_target_size = [200, 200]
-throw_target_img = 'Sprites/Throw_Target.png'
-
-throw_target_effect_name = 'Throw_Target_Effect'
-throw_target_effect_pos = [400, 300]
-throw_target_effect_size = [200, 200]
-throw_target_effect_img = 'Sprites/Throw_Target_Effect.png'
-
 #Base Ball
 base_ball_name = 'base_ball'
 base_ball_pos = [400, 300]
 base_ball_size = [100, 100]
 base_ball_img = 'Sprites/BaseBall.png'
 
+''' [ UI Info ] '''
+
+#Throw_Target
+throw_target_name = 'Throw_Target'
+throw_target_pos = [400, 300]       # x: 360 ~ 450, y : 90 ~ 210
+throw_target_size = [200, 200]
+throw_target_img = 'Sprites/Throw_Target.png'
+throw_target_ui_size = [100, 100]
+
+#Throw_Target_Effect
+throw_target_effect_name = 'Throw_Target_Effect'
+throw_target_effect_pos = [400, 300]
+throw_target_effect_size = [200, 200]
+throw_target_effect_img = 'Sprites/Throw_Target_Effect.png'
+throw_target_effect_ui_size = [100, 100]
+
+#Throw_Target_End
+throw_target_end_name = 'Throw_Target_End'
+throw_target_end_pos = [400, 300]
+throw_target_end_size = [200, 200]
+throw_target_end_img = 'Sprites/Throw_Target_End.png'
+throw_target_end_ui_size = [100, 100]
+
+#Message_Strike
+message_strike = 'Message_Strike'
+message_strike_pos = [400, 300]
+message_strike_size = [400, 200]
+message_strike_img = 'Sprites/Ui/Msg_Strike.png'
+message_strike_ui_size = [400, 200]
+
+#Message_Strike_Out
+message_strike_out = 'Message_Strike_Out'
+message_strike_out_pos = [400, 300]
+message_strike_out_size = [400, 200]
+message_strike_out_img = 'Sprites/Ui/Msg_Strike_Out.png'
+message_strike_out_ui_size = [400, 200]
+
+#Message_Ball
+message_ball = 'Message_Ball'
+message_ball_pos = [400, 300]
+message_ball_size = [400, 200]
+message_ball_img = 'Sprites/Ui/Msg_Ball.png'
+message_ball_ui_size = [400, 200]
+
+
 ''' [ System ] '''
+
+# 이닝 초/말
 TOP = 0
 BOTTOM = 1
+
+# 공 생성 위치 범위
+THROW_MAX_X = 460
+THROW_MAX_Y = 220
+THROW_MIN_X = 350
+THROW_MIN_Y = 80
+
+# 스트라이크 존
+STRIKE_MAX_X = 440
+STRIKE_MAX_Y = 200
+STRIKE_MIN_X = 370
+STRIKE_MIN_Y = 100
 
 ''' PlayModeInfo '''
 class PlayMode_Info():

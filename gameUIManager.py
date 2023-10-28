@@ -9,8 +9,9 @@ from gameObject import *
 '''
 
 class UI(GameObject):
-    def __init__(self, name, pos, sprite, size, type, layer, bActive):
+    def __init__(self, name, pos, sprite, size, type, layer, bActive, ui_size):
         super().__init__(-1, name, pos, sprite, size, type, layer, bActive)
+        self.ui_size = ui_size
 
     def update(self):
         pass
@@ -22,15 +23,15 @@ class UI(GameObject):
         pos = super().get_object_var('pos')
         size = super().get_object_var('size')
 
-        self.sprite.clip_draw(0, 0, 100, 100, pos[0], pos[1], size[0], size[1])
+        self.sprite.clip_draw(0, 0, self.ui_size[0], self.ui_size[1], pos[0], pos[1], size[0], size[1])
 
 
 class UIManager:
     def __init__(self):
         self.list_ui = []
 
-    def create_ui(self, name, pos, sprite, size, type, layer, bActive):
-        self.list_ui.append(UI(name, pos, sprite, size, type, layer, bActive))
+    def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):
+        self.list_ui.append(UI(name, pos, sprite, size, type, layer, bActive, ui_size))
 
     def render(self):
         for ui in self.list_ui:

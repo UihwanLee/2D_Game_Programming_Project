@@ -29,9 +29,12 @@ class GameEngine:
 
         self.game_system.throw_target = self.ui_manager.find_ui(throw_target_name)
         self.game_system.throw_target_effect = self.ui_manager.find_ui(throw_target_effect_name)
+        self.game_system.throw_target_end = self.ui_manager.find_ui(throw_target_end_name)
 
         self.playerAI = self.game_system.playerAI
         self.playerAI.game_system = self.game_system
+
+        self.game_system.ui_manager = self.ui_manager
 
     # 이벤트 처리 함수. gamePlayer와 gameSystem 모듈로 전달하여 이벤틍에 적절한 동작을 수행한다.
     def handle_events(self):
@@ -55,9 +58,12 @@ class GameEngine:
 
     # ui를 생성하는 함수. 게임에서 사용할 ui 오브젝트를 관리하는 클래스를 생성한다.
     def create_ui(self):
-        self.ui_manager.create_ui(throw_target_name, throw_target_pos, throw_target_img, throw_target_size, DYNAMIC,1, False)
-        self.ui_manager.create_ui(throw_target_effect_name, throw_target_effect_pos, throw_target_effect_img, throw_target_effect_size, DYNAMIC, 1, False)
-
+        self.ui_manager.create_ui(throw_target_name, throw_target_pos, throw_target_img, throw_target_size, DYNAMIC,1, False, throw_target_ui_size)
+        self.ui_manager.create_ui(throw_target_effect_name, throw_target_effect_pos, throw_target_effect_img, throw_target_effect_size, DYNAMIC, 1, False, throw_target_effect_ui_size)
+        self.ui_manager.create_ui(throw_target_end_name, throw_target_end_pos, throw_target_end_img, throw_target_end_size, DYNAMIC, 1, False, throw_target_end_ui_size)
+        self.ui_manager.create_ui(message_strike, message_strike_pos, message_strike_img, message_strike_size, DYNAMIC, 2, False, message_strike_ui_size)
+        self.ui_manager.create_ui(message_strike_out, message_strike_out_pos, message_strike_out_img, message_strike_out_size, DYNAMIC,2, False, message_strike_out_ui_size)
+        self.ui_manager.create_ui(message_ball, message_ball_pos, message_ball_img, message_ball_size, DYNAMIC, 2, False, message_ball_ui_size)
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
     def render_scenes(self):

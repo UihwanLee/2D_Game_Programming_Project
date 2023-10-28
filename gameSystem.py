@@ -193,13 +193,36 @@ class GameSystem:
     # 스트라이크 판정 시 작동하는 함수
     def strike(self):
         strike_ui = self.ui_manager.find_ui(message_strike)
-        strike_ui.bActive = True
-        self.ui_manager.start_fade(strike_ui, 100, 1000)
+
+        self.ui_manager.start_fade(strike_ui, 100, 3000)    # 스트라이크 메세지 띄우기
+        GameSystem.STRIKE += 1                              # 스트라이크 횟수 증가
+
+        # 스트라이크 아웃 체크
+        self.check_strike_out()
 
     # 볼 판정 시 작동하는 함수
     def ball(self):
         ball_ui = self.ui_manager.find_ui(message_ball)
-        ball_ui.bActive = True
-        self.ui_manager.start_fade(ball_ui, 100, 1000)
+
+        self.ui_manager.start_fade(ball_ui, 100, 3000)  # 볼 메세지 띄우기
+        GameSystem.BALL += 1                            # 볼 횟수 증가
+
+        # 볼 넷으로 1루 진출 체크
+        self.check_ball_four()
+
+    def check_strike_out(self):
+        if GameSystem.STRIKE >= 3:
+            GameSystem.OUT += 1             # 아웃 횟수 증가
+
+            # 쓰리 아웃으로 공수 교대인지 체크
+
+    def check_ball_four(self):
+        if GameSystem.BALL >= 4:
+            GameSystem.BALL = 0
+            pass
+
+    def check_three_out(self):
+        if GameSystem.OUT >= 3:
+            pass
 
 

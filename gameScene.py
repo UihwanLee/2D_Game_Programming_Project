@@ -29,7 +29,7 @@ class Scene:
             object.render()
 
     # scene 안에 game_objects 리스트에 들어있는 객체를 이름으로 찾기
-    def fine_object(self, name):
+    def find_object(self, name):
         for object in self.game_objects:
             if object.name == name:
                 return object

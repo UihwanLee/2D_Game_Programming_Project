@@ -35,7 +35,7 @@ class GameSystem:
         self.is_check_throw_event_by_hit = False
         self.throw_event_rate = 0
         self.throw_hit_offset = 0.0
-        self.decrease_size = 2          # 1 ~ 3 정수 형태로 나타냄
+        self.throw_power = THROW_POWER_MIDDLE          # [능력치]에 따라 조정 : 1 ~ 3 정수 형태로 나타냄
 
         # 야구공 초기위치와 타켓 위치
         self.is_throw_ball_to_target_anim = False
@@ -125,7 +125,7 @@ class GameSystem:
 
         distance = math.sqrt((self.base_ball_target_x - self.base_ball_pos_x) ** 2 + (
                     self.base_ball_target_y - self.base_ball_pos_y) ** 2)
-        self.throw_speed = distance/ int(((12510 / self.decrease_size ) * 0.1) - 100)
+        self.throw_speed = distance/ int(((12510 / self.throw_power ) * 0.1) - 100)
         self.throw_angle = math.atan2(self.base_ball_target_y - self.base_ball_pos_y, self.base_ball_target_x - self.base_ball_pos_x)
 
     # 생성된 공 위치로 이동하는 애니메이션 진행
@@ -153,7 +153,7 @@ class GameSystem:
 
     # 공의 박자와 Hit하는 순간을 체크하는 함수.
     def check_throw_event_by_hit(self):
-        decrease_size = self.decrease_size * 0.1 # [능력치]에 따라 조정
+        decrease_size = self.throw_power * 0.1
 
         #self.throw_event_rate += 1
 
@@ -164,9 +164,10 @@ class GameSystem:
         # 박자가 끝난 후에는 관련 ui를 비활성 후 스트라이크/볼 체크 처리
         if(size < 75) :
             self.throw_target.bActive = False
-            self.throw_target_end.bActive = True
             self.is_check_throw_event_by_hit = False
             self.throw_target_effect.bActive = False
+
+            self.ui_manager.start_fade(self.throw_target_end, 1, 3000) # throw_target_end 보여줬다가 없애기
             self.check_throw_result()
             return
 

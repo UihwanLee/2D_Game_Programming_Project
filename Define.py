@@ -91,6 +91,12 @@ STRIKE_MAX_Y = 200
 STRIKE_MIN_X = 370
 STRIKE_MIN_Y = 100
 
+# 투수 던지는 파워 범위(1, 2, 3)
+THROW_POWER_LOW = 1
+THROW_POWER_MIDDLE = 2
+THROW_POWER_HIGH = 3
+
+
 ''' PlayModeInfo '''
 class PlayMode_Info():
     pos = []

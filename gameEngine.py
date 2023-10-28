@@ -66,16 +66,19 @@ class GameEngine:
         self.ui_manager.create_ui(message_ball, message_ball_pos, message_ball_img, message_ball_size, DYNAMIC, 2, False, message_ball_ui_size)
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
-    def render_scenes(self):
+    def render_world(self):
         clear_canvas()
         self.game_world.render_objects()
         self.ui_manager.render()
         update_canvas()
 
     # 게임 시스템을 계속해서 업데이트 하는 함수
-    def update_system(self):
+    def update_world(self):
         if self.game_system:
             self.game_system.update()
+
+        if self.ui_manager:
+            self.ui_manager.update()
 
     # 게임을 실행하는 함수. 모든 scene을 render하고 이벤트를 지속적으로 받는다.
     def run(self):
@@ -84,7 +87,7 @@ class GameEngine:
         self.create_ui()
         self.init_setting()
         while self.running:
-            self.update_system()
-            self.render_scenes()
+            self.update_world()
+            self.render_world()
             self.handle_events()
         close_canvas()

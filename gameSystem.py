@@ -191,10 +191,12 @@ class GameSystem:
     def strike(self):
         strike_ui = self.ui_manager.find_ui(message_strike)
         strike_ui.bActive = True
+        self.ui_manager.start_fade(strike_ui, 100, 1000)
 
     # 볼 판정 시 작동하는 함수
     def ball(self):
         ball_ui = self.ui_manager.find_ui(message_ball)
         ball_ui.bActive = True
+        self.ui_manager.start_fade(ball_ui, 100, 1000)
 
 

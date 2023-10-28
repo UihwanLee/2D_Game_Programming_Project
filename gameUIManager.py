@@ -33,7 +33,8 @@ class UIManager:
     def __init__(self):
         self.ui_list = []
 
-        # fade_in/fade_out
+        # fade_in/
+        self.is_fade_in_anim = False
         self.is_fade_anim = False
         self.fade_in_alpha = 0.0
         self.fade_out_alpha = 0.0
@@ -65,36 +66,49 @@ class UIManager:
 
         return None
 
+    # ui Fade in 애니메이션
+    def start_fade_in(self, ui, in_duration=100.0):
+        self.fade_ui = ui
+        self.fade_sprite = ui.get_object_var('sprite')
+        self.fade_in_alpha = 1.0 / in_duration
+        self.fade_ui.alpha = 0.0
+        self.fade_in_done = False
+        self.is_fade_in_anim = True
+        self.is_fade_anim = True
+
     # ui Fade in/Out 애니메이션
     def start_fade(self, ui, in_duration=100.0, out_duration=100.0):
-        print('페이드 시작!')
         self.fade_ui = ui
         self.fade_sprite = ui.get_object_var('sprite')
         self.fade_in_alpha = 1.0 / in_duration
         self.fade_out_alpha = 1.0 / out_duration
         self.fade_ui.alpha = 0.0
         self.fade_in_done = False
+        self.is_fade_in_anim = False
         self.is_fade_anim = True
 
+    # fade_in 함수 : 이미지 투명도를 0에서 1로 바꿔준다.
     def fade_in(self):
         if self.fade_in_done:
             return
 
         if self.fade_ui.alpha >= 1.0:
-            self.fade_in_done = True
-            print("페이드 인 끝")
+            if self.is_fade_in_anim:
+                self.is_fade_anim = False
+            else:
+                self.fade_in_done = True
             return
 
         self.fade_ui.alpha += self.fade_in_alpha
         self.fade_sprite.opacify(self.fade_ui.alpha)
 
+    # fade_out 함수 : 이미지 투명도를 1에서 0로 바꿔준다.
     def fade_out(self):
         if self.fade_in_done == False:
             return
 
         if self.fade_ui.alpha <= 0.0:
             self.is_fade_anim = False
-            print("페이드 아웃 끝")
             return
 
         self.fade_ui.alpha -= self.fade_out_alpha

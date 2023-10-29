@@ -40,6 +40,11 @@ class UI(GameObject):
 
         self.sprite.clip_draw(0, 0, self.ui_size[0], self.ui_size[1], pos[0], pos[1], size[0], size[1])
 
+    # ui Sprite 투명도 조정
+    def set_alpha(self, alpha):
+        sprite = super().get_object_var('sprite')
+        sprite.opacify(alpha)
+
     # ui Fade in 애니메이션
     def start_fade_in(self, ui, in_duration=100.0):
         self.fade_ui = ui

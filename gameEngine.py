@@ -31,6 +31,9 @@ class GameEngine:
         self.game_system.throw_target_effect = self.ui_manager.find_ui(throw_target_effect_name)
         self.game_system.throw_target_end = self.ui_manager.find_ui(throw_target_end_name)
 
+        self.game_system.hit_box = self.ui_manager.find_ui(hit_box)
+        self.game_system.hit_box.set_alpha(0.4)
+
         self.playerAI = self.game_system.playerAI
         self.playerAI.game_system = self.game_system
 
@@ -64,6 +67,7 @@ class GameEngine:
         self.ui_manager.create_ui(message_strike, message_strike_pos, message_strike_img, message_strike_size, DYNAMIC, 2, False, message_strike_ui_size)
         self.ui_manager.create_ui(message_strike_out, message_strike_out_pos, message_strike_out_img, message_strike_out_size, DYNAMIC,2, False, message_strike_out_ui_size)
         self.ui_manager.create_ui(message_ball, message_ball_pos, message_ball_img, message_ball_size, DYNAMIC, 2, False, message_ball_ui_size)
+        self.ui_manager.create_ui(hit_box, hit_box_pos, hit_box_img, hit_box_size, DYNAMIC, 3, True, hit_box_ui_size)
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
     def render_world(self):

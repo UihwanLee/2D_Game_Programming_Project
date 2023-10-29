@@ -72,6 +72,13 @@ message_ball_size = [400, 200]
 message_ball_img = 'Sprites/Ui/Msg_Ball.png'
 message_ball_ui_size = [400, 200]
 
+# Hit_Box
+hit_box = 'Hit_Box'
+hit_box_pos = [400, 150]
+hit_box_size = [80, 80]
+hit_box_img = 'Sprites/Hit_Box.png'
+hit_box_ui_size = [100, 100]
+
 
 ''' [ System ] '''
 

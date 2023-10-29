@@ -46,6 +46,10 @@ class GameSystem:
         self.throw_angle = 0
         self.throw_speed = 0
 
+        # 히트 박스
+        self.is_hit_box_set = False;
+        self.hit_box = None
+
         # 클래스
         self.ui_manager = None
 
@@ -54,6 +58,9 @@ class GameSystem:
 
     # GameSystem update 함수 특정 이벤트를 검사하는 일을 수행한다.
     def update(self):
+        if self.is_hit_box_set:
+            pass
+
         if self.is_check_throw_event_by_hit:
             self.check_throw_event_by_hit()
 
@@ -77,6 +84,10 @@ class GameSystem:
     
     # Player 공/수 선택 공->타자 / 수->투수로 시스템 설정 하기
     def SetPlayMode(self):
+        pass
+
+    # 히트 박스 방향키로 움직이기(경계면 사이까지 움직일 수 있다)
+    def move_hit_box(self):
         pass
 
     # 투수 AI 공 던지기

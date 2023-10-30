@@ -160,7 +160,7 @@ Pitcher_IDLE.delay = [100, 100, 100, 100, 100]
 Picher_THROW = anim_frame()
 Picher_THROW.posX = [400, 400, 400, 400, 400, 400, 400, 400, 400, 400]
 Picher_THROW.posY = [270, 270, 270, 270, 270, 270, 270, 270, 270, 270]
-Picher_THROW.delay = [100, 100, 100, 100, 100, 50, 30, 30, 50, 100]
+Picher_THROW.delay = [70, 70, 30, 30, 30, 30, 30, 30, 50, 70]
 
 Pitcher_Anim.append(Pitcher_IDLE)
 Pitcher_Anim.append(Picher_THROW)

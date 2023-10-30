@@ -35,7 +35,7 @@ class GameSystem:
         self.is_check_throw_event_by_hit = False
         self.throw_event_rate = 0
         self.throw_hit_offset = 0.0
-        self.throw_power = THROW_POWER_MIDDLE          # [능력치]에 따라 조정 : 1 ~ 3 정수 형태로 나타냄
+        self.throw_power = THROW_POWER_HIGH          # [능력치]에 따라 조정 : 1 ~ 3 정수 형태로 나타냄
 
         # 야구공 초기위치와 타켓 위치
         self.is_throw_ball_to_target_anim = False

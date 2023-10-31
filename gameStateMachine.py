@@ -72,6 +72,9 @@ class Hit:
         player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
         player.start_time = get_time()
 
+        # system hit offset
+        player.game_system.check_hit()
+
     @staticmethod
     def do(player):
         # Hit 애니메이션 끝난 이벤트를 시간으로 체크하여 Idle로 돌아가기

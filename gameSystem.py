@@ -79,9 +79,18 @@ class GameSystem:
     def SetPlayMode(self):
         pass
 
-    # 히트 박스 방향키로 움직이기(경계면 사이까지 움직일 수 있다)
-    def move_hit_box(self):
-        pass
+    # 플레이어가 SPACE 키 눌러 hit 하면 안타/홈런/스트라이크 체크 함수.
+    def check_hit(self):
+        hit_try = self.throw_target_effect.size[0]
+        offset = abs(HIT_EXACT_SIZE - hit_try)
+
+        # system에서 설정한 범위 값대로 홈런/안타/스트라이크 체크
+        if offset <= HOME_RUN_MAX_OFFSET:
+            print('홈런!')
+        elif offset <= HIT_MAX_OFFSET:
+            print('안타!')
+        else:
+            print('스트라이크!')
 
     # 투수 AI 공 던지기
     def throw_ball(self):
@@ -167,6 +176,8 @@ class GameSystem:
 
         # 박자가 끝난 후에는 관련 ui를 비활성 후 스트라이크/볼 체크 처리
         if(size < 75) :
+            # 타자가 hit 했는지 체크 해야 함!
+
             self.throw_target.bActive = False
             self.is_check_throw_event_by_hit = False
             self.throw_target_effect.bActive = False

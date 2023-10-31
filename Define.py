@@ -103,6 +103,11 @@ THROW_POWER_LOW = 1
 THROW_POWER_MIDDLE = 2
 THROW_POWER_HIGH = 3
 
+# 타자 hit 시 판단 변수
+HIT_EXACT_SIZE = 100
+HIT_MAX_OFFSET = 10         # 안타 최소 offset 값
+HOME_RUN_MAX_OFFSET = 1.0   # 홈런 최소 offset 값
+
 
 ''' PlayModeInfo '''
 class PlayMode_Info():

@@ -132,7 +132,8 @@ Hitter_IDLE.delay = [200, 250, 150]
 Hitter_HIT = anim_frame()
 Hitter_HIT.posX = [275, 275, 275, 345, 345, 275]
 Hitter_HIT.posY = [200, 200, 200, 200, 200, 200]
-Hitter_HIT.delay = [5, 5, 5, 50, 50, 120]
+# Hitter_HIT.delay = [5, 5, 5, 50, 50, 120
+Hitter_HIT.delay = [5, 5, 5, 50, 50, 70]
 Hitter_HIT.max_frame = 6
 
 Hitter_Anim.append(Hitter_IDLE)
@@ -160,7 +161,8 @@ Pitcher_IDLE.delay = [100, 100, 100, 100, 100]
 Picher_THROW = anim_frame()
 Picher_THROW.posX = [400, 400, 400, 400, 400, 400, 400, 400, 400, 400]
 Picher_THROW.posY = [270, 270, 270, 270, 270, 270, 270, 270, 270, 270]
-Picher_THROW.delay = [70, 70, 30, 30, 30, 30, 30, 30, 50, 70]
+Picher_THROW.delay = [100, 100, 100, 100, 100, 50, 30, 30, 50, 100]
+# Picher_THROW.delay = [70, 70, 30, 30, 30, 30, 30, 30, 50, 70]
 
 Pitcher_Anim.append(Pitcher_IDLE)
 Pitcher_Anim.append(Picher_THROW)

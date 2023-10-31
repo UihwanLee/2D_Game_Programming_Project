@@ -105,8 +105,16 @@ THROW_POWER_HIGH = 3
 
 # 타자 hit 시 판단 변수
 HIT_EXACT_SIZE = 100
+FLYING_HIT_MAX_OFFSET = 14  # 뜬볼 최소 offset 값
 HIT_MAX_OFFSET = 10         # 안타 최소 offset 값
 HOME_RUN_MAX_OFFSET = 1.0   # 홈런 최소 offset 값
+
+HIT_DIR_MIN_X = 200         # hit 시 야구공 이동 방향 최소 x값
+HIT_DIR_MAX_X = 600         # hit 시 야구공 이동 방향 최대 x값
+HIT_DIR_MIN_Y = 300         # hit 시 야구공 이동 방향 최소 y값
+HIT_DIR_MAX_Y = 400         # hit 시 야구공 이동 방향 최대 y값
+HIT_DEPTH_MIN = 500         # hit 시 야구공 이동 깊이 최소 값
+HIT_DEPTH_MAX = 700         # hit 시 야구공 이동 깊이 최대 값
 
 
 ''' PlayModeInfo '''

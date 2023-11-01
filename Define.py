@@ -28,6 +28,13 @@ base_ball_pos = [400, 300]
 base_ball_size = [100, 100]
 base_ball_img = 'Sprites/BaseBall.png'
 
+#BackGround2
+background_base_02_name = 'Background_Base_02'
+background_base_02_pos = [400, 600]
+background_base_02_size = [1200, 1400]
+background_base_02_img = 'Sprites/BG_Base_2.png'
+background_base_02_type = STATIC
+
 ''' [ UI Info ] '''
 
 #Throw_Target

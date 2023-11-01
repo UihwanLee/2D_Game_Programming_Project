@@ -130,6 +130,9 @@ class GameSystem:
         self.playerAI.throw_ball()
 
     def generate_random_throw_target(self):
+        # hit 변수 초기회
+        self.is_hit = False
+
         # 던진 공 위치는 게임 내 사각 박스 내에 랜덤으로 생성
         pos_x = random.randint(THROW_MIN_X, THROW_MAX_X)
         pos_y = random.randint(THROW_MIN_Y, THROW_MAX_Y)
@@ -194,6 +197,11 @@ class GameSystem:
             self.base_ball.size[0] += 1
             self.base_ball.size[1] += 1
 
+        # 타자가 hit 했는지 체크 해야 함!
+        if self.is_hit:
+            self.is_throw_ball_to_target_anim = False
+            return
+
         # 타켓 위치로 왔을 때 종료
         if distance < 5:
             self.is_throw_ball_to_target_anim = False
@@ -211,11 +219,10 @@ class GameSystem:
 
         # 타자가 hit 했는지 체크 해야 함!
         if self.is_hit:
-            print("공 던지기 끝!")
             self.throw_target.bActive = False
             self.is_check_throw_event_by_hit = False
             self.throw_target_effect.bActive = False
-            self.is_hit = False
+            self.is_hit_ball_to_target_anim = False
             return
 
         # 박자가 끝난 후에는 관련 ui를 비활성 후 스트라이크/볼 체크 처리

@@ -13,7 +13,8 @@ class GameEngine:
     def __init__(self):
         self.running = True
         self.scene_01 = Scene(1)
-        self.game_world = self.scene_01
+        self.scene_02 = Scene(2)
+        self.game_world = self.scene_02
         self.game_system = GameSystem()
         self.ui_manager = UIManager()
         self.player = None
@@ -21,10 +22,10 @@ class GameEngine:
 
     # 게임 내에서 사용할 game_system, player, playerAI 등을 초기화
     def init_setting(self):
-        self.game_system.playerAI = self.game_world.find_object('playerAI')
-        self.game_system.base_ball = self.game_world.find_object(base_ball_name)
+        self.game_system.playerAI = self.scene_01.find_object('playerAI')
+        self.game_system.base_ball = self.scene_01.find_object(base_ball_name)
 
-        self.player = self.game_world.find_object(player_name)
+        self.player = self.scene_01.find_object(player_name)
         self.player.game_system = self.game_system
 
         self.game_system.throw_target = self.ui_manager.find_ui(throw_target_name)
@@ -55,6 +56,8 @@ class GameEngine:
         self.scene_01.create_player(player_name, Hitter, 1, True,  0)
         self.scene_01.create_playerAI(playerAI_name, Pitcher, 1, True, 0)
         self.scene_01.create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 2, False)
+
+        self.scene_02.create_object(background_base_02_name, background_base_02_pos, background_base_02_img, background_base_02_size, STATIC, 0, True)
 
     # ui를 생성하는 함수. 게임에서 사용할 ui 오브젝트를 관리하는 클래스를 생성한다.
     def create_ui(self):

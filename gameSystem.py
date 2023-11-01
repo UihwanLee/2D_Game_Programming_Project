@@ -103,7 +103,7 @@ class GameSystem:
             print('뜬 볼')
         else:
             self.is_hit = False
-            print('스트라이크!')
+            print('헛 스윙!')
 
     # hit 할 시, 야구공 랜덤으로 위치 설정. 설정된 변수 대로 scene_01, scene_02 진행
     def start_hit(self, is_flying, is_home_run):
@@ -209,9 +209,20 @@ class GameSystem:
         size = self.throw_target_effect.size[0] - decrease_size
         self.throw_target_effect.size = [size, size]
 
+        # 타자가 hit 했는지 체크 해야 함!
+        if self.is_hit:
+            print("공 던지기 끝!")
+            self.throw_target.bActive = False
+            self.is_check_throw_event_by_hit = False
+            self.throw_target_effect.bActive = False
+            self.is_hit = False
+            return
+
         # 박자가 끝난 후에는 관련 ui를 비활성 후 스트라이크/볼 체크 처리
         if (size < 75):
             # 타자가 hit 했는지 체크 해야 함!
+            if self.is_hit:
+                return
 
             self.throw_target.bActive = False
             self.is_check_throw_event_by_hit = False

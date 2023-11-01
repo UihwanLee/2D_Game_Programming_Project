@@ -14,7 +14,7 @@ class GameEngine:
         self.running = True
         self.scene_01 = Scene(1)
         self.scene_02 = Scene(2)
-        self.game_world = self.scene_02
+        self.game_world = self.scene_01
         self.game_system = GameSystem()
         self.ui_manager = UIManager()
         self.player = None

@@ -54,6 +54,7 @@ class GameSystem:
         self.throw_speed = 0
 
         # 클래스
+        self.game_engine = None
         self.ui_manager = None
 
         self.temp = 0
@@ -147,8 +148,11 @@ class GameSystem:
             self.base_ball.size[1] += 1
 
         # 타켓 위치로 왔을 때 종료
+        # scene_02로 change
         if distance < 5:
             self.is_hit_anim = False
+            change_scene = "scene_02"
+            self.game_engine.change_scene(change_scene)
             return
 
     # 투수 AI 공 던지기

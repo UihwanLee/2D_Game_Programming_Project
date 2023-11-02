@@ -10,7 +10,6 @@ from gameTime import Time
 
 # 게임 내 모든 씬, 오브젝트, 시스템 관리할 클래스
 class GameEngine:
-
     # 게임에서 몇 개의 scene을 사용할 것인지 정하고 초기에 보여줄 scene을 game_world로 설정한다.
     def __init__(self):
         self.running = True
@@ -28,6 +27,7 @@ class GameEngine:
     def init_setting(self):
         self.game_system.playerAI = self.scene_01.find_object('playerAI')
         self.game_system.base_ball = self.scene_01.find_object(base_ball_name)
+        self.game_system.game_engine = self
 
         self.player = self.scene_01.find_object(player_name)
         self.player.game_system = self.game_system
@@ -71,6 +71,11 @@ class GameEngine:
         self.ui_manager.create_ui(message_strike, message_strike_pos, message_strike_img, message_strike_size, DYNAMIC, 2, False, message_strike_ui_size)
         self.ui_manager.create_ui(message_strike_out, message_strike_out_pos, message_strike_out_img, message_strike_out_size, DYNAMIC,2, False, message_strike_out_ui_size)
         self.ui_manager.create_ui(message_ball, message_ball_pos, message_ball_img, message_ball_size, DYNAMIC, 2, False, message_ball_ui_size)
+
+    # 씬 변경 함수
+    def change_scene(self, scene):
+        if hasattr(self, scene):
+            self.game_world = getattr(self, scene)
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
     def render_world(self):

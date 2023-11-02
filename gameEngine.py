@@ -53,7 +53,7 @@ class GameEngine:
     # scene을 생성하는 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):
         self.scene_01.create_object(background_name, background_pos, background_img, background_size,background_type, 0, True)
-        self.scene_01.create_player(player_name, Hitter, 1, True,  0)
+        self.scene_01.create_player(player_name, Hitter, 3, True,  0)
         self.scene_01.create_playerAI(playerAI_name, Pitcher, 1, True, 0)
         self.scene_01.create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 2, False)
 

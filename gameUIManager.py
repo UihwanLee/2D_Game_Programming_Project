@@ -101,7 +101,7 @@ class UI(GameObject):
 
 class UIManager:
     def __init__(self):
-        self.ui_list = []
+        self.ui_list = [[] for _ in range(4)]
 
         # fade_in/out
         self.is_fade_in_anim = False
@@ -114,24 +114,27 @@ class UIManager:
 
     # ui 생성하는 함수, ui_list에 담는다.
     def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):
-        self.ui_list.append(UI(name, pos, sprite, size, type, layer, bActive, ui_size))
+        self.ui_list[layer].append(UI(name, pos, sprite, size, type, layer, bActive, ui_size))
 
     # ui_manager update 함수. ui_list에 들어있는 ui를 update한다.
     def update(self):
-       for ui in self.ui_list:
-           ui.update()
+       for layer in self.ui_list:
+           for ui in layer:
+            ui.update()
 
     # ui_manager render 함수. ui_list에 담긴 ui를 그린다.
     def render(self):
-        for ui in self.ui_list:
-            ui.update()
-            ui.render()
+        for layer in self.ui_list:
+            for ui in layer:
+                ui.update()
+                ui.render()
 
     # ui 리스트에 들어있는 객체를 이름으로 찾기
     def find_ui(self, name):
-        for ui in self.ui_list:
-            if ui.name == name:
-                return ui
+        for layer in self.ui_list:
+            for ui in layer:
+                if ui.name == name:
+                    return ui
 
         return None
 

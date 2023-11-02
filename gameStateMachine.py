@@ -79,7 +79,7 @@ class Hit:
     def do(player):
         # Hit 애니메이션 끝난 이벤트를 시간으로 체크하여 Idle로 돌아가기
         #  get_time() - player.start_time > 0.8:
-        if get_time() - player.start_time > 0.5:
+        if get_time() - player.start_time > player.play_anim[player.action].total_delay:
             player.state_machine.handle_event(('TIME_OUT', 0))
 
     @staticmethod
@@ -99,11 +99,11 @@ class Throw:
     @staticmethod
     def do(player):
         # Throw 애니메이션 끝난 이벤트를 시간으로 체크하여 Idle로 돌아가기
-        if get_time() - player.start_time > 1.8:
+        if get_time() - player.start_time > player.play_anim[player.action].total_delay:
             player.state_machine.handle_event(('TIME_OUT', 0))
 
         # 던진 특정 순간 공 위치 생성 : 투수가 playerAI 기준
-        if get_time() - player.start_time > 0.8:
+        if get_time() - player.start_time > sum(player.play_anim[player.action].delay[:6]):
             if player.throw_event == False:
                 player.start_throw_event()
                 player.throw_event = True

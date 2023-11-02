@@ -137,6 +137,7 @@ class anim_frame():
     posX = []
     posY = []
     delay = []
+    total_delay = 0.0
 
 ''' Hitter '''
 
@@ -146,14 +147,15 @@ Hitter_Anim = []
 Hitter_IDLE = anim_frame()
 Hitter_IDLE.posX = [275, 275, 275]
 Hitter_IDLE.posY = [200, 200, 200]
-Hitter_IDLE.delay = [200, 250, 150]
+Hitter_IDLE.delay = [0.5, 0.5, 0.5]
+Hitter_IDLE.total_delay = sum(Hitter_IDLE.delay)
 
 # HIT
 Hitter_HIT = anim_frame()
 Hitter_HIT.posX = [275, 275, 275, 345, 345, 275]
 Hitter_HIT.posY = [200, 200, 200, 200, 200, 200]
-# Hitter_HIT.delay = [5, 5, 5, 50, 50, 120
-Hitter_HIT.delay = [5, 5, 5, 50, 50, 70]
+Hitter_HIT.delay = [0.01, 0.1, 0.1, 0.05, 0.05, 0.2]
+Hitter_HIT.total_delay = sum(Hitter_HIT.delay)
 Hitter_HIT.max_frame = 6
 
 Hitter_Anim.append(Hitter_IDLE)
@@ -175,14 +177,15 @@ Pitcher_Anim = []
 Pitcher_IDLE = anim_frame()
 Pitcher_IDLE.posX = [400, 400, 400, 400, 400]
 Pitcher_IDLE.posY = [270, 270, 270, 270, 270]
-Pitcher_IDLE.delay = [100, 100, 100, 100, 100]
+Pitcher_IDLE.delay = [0.3, 0.3, 0.3, 0.3, 0.3]
+Pitcher_IDLE.total_delay = sum(Pitcher_IDLE.delay)
 
 # Throw
 Picher_THROW = anim_frame()
 Picher_THROW.posX = [400, 400, 400, 400, 400, 400, 400, 400, 400, 400]
 Picher_THROW.posY = [270, 270, 270, 270, 270, 270, 270, 270, 270, 270]
-Picher_THROW.delay = [100, 100, 100, 100, 100, 50, 30, 30, 50, 100]
-# Picher_THROW.delay = [70, 70, 30, 30, 30, 30, 30, 30, 50, 70]
+Picher_THROW.delay = [0.1, 0.1, 0.1, 0.1, 0.1, 0.15, 0.1, 0.1, 0.15, 0.3]
+Picher_THROW.total_delay = sum(Picher_THROW.delay)
 
 Pitcher_Anim.append(Pitcher_IDLE)
 Pitcher_Anim.append(Picher_THROW)

@@ -2,6 +2,7 @@ from sdl2 import SDL_KEYDOWN, SDLK_s
 
 from gameObject import *
 from gameStateMachine import StateMachine_Player
+from gameTime import Time
 
 '''
     Player 클래스 : GameObject 상속
@@ -28,7 +29,6 @@ class Player(GameObject):
         self.play_mode = playMode
         self.play_anim = playMode.anim
         self.frame = frame
-        self.time = 0
         self.action = 0
         self.state_machine = StateMachine_Player(self)
         self.max_frame = len(playMode.anim[self.action].posX)
@@ -54,21 +54,19 @@ class Player(GameObject):
         # player state_machine 업데이트
         self.state_machine.update()
 
-        self.time += 1
-
         # 애니메이션의 다이나믹을 위해 delay : delay 함수를 호출하면 Frame이 떨어지므로 time으로 구현
-        time = self.play_anim[self.action].delay[self.frame]
-        if self.time > time:
-            self.frame = (self.frame + 1) % self.max_frame
-            self.time = 0
+        # Time.frame_time으로 애니메이션 frame 간 delay 구현
+        ACTION_PER_TIME = 1.0 / self.play_anim[self.action].delay[int(self.frame)]
+        self.frame = (self.frame + ACTION_PER_TIME * Time.frame_time) % self.max_frame
 
     # player 렌더링. player_Anim 리스트를 기준으로 렌더링 한다.
     def render(self):
         bActive = super().get_object_var('bActive')
         if bActive is False: return
 
+        frame = int(self.frame)
         pos = super().get_object_var('pos')
         sprite = super().get_object_var('sprite')
-        posX, posY = self.play_anim[self.action].posX[self.frame], self.play_anim[self.action].posY[self.frame]
+        posX, posY = self.play_anim[self.action].posX[frame], self.play_anim[self.action].posY[frame]
         sizeX, sizeY = self.play_mode.size[0], self.play_mode.size[1]
-        sprite.clip_draw(self.frame * 100, self.action * 100, 100, 100, posX, posY, sizeX, sizeY)
+        sprite.clip_draw(frame * 100, self.action * 100, 100, 100, posX, posY, sizeX, sizeY)

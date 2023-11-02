@@ -5,6 +5,8 @@ from gameScene import Scene
 from gameSystem import GameSystem
 from gameUIManager import UIManager
 
+from gameTime import Time
+
 
 # 게임 내 모든 씬, 오브젝트, 시스템 관리할 클래스
 class GameEngine:
@@ -15,10 +17,12 @@ class GameEngine:
         self.scene_01 = Scene(1)
         self.scene_02 = Scene(2)
         self.game_world = self.scene_01
+        self.player = None
+
+        # 클래스
         self.game_system = GameSystem()
         self.ui_manager = UIManager()
-        self.player = None
-        pass
+        self.time = Time()
 
     # 게임 내에서 사용할 game_system, player, playerAI 등을 초기화
     def init_setting(self):
@@ -93,4 +97,5 @@ class GameEngine:
             self.update_world()
             self.render_world()
             self.handle_events()
+            self.time.update()
         close_canvas()

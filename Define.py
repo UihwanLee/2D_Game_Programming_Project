@@ -5,6 +5,10 @@
 
 ''' [ Object Info ] '''
 
+#Scene
+SCENE_01 = 'scene_01'
+SCENE_02 = 'scene_02'
+
 #Object Type
 STATIC = 0
 DYNAMIC = 1

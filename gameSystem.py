@@ -189,7 +189,7 @@ class GameSystem:
         self.base_ball_base.size[1] = 50
         self.base_ball_base.pos[0] = 400
         self.base_ball_base.pos[1] = 70
-        self.base_ball_target_x = 300       # 0 ~ 400 : 오른쪽, 400 ~ 800 : 왼쪽
+        self.base_ball_target_x = CAMERA_DIR_MIN_X - (self.hit_target_pos[0] - HIT_DIR_MIN_X)      # 100 ~ 400 : 오른쪽, 400 ~ 700 : 왼쪽
         self.base_ball_target_y = 500
         self.base_ball_base_angle = math.atan2(self.base_ball_target_y - self.base_ball_base.pos[1],
                                             self.base_ball_target_x - self.base_ball_base.pos[0])

@@ -104,10 +104,10 @@ THROW_MIN_X = 350
 THROW_MIN_Y = 80
 
 # 스트라이크 존
-STRIKE_MAX_X = 440
-STRIKE_MAX_Y = 200
-STRIKE_MIN_X = 370
-STRIKE_MIN_Y = 100
+STRIKE_MAX_X = 450
+STRIKE_MAX_Y = 205
+STRIKE_MIN_X = 360
+STRIKE_MIN_Y = 95
 
 # 투수 던지는 파워 범위(1, 2, 3)
 THROW_POWER_LOW = 1
@@ -121,7 +121,7 @@ HIT_MAX_OFFSET = 10         # 안타 최소 offset 값
 HOME_RUN_MAX_OFFSET = 1.0   # 홈런 최소 offset 값
 
 HIT_DIR_MIN_X = 200         # hit 시 야구공 이동 방향 최소 x값
-HIT_DIR_MAX_X = 600         # hit 시 야구공 이동 방향 최대 x값
+HIT_DIR_MAX_X = 800         # hit 시 야구공 이동 방향 최대 x값
 HIT_DIR_MIN_Y = 300         # hit 시 야구공 이동 방향 최소 y값
 HIT_DIR_MAX_Y = 400         # hit 시 야구공 이동 방향 최대 y값
 
@@ -131,8 +131,8 @@ HIT_DEPTH_MAX = 700         # hit 시 야구공 이동 깊이 최대 값
 # scene_02
 CAMERA_DIR_MIN_X = 700      # camera 이동 방향 최소 x값
 CAMERA_DIR_MAX_X = 100      # camera 이동 방향 최대
-CAMERA_DEPTH_MIN = 350         # hit 시 야구공 이동 깊이 최소 값
-CAMERA_DEPTH_MAX = -100         # hit 시 야구공 이동 깊이 최대 값
+CAMERA_DEPTH_MIN = 350      # hit 시 야구공 이동 깊이 최소 값
+CAMERA_DEPTH_MAX = -100     # hit 시 야구공 이동 깊이 최대 값
 
 
 

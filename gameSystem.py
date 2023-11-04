@@ -42,6 +42,7 @@ class GameSystem:
         self.hit_angle = 0
 
         # 공 박자 변수
+        self.is_throw_Done = False
         self.is_check_throw_event_by_hit = False
         self.throw_event_rate = 0
         self.throw_hit_offset = 0.0
@@ -111,6 +112,18 @@ class GameSystem:
         self.throw_event_rate = 0
         self.throw_hit_offset = 0.0
 
+    # 투수가 던지고 나서 안타/홀런/스트라이크 됐을 때 변수 초기화
+    def reset_throw(self):
+        self.base_ball.bActive = False
+        self.throw_target_effect.size = [200, 200]
+        self.throw_event_rate = 0
+        self.throw_hit_offset = 0.0
+
+        self.is_throw_Done = False
+        self.is_hit_anim = False
+        self.is_hit_anim2 = False
+
+
     # Player 공/수 선택 공->타자 / 수->투수로 시스템 설정 하기
     def SetPlayMode(self):
         pass
@@ -119,6 +132,10 @@ class GameSystem:
     def check_hit(self):
         hit_try = self.throw_target_effect.size[0]
         offset = abs(HIT_EXACT_SIZE - hit_try)
+
+        # 투수가 이미 던져서 스트라이크/볼 처리 된 경우 예외처리
+        if self.is_throw_Done:
+            return
 
         # system에서 설정한 범위 값대로 홈런/안타/뜬볼/스트라이크 체크
         # 홈런이나 안타 시 IS_HIT 변수 변경
@@ -194,10 +211,11 @@ class GameSystem:
         self.base_ball_base.size[1] = 50
         self.base_ball_base.pos[0] = 400
         self.base_ball_base.pos[1] = 70
-        self.base_ball_target_x = CAMERA_DIR_MIN_X - (self.hit_target_pos[0] - HIT_DIR_MIN_X)      # 100 ~ 400 : 오른쪽, 400 ~ 700 : 왼쪽
+
+        # 선형 보간으로 base_ball x 위치 구하기 (100 ~ 400 : 오른쪽, 400 ~ 700 : 왼쪽)
+        self.base_ball_target_x = CAMERA_DIR_MIN_X - ((self.hit_target_pos[0] - HIT_DIR_MIN_X) / (HIT_DIR_MAX_X - HIT_DIR_MIN_X)) * (CAMERA_DIR_MIN_X - CAMERA_DIR_MAX_X)
         self.base_ball_target_y = 400
-        self.base_ball_base_angle = math.atan2(self.base_ball_target_y - self.base_ball_base.pos[1],
-                                            self.base_ball_target_x - self.base_ball_base.pos[0])
+        self.base_ball_base_angle = math.atan2(self.base_ball_target_y - self.base_ball_base.pos[1], self.base_ball_target_x - self.base_ball_base.pos[0])
 
         # 카메라
         self.camera_pos_x = 400.0
@@ -228,9 +246,18 @@ class GameSystem:
 
         # 타켓 위치로 왔을 때 종료
         # scene_02로 change
-        if distance < 5.0:
+        if distance < 5.0 or (self.base_camera_target_y - self.camera_pos_y) ** 2 < 5:
             print("끝")
             self.is_hit_anim2 = False
+            # 홈런이면 홈런 표시하고 넘어가기
+
+            # 안타 / 아웃은 수비 선수들의 움직임으로 판단하여 구현
+
+            # 변수 초기화
+            self.reset_throw()
+
+            # 씬 변경
+            self.game_engine.change_scene(SCENE_01)
 
         self.camera_pos_x += 1.0 * math.cos(angle)
         self.camera_pos_y -= 1.0 * math.sin(angle)
@@ -248,11 +275,6 @@ class GameSystem:
 
         if self.base.pos[1] < -100:
             self.base.pos[1] = -100
-
-        # print(distance)
-        if (self.base_camera_target_y - self.camera_pos_y) ** 2 < 5:
-            print("끝")
-            self.is_hit_anim2 = False
 
     # 투수 AI 공 던지기
     def throw_ball(self):
@@ -333,6 +355,7 @@ class GameSystem:
 
         # 타켓 위치로 왔을 때 종료
         if distance < 5:
+            self.is_throw_Done = True
             self.is_throw_ball_to_target_anim = False
             return
 
@@ -360,6 +383,7 @@ class GameSystem:
             if self.is_hit:
                 return
 
+            self.is_throw_Done = True
             self.throw_target.bActive = False
             self.is_check_throw_event_by_hit = False
             self.throw_target_effect.bActive = False

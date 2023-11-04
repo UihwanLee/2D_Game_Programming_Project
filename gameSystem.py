@@ -3,6 +3,7 @@ import math
 from Define import *
 from gameAI import *
 from Define import BOTTOM
+import random
 
 '''
     2DGP 게임에서 야구 시스템을 동작하는 클래스
@@ -32,6 +33,7 @@ class GameSystem:
         self.base_ball = None
 
         # 타자 hit 변수
+        self.is_home_run = False
         self.is_hit = False
         self.is_hit_anim = False
         self.is_hit_anim2 = False
@@ -67,6 +69,7 @@ class GameSystem:
 
         # 야구공
         self.base_ball_base = None
+        self.base_ball_base_speed = 0.5
         self.base_ball_base_target_x = 0.0
         self.base_ball_base_target_y = 0.0
         self.base_ball_base_angle = 0.0
@@ -121,6 +124,7 @@ class GameSystem:
         # 홈런이나 안타 시 IS_HIT 변수 변경
         if offset <= HOME_RUN_MAX_OFFSET:
             self.is_hit = True
+            self.is_home_run = True
             self.start_hit(False, True)
             print('홈런!')
         elif offset <= 30:
@@ -185,12 +189,13 @@ class GameSystem:
         self.is_hit_anim2 = True
 
         # 야구공 세트
+        self.base_ball_base_speed = 0.5
         self.base_ball_base.size[0] = 50
         self.base_ball_base.size[1] = 50
         self.base_ball_base.pos[0] = 400
         self.base_ball_base.pos[1] = 70
         self.base_ball_target_x = CAMERA_DIR_MIN_X - (self.hit_target_pos[0] - HIT_DIR_MIN_X)      # 100 ~ 400 : 오른쪽, 400 ~ 700 : 왼쪽
-        self.base_ball_target_y = 500
+        self.base_ball_target_y = 400
         self.base_ball_base_angle = math.atan2(self.base_ball_target_y - self.base_ball_base.pos[1],
                                             self.base_ball_target_x - self.base_ball_base.pos[0])
 
@@ -198,11 +203,21 @@ class GameSystem:
         self.camera_pos_x = 400.0
         self.camera_pos_y = 600.0
         self.base_camera_target_x = 600
-        self.base_camera_target_y = -100        # (MAX : -100 ~ MIN : 200)
+
+        # 카메라 깊이
+        self.base_camera_target_y = random.randint(CAMERA_DEPTH_MAX, CAMERA_DEPTH_MIN)        # (MAX : -100 ~ MIN : 350)
+        print(self.base_camera_target_y)
+
+        # 홈런 -> depth: -100 고정, base_ball speed: 0.8
+        # 그 외 -> depth: (-100 ~ 350), base_ball speed: 0.5
+        if self.is_home_run:
+            self.base_camera_target_y
+            self.base_ball_base_speed = 0.8
+
         self.base_camera_angle = math.atan2(background_base_02_pos[1] - self.base_camera_target_y,
                                             self.base_camera_target_x - background_base_02_pos[0])
 
-    # scene_02에서 공이 홈런/안타/뜬볼 처리 애니메이션
+            # scene_02에서 공이 홈런/안타/뜬볼 처리 애니메이션
     def hit_ball_to_target_anim_in_base(self):
         # 설정된 hit_target_pos에 따라 base_ball_base, camera 이동
         camera_speed = 1.0
@@ -220,8 +235,8 @@ class GameSystem:
         self.camera_pos_x += 1.0 * math.cos(angle)
         self.camera_pos_y -= 1.0 * math.sin(angle)
 
-        self.base_ball_base.pos[0] -= 1.0 * math.cos(angle)
-        self.base_ball_base.pos[1] += 1.0 * math.sin(angle)
+        self.base_ball_base.pos[0] -= self.base_ball_base_speed * math.cos(angle)
+        self.base_ball_base.pos[1] += self.base_ball_base_speed * math.sin(angle)
 
         if self.camera_pos_x > 600:
             self.camera_pos_x = 600

@@ -120,7 +120,7 @@ class UIManager:
     def update(self):
        for layer in self.ui_list:
            for ui in layer:
-            ui.update()
+                ui.update()
 
     # ui_manager render 함수. ui_list에 담긴 ui를 그린다.
     def render(self):

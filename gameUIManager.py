@@ -138,6 +138,13 @@ class UIManager:
 
         return None
 
+    # ui 활성화/비활성화
+    def set_bActive(self, name, bActive):
+        for layer in self.ui_list:
+            for ui in layer:
+                if ui.name == name:
+                    ui.bActive = bActive
+
     # ui Fade in 애니메이션
     def start_fade_in(self, ui, in_duration=100.0):
         ui.start_fade_in(ui, in_duration)

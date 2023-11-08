@@ -5,21 +5,42 @@
 
 ''' [ Object Info ] '''
 
+#Window
+WINDOW_WIDTH = 800
+WINDOW_HEIGHT = 600
+
 #Scene
 SCENE_01 = 'scene_01'
 SCENE_02 = 'scene_02'
 SCENE_03 = 'scene_03'
 SCENE_04 = 'scene_04'
 
+#Mouse
+mouse_arrow_img = 'Sprites/hand_arrow.png'
+
 #Object Type
 STATIC = 0
 DYNAMIC = 1
+
+#Start_Background
+start_bg_name = 'Start_BG'
+start_bg_pos = [400, 300]
+start_bg_size = [800, 600]
+start_bg_img = 'Sprites/BG/BG_Base_00.png'
+start_bg_type = STATIC
+
+#Start_Background
+start_02_bg_name = 'Start_02_BG'
+start_02_bg_pos = [400, 300]
+start_02_bg_size = [800, 600]
+start_02_bg_img = 'Sprites/BG/BG_Base_01.png'
+start_02_bg_type = STATIC
 
 #BackGround
 background_name = 'BackGround'
 background_pos = [400, 300]
 background_size = [800, 600]
-background_img = 'Sprites/BG_Base.png'
+background_img = 'Sprites/BG/BG_Base_03.png'
 background_type = STATIC
 
 #Player
@@ -38,10 +59,52 @@ base_ball_img = 'Sprites/BaseBall.png'
 background_base_02_name = 'Background_Base_02'
 background_base_02_pos = [400, 600]
 background_base_02_size = [1200, 1400]
-background_base_02_img = 'Sprites/BG_Base_2.png'
+background_base_02_img = 'Sprites/BG/BG_Base_04.png'
 background_base_02_type = STATIC
 
 ''' [ UI Info ] '''
+
+#TOUCH_SCREEN
+touch_screen_name = 'Touch Screen'
+touch_screen_pos = [400, 300]
+touch_screen_size = [800, 600]
+touch_screen_img = 'Sprites/UI/UI_TOUCH_SCREEN.png'
+touch_screen_ui_size = [800, 600]
+
+#BUTTON_EMTPY
+button_empty_name = 'Button_Empty'
+button_empty_pos = [400, 300]
+button_empty_size = [200, 100]
+button_empty_img = 'Sprites/UI/BUTTON/UI_BUTTON_EMPTY.png'
+button_empty_ui_size = [200, 100]
+
+#BUTTON_GAME_START
+button_gamestart_name = 'Button_GameStart'
+button_gamestart_pos = [640, 300]
+button_gamestart_size = [200, 100]
+button_gamestart_img = 'Sprites/UI/BUTTON/UI_BUTTON_GAME_START.png'
+button_gamestart_ui_size = [200, 100]
+
+#BUTTON_QUIT
+button_quit_name = 'Button_Quit'
+button_quit_pos = [400, 300]
+button_quit_size = [200, 100]
+button_quit_img = 'Sprites/UI/BUTTON/UI_BUTTON_QUIT.png'
+button_quit_ui_size = [200, 100]
+
+#BUTTON_RETURN
+button_return_name = 'Button_Quit'
+button_return_pos = [400, 300]
+button_return_size = [210, 100]
+button_return_img = 'Sprites/UI/BUTTON/UI_BUTTON_RETURN.png'
+button_return_ui_size = [200, 100]
+
+#BUTTON_RETURN_LOGO
+button_return_logo_name = 'Button_Quit'
+button_return_logo_pos = [400, 300]
+button_return_logo_size = [100, 100]
+button_return_logo_img = 'Sprites/UI/BUTTON/UI_BUTTON_RETURN_LOGO.png'
+button_return_logo_ui_size = [100, 100]
 
 #Throw_Target
 throw_target_name = 'Throw_Target'
@@ -68,21 +131,21 @@ throw_target_end_ui_size = [100, 100]
 message_strike = 'Message_Strike'
 message_strike_pos = [400, 300]
 message_strike_size = [400, 200]
-message_strike_img = 'Sprites/Ui/Msg_Strike.png'
+message_strike_img = 'Sprites/UI/Msg_Strike.png'
 message_strike_ui_size = [400, 200]
 
 #Message_Strike_Out
 message_strike_out = 'Message_Strike_Out'
 message_strike_out_pos = [400, 300]
 message_strike_out_size = [400, 200]
-message_strike_out_img = 'Sprites/Ui/Msg_Strike_Out.png'
+message_strike_out_img = 'Sprites/UI/Msg_Strike_Out.png'
 message_strike_out_ui_size = [400, 200]
 
 #Message_Ball
 message_ball = 'Message_Ball'
 message_ball_pos = [400, 300]
 message_ball_size = [400, 200]
-message_ball_img = 'Sprites/Ui/Msg_Ball.png'
+message_ball_img = 'Sprites/UI/Msg_Ball.png'
 message_ball_ui_size = [400, 200]
 
 # Hit_Box

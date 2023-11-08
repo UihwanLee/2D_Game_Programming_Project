@@ -93,7 +93,7 @@ button_quit_img = 'Sprites/UI/BUTTON/UI_BUTTON_QUIT.png'
 button_quit_ui_size = [200, 100]
 
 #BUTTON_RETURN
-button_return_name = 'Button_Quit'
+button_return_name = 'Button_Return'
 button_return_pos = [400, 300]
 button_return_size = [210, 100]
 button_return_img = 'Sprites/UI/BUTTON/UI_BUTTON_RETURN.png'

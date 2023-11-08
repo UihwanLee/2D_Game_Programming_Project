@@ -92,6 +92,9 @@ class GameSystem:
         self.throw_event_rate = 0
 
     # GameSystem update 함수 특정 이벤트를 검사하는 일을 수행한다.
+    # 타자가 방망이를 휘둘렸는지, 그 결과가 어떤지 처리
+    # 투수가 공 던지는 애니메이션 수행
+    # 타자 공 히트해서 공 날아가는 애니메이션 수행
     def update(self):
         if self.is_check_throw_event_by_hit:
             self.check_throw_event_by_hit()

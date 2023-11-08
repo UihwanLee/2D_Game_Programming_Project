@@ -126,7 +126,6 @@ class UIManager:
     def render(self):
         for layer in self.ui_list:
             for ui in layer:
-                ui.update()
                 ui.render()
 
     # ui 리스트에 들어있는 객체를 이름으로 찾기
@@ -145,6 +144,25 @@ class UIManager:
                 if ui.name == name:
                     ui.bActive = bActive
 
+    # 마우스 클릭했을 때 ui button를 클릭했는지 판단하는 함수
+    def check_click_button(self, name, mx, my):
+        button = self.find_ui(name)
+
+        if button.bActive is False:
+            return False
+
+        bottom_x = button.pos[0] - button.size[0]/2
+        bottom_y = button.pos[1] - button.size[1]/2
+        top_x = button.pos[0] + button.size[0]/2
+        top_y = button.pos[1] + button.size[1]/2
+
+        if bottom_x > mx:return False
+        if bottom_y > my: return False
+        if top_x < mx: return False
+        if top_y < my: return False
+
+        return True
+
     # ui Fade in 애니메이션
     def start_fade_in(self, ui, in_duration=100.0):
         ui.start_fade_in(ui, in_duration)
@@ -152,3 +170,8 @@ class UIManager:
     # ui Fade in/Out 애니메이션
     def start_fade(self, ui, in_duration=100.0, out_duration=100.0):
         ui.start_fade(ui, in_duration, out_duration)
+
+    # 반짝반짝 애니메이션
+    def start_twincle(self, name, in_duration, out_duration):
+        pass
+

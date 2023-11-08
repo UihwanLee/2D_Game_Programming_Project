@@ -14,9 +14,15 @@ class GameEngine:
     # 게임에서 몇 개의 scene을 사용할 것인지 정하고 초기에 보여줄 scene을 game_world로 설정한다.
     def __init__(self):
         self.running = True
+
+        # Scene 생성
         self.scene_03 = Scene03(3, self)
         self.scene_04 = Scene04(4, self)
+
+        # 현재 게임 엔진에서 첫번째로 불러올 씬
         self.game_world = self.scene_03
+
+        # 게임에서 사용할 player
         self.player = None
 
         # 클래스
@@ -25,21 +31,22 @@ class GameEngine:
 
     # 게임 내에서 사용할 game_system, player, playerAI 등을 초기화
     def init_setting(self):
-        self.game_system.playerAI = self.scene_03.find_object('playerAI')
+        # scene03
+        self.game_system.playerAI = self.scene_03.find_object(playerAI_name)
         self.game_system.base_ball = self.scene_03.find_object(base_ball_name)
-        self.game_system.base = self.scene_04.find_object(background_base_02_name)
-        self.game_system.base_ball_base = self.scene_04.find_object(base_ball_name)
-
-        self.player = self.scene_03.find_object(player_name)
-        self.player.game_system = self.game_system
-
         self.game_system.throw_target = self.scene_03.find_ui(throw_target_name)
         self.game_system.throw_target_effect = self.scene_03.find_ui(throw_target_effect_name)
         self.game_system.throw_target_end = self.scene_03.find_ui(throw_target_end_name)
-
+        self.player = self.scene_03.find_object(player_name)
+        self.player.game_system = self.game_system
         self.playerAI = self.game_system.playerAI
         self.playerAI.game_system = self.game_system
 
+        # scene04
+        self.game_system.base = self.scene_04.find_object(background_base_02_name)
+        self.game_system.base_ball_base = self.scene_04.find_object(base_ball_name)
+
+        # module
         self.game_system.ui_manager = self.game_world.ui_manager
         self.game_system.game_engine = self
 

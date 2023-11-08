@@ -46,7 +46,7 @@ class Scene:
     def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):
         self.ui_manager.create_ui(name, pos, sprite, size, type, layer, bActive, ui_size)
 
-    # Scene에서 handle_event 처리
+    # Scene에서 handle_event 처리(오버라이딩 처리)
     def handle_event(self, event):
         pass
 
@@ -90,6 +90,9 @@ class Scene01(Scene):
 
     # scene에서 초기 오브젝트 세팅
     def start(self):
+        # GameOjbect
+
+        # UI
         pass
 
     # Scene에서 handle_event 처리
@@ -104,6 +107,7 @@ class Scene01(Scene):
                 pass
 
 
+# Scene03 : 경기 플레이 화면 01
 class Scene03(Scene):
     def __init__(self, order, engine):
         super().__init__(order, engine)
@@ -148,24 +152,18 @@ class Scene03(Scene):
                         self.player.handle_event(event)
 
 
+# Scene04 : 경기 플레이 화면 02
 class Scene04(Scene):
     def __init__(self, order, engine):
         super().__init__(order, engine)
-        self.ui_manager = UIManager()
 
     # scene에서 초기 오브젝트 세팅
     def start(self):
-        super().create_object(background_base_02_name, background_base_02_pos, background_base_02_img,
-                              background_base_02_size, STATIC, 0, True)
+        super().create_object(background_base_02_name, background_base_02_pos, background_base_02_img, background_base_02_size, STATIC, 0, True)
         super().create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 1, True)
 
     # Scene에서 handle_event 처리
     def handle_event(self):
         events = get_events()
         for event in events:
-            if event.type == SDL_QUIT:
-                self.running = False
-            elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                self.running = False
-            else:
-                pass
+            pass

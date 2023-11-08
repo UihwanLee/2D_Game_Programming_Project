@@ -2,10 +2,10 @@ from pico2d import *
 
 from Define import *
 from gameScene import Scene
-from gameScene import Scene01
-from gameScene import Scene02
-from gameScene import Scene03
-from gameScene import Scene04
+from gameScene_01 import Scene01
+from gameScene_02 import Scene02
+from gameScene_03 import Scene03
+from gameScene_04 import Scene04
 from gameSystem import GameSystem
 from gameUIManager import UIManager
 

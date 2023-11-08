@@ -17,6 +17,13 @@ import random
     투수 AI 가 던질 시 hit 검사
     
     타자 홈런/안타/뜬 볼/스트라이크 체크
+    
+    [타자 홈런/안타/뜬 볼/스트라이크 체크 알고리즘]
+    1) 투수가 공을 던지면 공의 던져질 target이 표시되고 이 target 중심으로 원 고리의 크기가 점점 줄어든다.
+    2) 타자가 SPACE키를 누르면 방망이를 휘두르는데 이때 줄어든 원 고리 크기와 target 원의 크기 offset을 구한다.
+    3) Define.py에서 정한 (홈런/안타/스트라이크) 범위에 맞는 offset을 판단한다.
+    4) hit시(홈런/안타) scene_04로 넘어 가며 애니메이션이 진행되고 아니면 스트라이크 처리 
+    
     투수 스트라이크/볼/스트라이크 아웃 체크
     
 '''
@@ -83,6 +90,11 @@ class GameSystem:
         self.base_ball_base_target_y = 0.0
         self.base_ball_base_angle = 0.0
         self.base_ball_base_dir = 1.0
+
+        # 스트라이크, 볼, 아웃 전등
+        self.ui_strike = []
+        self.ui_ball = []
+        self.ui_out = []
 
         # 클래스
         self.game_engine = None
@@ -427,6 +439,15 @@ class GameSystem:
         strike_ui = self.ui_manager.find_ui(message_strike)
 
         self.ui_manager.start_fade(strike_ui, 100, 3000)  # 스트라이크 메세지 띄우기
+
+        # if GameSystem.STRIKE < 2:
+        #     for idx in range(0, GameSystem.STRIKE+1):
+        #         print(UI_LIGHT_POS_X[idx])
+        #         # 스트라이크 전등 추가
+        #         self.ui_strike[idx].pos[0] = UI_LIGHT_POS_X[idx]
+        #         self.ui_strike[idx].pos[1] = 520
+        #         self.ui_strike[idx].bActive = True
+
         GameSystem.STRIKE += 1  # 스트라이크 횟수 증가
 
         # 스트라이크 아웃 체크
@@ -436,6 +457,11 @@ class GameSystem:
     def ball(self):
         ball_ui = self.ui_manager.find_ui(message_ball)
 
+        # if GameSystem.BALL < 3:
+        #     self.ui_ball[GameSystem.BALL].pos[0] = UI_LIGHT_POS_X[GameSystem.BALL]
+        #     self.ui_ball[GameSystem.BALL].pos[1] = 500
+        #     self.ui_ball[GameSystem.BALL].bActive = True
+
         self.ui_manager.start_fade(ball_ui, 100, 3000)  # 볼 메세지 띄우기
         GameSystem.BALL += 1  # 볼 횟수 증가
 
@@ -444,13 +470,34 @@ class GameSystem:
 
     def check_strike_out(self):
         if GameSystem.STRIKE >= 3:
+            GameSystem.STRIKE = 0
             GameSystem.OUT += 1  # 아웃 횟수 증가
 
+            # if GameSystem.OUT < 2:
+            #     self.ui_out[GameSystem.OUT].pos[0] = UI_LIGHT_POS_X[GameSystem.OUT]
+            #     self.ui_out[GameSystem.OUT].pos[1] = 480
+            #     self.ui_out[GameSystem.OUT].bActive = True
+
+            # 스트라이크 / 볼 모두 비활성화
+            for strike in self.ui_strike: strike.bActvie = False
+            for ball in self.ui_ball: ball.bActvie = False
+
             # 쓰리 아웃으로 공수 교대인지 체크
+            if GameSystem.OUT >= 3:
+                GameSystem.BALL = 0
+                GameSystem.OUT = 0
+                # 스트라이크 / 볼 / 아웃 모두 비활성화
+                for strike in self.ui_strike: strike.bActvie = False
+                for ball in self.ui_ball: ball.bActvie = False
+                for out in self.ui_out: out.bActvie = False
 
     def check_ball_four(self):
         if GameSystem.BALL >= 4:
             GameSystem.BALL = 0
+            GameSystem.STRIKE = 0
+            # 스트라이크 / 볼 모두 비활성화
+            for strike in self.ui_strike: strike.bActvie = False
+            for ball in self.ui_ball: ball.bActvie = False
             pass
 
     def check_three_out(self):

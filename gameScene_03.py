@@ -29,6 +29,15 @@ class Scene03(Scene):
         super().create_ui(message_ball, message_ball_pos, message_ball_img, message_ball_size, DYNAMIC, 2, False,
                           message_ball_ui_size)
 
+        # 스트라이크 2개 / 볼 3개 / 아웃 2개
+        super().create_ui(ui_strike_name + '1', ui_strike_pos, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)
+        super().create_ui(ui_strike_name + '2', ui_strike_pos, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)
+        super().create_ui(ui_ball_name + '1', ui_ball_pos, ui_ball_img, ui_ball_size, DYNAMIC, 2, False, ui_ball_ui_size)
+        super().create_ui(ui_ball_name + '2', ui_ball_pos, ui_ball_img, ui_ball_size, DYNAMIC, 2, False,ui_ball_ui_size)
+        super().create_ui(ui_ball_name + '3', ui_ball_pos, ui_ball_img, ui_ball_size, DYNAMIC, 2, False, ui_ball_ui_size)
+        super().create_ui(ui_out_name + '1', ui_out_pos, ui_out_img, ui_out_size, DYNAMIC, 2, False, ui_out_ui_size)
+        super().create_ui(ui_out_name + '2', ui_out_pos, ui_out_img, ui_out_size, DYNAMIC, 2, False, ui_out_ui_size)
+
         self.player = super().find_object(player_name)
 
     # scene 전환 시 초기 함수

@@ -24,7 +24,7 @@ class GameEngine:
         self.scene_04 = Scene04(4, self)
 
         # 현재 게임 엔진에서 첫번째로 불러올 씬
-        self.game_world = self.scene_01
+        self.game_world = self.scene_03
 
         # 게임에서 사용할 player
         self.player = None
@@ -41,6 +41,14 @@ class GameEngine:
         self.game_system.throw_target = self.scene_03.find_ui(throw_target_name)
         self.game_system.throw_target_effect = self.scene_03.find_ui(throw_target_effect_name)
         self.game_system.throw_target_end = self.scene_03.find_ui(throw_target_end_name)
+        self.game_system.ui_strike.append(self.game_world.find_ui(ui_strike_name + '1'))
+        self.game_system.ui_strike.append(self.game_world.find_ui(ui_strike_name + '2'))
+        self.game_system.ui_ball.append(self.game_world.find_ui(ui_ball_name + '1'))
+        self.game_system.ui_ball.append(self.game_world.find_ui(ui_ball_name + '2'))
+        self.game_system.ui_ball.append(self.game_world.find_ui(ui_ball_name + '3'))
+        self.game_system.ui_out.append(self.game_world.find_ui(ui_out_name + '1'))
+        self.game_system.ui_out.append(self.game_world.find_ui(ui_out_name + '2'))
+
         self.player = self.scene_03.find_object(player_name)
         self.player.game_system = self.game_system
         self.playerAI = self.game_system.playerAI

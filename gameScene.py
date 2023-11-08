@@ -107,27 +107,40 @@ class Scene01(Scene):
         super().__init__(order, engine)
         self.ui_manager = super().get_object_var('ui_manager')
         self.touch_screen = False
+        self.touch_screen_ui = None
         self.mouse_point = [1000.0, 1000.0]
 
     # scene에서 초기 오브젝트 세팅
-    def start(self):
+    def init(self):
         # GameOjbect
         super().create_object(start_bg_name, start_bg_pos, start_bg_img, start_bg_size, start_bg_type, 2, True)
-        super().create_object(start_02_bg_name, start_02_bg_pos, start_02_bg_img, start_02_bg_size, start_02_bg_type, 0, False)
+        super().create_ui(start_02_bg_name, start_02_bg_pos, start_02_bg_img, start_02_bg_size, start_02_bg_type, 2, False,
+                          [800, 600])
 
         # UI
-        super().create_ui(touch_screen_name, touch_screen_pos, touch_screen_img, touch_screen_size, DYNAMIC, 2, True,
+        super().create_ui(touch_screen_name, touch_screen_pos, touch_screen_img, touch_screen_size, DYNAMIC, 1, True,
                           touch_screen_ui_size)
-        super().create_ui(button_empty_name, [565, 470], button_empty_img, [210, 100], DYNAMIC, 1, False,
+        super().create_ui(button_empty_name, [565, 470], button_empty_img, [210, 100], DYNAMIC, 3, False,
                           button_empty_ui_size)
-        super().create_ui(button_empty_name, [620, 390], button_empty_img, [210, 100], DYNAMIC, 1, False,
+        super().create_ui(button_empty_name, [620, 390], button_empty_img, [210, 100], DYNAMIC, 3, False,
                           button_empty_ui_size)
-        super().create_ui(button_gamestart_name, [640, 300], button_gamestart_img, [210, 100], DYNAMIC,1, False,
+        super().create_ui(button_gamestart_name, [640, 300], button_gamestart_img, [210, 100], DYNAMIC,3, False,
                           button_gamestart_ui_size)
-        super().create_ui(button_quit_name, [560, 120], button_quit_img, [210, 100], DYNAMIC, 1, False,
+        super().create_ui(button_quit_name, [560, 120], button_quit_img, [210, 100], DYNAMIC, 3, False,
                           button_quit_ui_size)
-        super().create_ui(button_return_name, [620, 210], button_return_img, [210, 100], DYNAMIC, 1, False,
+        super().create_ui(button_return_name, [620, 210], button_return_img, [210, 100], DYNAMIC, 3, False,
                           button_return_ui_size)
+
+        # touch_screen 반짝이기
+        self.touch_screen_ui = self.ui_manager.find_ui(touch_screen_name)
+        self.ui_manager.start_fade(self.touch_screen_ui, 200, 200, self)
+
+    # scene 전환 시 초기 함수
+    def start(self):
+        self.return_start()
+        # touch_screen 반짝이기
+        self.touch_screen_ui = self.ui_manager.find_ui(touch_screen_name)
+        self.ui_manager.start_fade(self.touch_screen_ui, 200, 200, self)
 
     # Scene에서 handle_event 처리
     def handle_event(self):
@@ -136,7 +149,10 @@ class Scene01(Scene):
             if event.type == SDL_QUIT:
                 super().quit()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                super().quit()
+                if self.touch_screen is False:
+                    super().quit()
+                else:
+                    self.return_start()
             elif event.type == SDL_MOUSEMOTION:
                 self.mouse_point[0], self.mouse_point[1] = event.x, WINDOW_HEIGHT - 1 - event.y
             elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:  # 마우스 왼쪽 버튼 클릭
@@ -154,7 +170,7 @@ class Scene01(Scene):
     def start_option(self):
         self.touch_screen = True
         super().set_object_bActive(start_bg_name, False)
-        super().set_object_bActive(start_02_bg_name, True)
+        self.ui_manager.set_bActive(start_02_bg_name, True)
         self.ui_manager.set_bActive(touch_screen_name, False)
 
         self.ui_manager.set_bActive(button_empty_name, True)
@@ -166,13 +182,16 @@ class Scene01(Scene):
     def return_start(self):
         self.touch_screen = False
         super().set_object_bActive(start_bg_name, True)
-        super().set_object_bActive(start_02_bg_name, False)
+        self.ui_manager.set_bActive(start_02_bg_name, False)
         self.ui_manager.set_bActive(touch_screen_name, True)
 
         self.ui_manager.set_bActive(button_empty_name, False)
         self.ui_manager.set_bActive(button_gamestart_name, False)
         self.ui_manager.set_bActive(button_quit_name, False)
         self.ui_manager.set_bActive(button_return_name, False)
+
+    def fade_done(self):
+        self.ui_manager.start_fade(self.touch_screen_ui, 200, 200, self)
 
 # Scene02 : 로비/팀 선택 화면
 class Scene02(Scene):
@@ -181,10 +200,11 @@ class Scene02(Scene):
         self.ui_manager = super().get_object_var('ui_manager')
         self.player_team = team_03_name
         self.mouse_point = [1000.0, 1000.0]
+        self.fade_bg = None
         # self.font = load_font(FONT_STYLE_01, 16)
 
     # scene에서 초기 오브젝트 세팅
-    def start(self):
+    def init(self):
         # GameOjbect
         super().create_object(start_03_bg_name, start_03_bg_pos, start_03_bg_img, start_03_bg_size, start_03_bg_type, 0, True)
 
@@ -210,7 +230,14 @@ class Scene02(Scene):
 
         # Fade BG
         super().create_ui(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 3, False, bg_black_ui_size)
+        self.fade_bg = self.ui_manager.find_ui(bg_black_name)
 
+    # scene 전환 시 초기 함수
+    def start(self):
+        self.select_team(team_03_name)
+        # black_BG 지우기
+        if self.fade_bg is not None:
+            self.fade_bg.bActive = False
 
     # Scene에서 handle_event 처리
     def handle_event(self):
@@ -268,7 +295,7 @@ class Scene03(Scene):
         self.player = None
 
     # scene에서 초기 오브젝트 / UI 세팅
-    def start(self):
+    def init(self):
         # GameOjbect
         super().create_object(background_name, background_pos, background_img, background_size, background_type, 0,
                               True)
@@ -292,6 +319,11 @@ class Scene03(Scene):
 
         self.player = super().find_object(player_name)
 
+    # scene 전환 시 초기 함수
+    def start(self):
+        #초기 세팅
+        pass
+
     # Scene에서 handle_event 처리
     def handle_event(self):
         events = get_events()
@@ -312,9 +344,14 @@ class Scene04(Scene):
         super().__init__(order, engine)
 
     # scene에서 초기 오브젝트 세팅
-    def start(self):
+    def init(self):
         super().create_object(background_base_02_name, background_base_02_pos, background_base_02_img, background_base_02_size, STATIC, 0, True)
         super().create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 1, True)
+
+    # scene 전환 시 초기 함수
+    def start(self):
+        # 초기 세팅
+        pass
 
     # Scene에서 handle_event 처리
     def handle_event(self):

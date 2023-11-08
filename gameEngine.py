@@ -60,16 +60,17 @@ class GameEngine:
 
     # scene을 초기화 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):
-        self.scene_01.start()
-        self.scene_02.start()
-        self.scene_03.start()
-        self.scene_04.start()
+        self.scene_01.init()
+        self.scene_02.init()
+        self.scene_03.init()
+        self.scene_04.init()
 
     # 씬 변경 함수
     def change_scene(self, scene):
         if hasattr(self, scene):
             self.game_world = getattr(self, scene)
             self.game_system.ui_manager = self.game_world.ui_manager # ui_manager도 바꿔줄 수 있도록 함.
+            self.game_world.start()
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
     def render_world(self):

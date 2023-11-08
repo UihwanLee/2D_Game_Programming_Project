@@ -36,6 +36,13 @@ start_02_bg_size = [800, 600]
 start_02_bg_img = 'Sprites/BG/BG_Base_01.png'
 start_02_bg_type = STATIC
 
+#Team_Background
+start_03_bg_name = 'Start_03_BG'
+start_03_bg_pos = [400, 300]
+start_03_bg_size = [800, 600]
+start_03_bg_img = 'Sprites/BG/BG_Base_02.png'
+start_03_bg_type = STATIC
+
 #BackGround
 background_name = 'BackGround'
 background_pos = [400, 300]
@@ -105,6 +112,48 @@ button_return_logo_pos = [400, 300]
 button_return_logo_size = [100, 100]
 button_return_logo_img = 'Sprites/UI/BUTTON/UI_BUTTON_RETURN_LOGO.png'
 button_return_logo_ui_size = [100, 100]
+
+#TEAM_01
+team_01_name = 'TEAM_01'
+team_01_pos = [100, 180]
+team_01_size = [150, 160]
+team_01_img = 'Sprites/UI/TEAMS/UI_TEAM_01.png'
+team_01_ui_size = [100, 100]
+
+#TEAM_02
+team_02_name = 'TEAM_02'
+team_02_pos = [250, 180]
+team_02_size = [150, 160]
+team_02_img = 'Sprites/UI/TEAMS/UI_TEAM_02.png'
+team_02_ui_size = [100, 100]
+
+#TEAM_03
+team_03_name = 'TEAM_03'
+team_03_pos = [400, 180]
+team_03_size = [150, 160]
+team_03_img = 'Sprites/UI/TEAMS/UI_TEAM_03.png'
+team_03_ui_size = [100, 100]
+
+#TEAM_04
+team_04_name = 'TEAM_04'
+team_04_pos = [550, 180]
+team_04_size = [150, 160]
+team_04_img = 'Sprites/UI/TEAMS/UI_TEAM_04.png'
+team_04_ui_size = [100, 100]
+
+#TEAM_05
+team_05_name = 'TEAM_05'
+team_05_pos = [700, 180]
+team_05_size = [150, 160]
+team_05_img = 'Sprites/UI/TEAMS/UI_TEAM_05.png'
+team_05_ui_size = [100, 100]
+
+#SELECT_TEAM
+team_select_name = 'TEAM_SELECT'
+team_select_pos = [400, 400]
+team_select_size = [200, 200]
+team_select_img = 'Sprites/UI/TEAMS/UI_TEAM_01.png'
+team_select_ui_size = [100, 100]
 
 #Throw_Target
 throw_target_name = 'Throw_Target'

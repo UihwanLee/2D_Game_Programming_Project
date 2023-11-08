@@ -3,6 +3,7 @@ from pico2d import *
 from Define import *
 from gameScene import Scene
 from gameScene import Scene01
+from gameScene import Scene02
 from gameScene import Scene03
 from gameScene import Scene04
 from gameSystem import GameSystem
@@ -18,11 +19,12 @@ class GameEngine:
 
         # Scene 생성
         self.scene_01 = Scene01(1, self)
+        self.scene_02 = Scene02(2, self)
         self.scene_03 = Scene03(3, self)
         self.scene_04 = Scene04(4, self)
 
         # 현재 게임 엔진에서 첫번째로 불러올 씬
-        self.game_world = self.scene_01
+        self.game_world = self.scene_02
 
         # 게임에서 사용할 player
         self.player = None
@@ -59,6 +61,7 @@ class GameEngine:
     # scene을 초기화 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):
         self.scene_01.start()
+        self.scene_02.start()
         self.scene_03.start()
         self.scene_04.start()
 

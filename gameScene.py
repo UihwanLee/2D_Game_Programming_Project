@@ -83,6 +83,10 @@ class Scene:
                 if object.name == name:
                     object.bActive = bActive
 
+    # 씬 전환
+    def change_scene(self, scene):
+        self.game_engine.change_scene(scene)
+
     # 게임 종료
     def quit(self):
         if self.game_engine is not None:
@@ -140,7 +144,7 @@ class Scene01(Scene):
                     self.start_option()
                 else:
                     # UI 버튼 클릭 체크
-                    if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0], self.mouse_point[1]): print("게임 시작!")
+                    if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0], self.mouse_point[1]): super().change_scene(SCENE_02)
                     if self.ui_manager.check_click_button(button_quit_name, self.mouse_point[0], self.mouse_point[1]): super().quit()
                     if self.ui_manager.check_click_button(button_return_name, self.mouse_point[0], self.mouse_point[1]): self.return_start()
             else:
@@ -169,6 +173,49 @@ class Scene01(Scene):
         self.ui_manager.set_bActive(button_gamestart_name, False)
         self.ui_manager.set_bActive(button_quit_name, False)
         self.ui_manager.set_bActive(button_return_name, False)
+
+# Scene02 : 로비/팀 선택 화면
+class Scene02(Scene):
+    def __init__(self, order, engine):
+        super().__init__(order, engine)
+        self.ui_manager = super().get_object_var('ui_manager')
+        self.mouse_point = [1000.0, 1000.0]
+
+    # scene에서 초기 오브젝트 세팅
+    def start(self):
+        # GameOjbect
+        super().create_object(start_03_bg_name, start_03_bg_pos, start_03_bg_img, start_03_bg_size, start_03_bg_type, 0, True)
+
+        # UI TEAM
+        super().create_ui(team_01_name, team_01_pos, team_01_img, team_01_size, DYNAMIC, 0, True, team_01_ui_size)
+        super().create_ui(team_02_name, team_02_pos, team_02_img, team_02_size, DYNAMIC, 0, True, team_02_ui_size)
+        super().create_ui(team_03_name, team_03_pos, team_03_img, team_03_size, DYNAMIC, 0, True, team_03_ui_size)
+        super().create_ui(team_04_name, team_04_pos, team_04_img, team_04_size, DYNAMIC, 0, True, team_04_ui_size)
+        super().create_ui(team_05_name, team_05_pos, team_05_img, team_05_size, DYNAMIC, 0, True, team_05_ui_size)
+        super().create_ui(team_select_name, team_select_pos, team_select_img, team_select_size, DYNAMIC, 1, True, team_select_ui_size)
+
+        # UI BUTTON
+        super().create_ui(button_empty_name, [400, 300], button_empty_img, [250, 100], DYNAMIC, 0, True,
+                          button_empty_ui_size)
+        super().create_ui(button_gamestart_name, [400, 40], button_gamestart_img, [250, 100], DYNAMIC, 2, True,
+                          button_gamestart_ui_size)
+
+
+    # Scene에서 handle_event 처리
+    def handle_event(self):
+        events = get_events()
+        for event in events:
+            if event.type == SDL_QUIT:
+                super().quit()
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
+                super().quit()
+            elif event.type == SDL_MOUSEMOTION:
+                self.mouse_point[0], self.mouse_point[1] = event.x, WINDOW_HEIGHT - 1 - event.y
+            elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:  # 마우스 왼쪽 버튼 클릭
+                pass
+            else:
+                pass
+
 
 
 # Scene03 : 경기 플레이 화면 01

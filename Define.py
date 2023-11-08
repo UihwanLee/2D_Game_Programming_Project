@@ -8,6 +8,8 @@
 #Scene
 SCENE_01 = 'scene_01'
 SCENE_02 = 'scene_02'
+SCENE_03 = 'scene_03'
+SCENE_04 = 'scene_04'
 
 #Object Type
 STATIC = 0

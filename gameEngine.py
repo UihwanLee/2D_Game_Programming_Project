@@ -2,20 +2,21 @@ from pico2d import *
 
 from Define import *
 from gameScene import Scene
+from gameScene import Scene03
+from gameScene import Scene04
 from gameSystem import GameSystem
 from gameUIManager import UIManager
 
 from gameTime import Time
-
 
 # 게임 내 모든 씬, 오브젝트, 시스템 관리할 클래스
 class GameEngine:
     # 게임에서 몇 개의 scene을 사용할 것인지 정하고 초기에 보여줄 scene을 game_world로 설정한다.
     def __init__(self):
         self.running = True
-        self.scene_01 = Scene(1)
-        self.scene_02 = Scene(2)
-        self.game_world = self.scene_01
+        self.scene_03 = Scene03(3, self)
+        self.scene_04 = Scene04(4, self)
+        self.game_world = self.scene_03
         self.player = None
 
         # 클래스
@@ -25,13 +26,12 @@ class GameEngine:
 
     # 게임 내에서 사용할 game_system, player, playerAI 등을 초기화
     def init_setting(self):
-        self.game_system.playerAI = self.scene_01.find_object('playerAI')
-        self.game_system.base_ball = self.scene_01.find_object(base_ball_name)
-        self.game_system.base = self.scene_02.find_object(background_base_02_name)
-        self.game_system.base_ball_base = self.scene_02.find_object(base_ball_name)
-        self.game_system.game_engine = self
+        self.game_system.playerAI = self.scene_03.find_object('playerAI')
+        self.game_system.base_ball = self.scene_03.find_object(base_ball_name)
+        self.game_system.base = self.scene_04.find_object(background_base_02_name)
+        self.game_system.base_ball_base = self.scene_04.find_object(base_ball_name)
 
-        self.player = self.scene_01.find_object(player_name)
+        self.player = self.scene_03.find_object(player_name)
         self.player.game_system = self.game_system
 
         self.game_system.throw_target = self.ui_manager.find_ui(throw_target_name)
@@ -42,29 +42,16 @@ class GameEngine:
         self.playerAI.game_system = self.game_system
 
         self.game_system.ui_manager = self.ui_manager
+        self.game_system.game_engine = self
 
-    # 이벤트 처리 함수. gamePlayer와 gameSystem 모듈로 전달하여 이벤틍에 적절한 동작을 수행한다.
+    # 이벤트 처리 함수. 각 Scene마다 handle_event 처리 방식이 다르다.
     def handle_events(self):
-        events = get_events()
-        for event in events:
-            if event.type == SDL_QUIT:
-                self.running = False
-            elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                self.running = False
-            else:
-                if(self.player != None):
-                    if(self.player.bActive):
-                        self.player.handle_event(event)
+        self.game_world.handle_event()
 
-    # scene을 생성하는 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
+    # scene을 초기화 함수. scene에 그릴 scene 정보/오브젝트 정보를 전달한다.
     def create_scenes(self):
-        self.scene_01.create_object(background_name, background_pos, background_img, background_size,background_type, 0, True)
-        self.scene_01.create_player(player_name, Hitter, 3, True,  0)
-        self.scene_01.create_playerAI(playerAI_name, Pitcher, 1, True, 0)
-        self.scene_01.create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 2, False)
-
-        self.scene_02.create_object(background_base_02_name, background_base_02_pos, background_base_02_img, background_base_02_size, STATIC, 0, True)
-        self.scene_02.create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 1, True)
+        self.scene_03.start()
+        self.scene_04.start()
 
     # ui를 생성하는 함수. 게임에서 사용할 ui 오브젝트를 관리하는 클래스를 생성한다.
     def create_ui(self):
@@ -107,3 +94,7 @@ class GameEngine:
             self.handle_events()
             self.time.update()
         close_canvas()
+
+    def quit(self):
+        self.running = False
+

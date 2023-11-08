@@ -8,8 +8,16 @@ import random
 '''
     2DGP 게임에서 야구 시스템을 동작하는 클래스
     
-    야구 룰
-    야구 애니메이션
+    다음과 같은 기능을 수행 한다.
+    
+    야구 게임 시스템 관리.
+    
+    투수 AI 던지는 경로 지정.
+    투수 AI 던지는 경로 대로 base_ball 위치 이동
+    투수 AI 가 던질 시 hit 검사
+    
+    타자 홈런/안타/뜬 볼/스트라이크 체크
+    투수 스트라이크/볼/스트라이크 아웃 체크
     
 '''
 
@@ -199,7 +207,7 @@ class GameSystem:
         if distance < 5:
             self.is_hit_anim = False
             self.set_hit_ball_to_target_anim_in_base()
-            self.game_engine.change_scene(SCENE_02)
+            self.game_engine.change_scene(SCENE_04)
             return
 
     def set_hit_ball_to_target_anim_in_base(self):
@@ -257,7 +265,7 @@ class GameSystem:
             self.reset_throw()
 
             # 씬 변경
-            self.game_engine.change_scene(SCENE_01)
+            self.game_engine.change_scene(SCENE_03)
 
         self.camera_pos_x += 1.0 * math.cos(angle)
         self.camera_pos_y -= 1.0 * math.sin(angle)

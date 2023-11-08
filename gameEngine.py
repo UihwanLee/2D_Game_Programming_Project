@@ -24,7 +24,7 @@ class GameEngine:
         self.scene_04 = Scene04(4, self)
 
         # 현재 게임 엔진에서 첫번째로 불러올 씬
-        self.game_world = self.scene_02
+        self.game_world = self.scene_01
 
         # 게임에서 사용할 player
         self.player = None

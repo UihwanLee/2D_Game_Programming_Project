@@ -29,6 +29,10 @@ class GameObject:
         elif self.type == DYNAMIC:
             self.sprite.clip_draw(0, 0, 100, 100, self.pos[0], self.pos[1], self.size[0], self.size[1])
 
+    # 게임 오브젝트 sprite 변경
+    def change_sprite(self, new_sprite):
+        self.sprite = load_image(new_sprite)
+
     # 게임 오브젝트 멤버변수 get 함수. GameObject 클래스를 상속 받은 클래스가 GameObject 멤버 변수에 접근할 때 사용 한다.
     def get_object_var(self, var):
         if hasattr(self, var):

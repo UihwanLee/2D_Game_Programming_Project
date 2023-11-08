@@ -15,6 +15,8 @@ class UI(GameObject):
         self.ui_size = ui_size
         self.alpha = 1.0  # 투명도
 
+        self.sprite_name = sprite
+
         # fade_in/out
         self.is_fade_in_anim = False
         self.is_fade_anim = False
@@ -23,6 +25,9 @@ class UI(GameObject):
         self.fade_ui = None
         self.fade_sprite = None
         self.fade_in_done = False
+
+        # fade 결과를 보낼 scene
+        self.scene = None
 
     # ui update 함수. fade_in/fade_out 같은 애니메이션 등을 처리한다.
     def update(self):
@@ -40,13 +45,20 @@ class UI(GameObject):
 
         self.sprite.clip_draw(0, 0, self.ui_size[0], self.ui_size[1], pos[0], pos[1], size[0], size[1])
 
+    # ui sprite 변경
+    def change_sprite(self, new_sprite):
+        super().change_sprite(new_sprite)
+
     # ui Sprite 투명도 조정
     def set_alpha(self, alpha):
         sprite = super().get_object_var('sprite')
         sprite.opacify(alpha)
 
+    def is_fade_done(self):
+        return self.is_fade_anim
+
     # ui Fade in 애니메이션
-    def start_fade_in(self, ui, in_duration=100.0):
+    def start_fade_in(self, ui, in_duration=100.0, scene = None):
         self.fade_ui = ui
         self.fade_ui.bActive = True
         self.fade_sprite = ui.get_object_var('sprite')
@@ -56,8 +68,10 @@ class UI(GameObject):
         self.is_fade_in_anim = True
         self.is_fade_anim = True
 
+        self.scene = scene
+
     # ui Fade in/Out 애니메이션
-    def start_fade(self, ui, in_duration=100.0, out_duration=100.0):
+    def start_fade(self, ui, in_duration=100.0, out_duration=100.0, scene=None):
         self.fade_ui = ui
         self.fade_ui.bActive = True
         self.fade_sprite = ui.get_object_var('sprite')
@@ -68,6 +82,8 @@ class UI(GameObject):
         self.is_fade_in_anim = False
         self.is_fade_anim = True
 
+        self.scene = scene
+
     # fade_in 함수 : 이미지 투명도를 0에서 1로 바꿔준다.
     def fade_in(self):
         if self.fade_in_done:
@@ -75,6 +91,8 @@ class UI(GameObject):
 
         if self.fade_ui.alpha >= 1.0:
             if self.is_fade_in_anim:
+                if self.scene is not None:
+                    self.scene.fade_done()
                 self.is_fade_anim = False
             else:
                 self.fade_in_done = True
@@ -93,6 +111,10 @@ class UI(GameObject):
             self.is_fade_anim = False
             self.fade_ui.bActive = False
             self.fade_sprite.opacify(1)
+
+            # scene이 존재하면 fade가 끝났음을 알린다.
+            if self.scene is not None:
+                self.scene.fade_done()
             return
 
         self.fade_ui.alpha -= self.fade_out_alpha
@@ -164,12 +186,15 @@ class UIManager:
         return True
 
     # ui Fade in 애니메이션
-    def start_fade_in(self, ui, in_duration=100.0):
-        ui.start_fade_in(ui, in_duration)
+    def start_fade_in(self, ui, in_duration=100.0, scene = None):
+        ui.start_fade_in(ui, in_duration, scene)
 
     # ui Fade in/Out 애니메이션
-    def start_fade(self, ui, in_duration=100.0, out_duration=100.0):
-        ui.start_fade(ui, in_duration, out_duration)
+    def start_fade(self, ui, in_duration=100.0, out_duration=100.0, scene = None):
+        ui.start_fade(ui, in_duration, out_duration, scene)
+
+    def check_fade_anim_done(self, ui):
+        return ui.is_fade_anim
 
     # 반짝반짝 애니메이션
     def start_twincle(self, name, in_duration, out_duration):

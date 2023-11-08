@@ -3,6 +3,11 @@
     게임 오브젝트 정보, 다른 객체의 정보를 저장한다.
 '''
 
+''' [ Font ] '''
+
+#Font
+FONT_STYLE_01 = 'Font/H2GTRE.TTF'
+
 ''' [ Object Info ] '''
 
 #Window
@@ -70,6 +75,13 @@ background_base_02_img = 'Sprites/BG/BG_Base_04.png'
 background_base_02_type = STATIC
 
 ''' [ UI Info ] '''
+
+#Backgroubd_black
+bg_black_name = 'BG_Black'
+bg_black_pos = [400, 300]
+bg_black_size = [800, 600]
+bg_black_img = 'Sprites/BG/UI_BLACK.png'
+bg_black_ui_size = [800, 600]
 
 #TOUCH_SCREEN
 touch_screen_name = 'Touch Screen'
@@ -154,6 +166,13 @@ team_select_pos = [400, 400]
 team_select_size = [200, 200]
 team_select_img = 'Sprites/UI/TEAMS/UI_TEAM_01.png'
 team_select_ui_size = [100, 100]
+
+#SELECT_TEAM_POINT
+team_select_point_name = 'TEAM_SELECT_POINT'
+team_select_point_pos = [400, 180]
+team_select_point_size = [150, 160]
+team_select_point_img = 'Sprites/UI/TEAMS/UI_TEAM_SELECT_POINT.png'
+team_select_point_ui_size = [100, 100]
 
 #Throw_Target
 throw_target_name = 'Throw_Target'

@@ -33,8 +33,9 @@ class GamePlayerAI(GameObject):
         self.game_system = None
 
     def update(self):
-        bActive = super().get_object_var('bActive')
-        if bActive is False: return
+        active = super().get_object_var('bActive')
+        if not active:
+            return
 
         # playerAI state_machine 업데이트
         self.state_machine.update()
@@ -46,8 +47,9 @@ class GamePlayerAI(GameObject):
 
     # playerAI 렌더링. play_Anim 리스트를 기준으로 렌더링 한다.
     def render(self):
-        bActive = super().get_object_var('bActive')
-        if bActive is False: return
+        active = super().get_object_var('bActive')
+        if not active:
+            return
 
         frame = int(self.frame)
         pos = super().get_object_var('pos')

@@ -48,8 +48,9 @@ class Player(GameObject):
     # player 업데이트. time 변수를 기준으로 각족 이벤트를 처리한다.
     def update(self):
         # player가 활성화 할 때만 시행
-        bActive = super().get_object_var('bActive')
-        if bActive is False: return
+        active = super().get_object_var('bActive')
+        if not active:
+            return
 
         # player state_machine 업데이트
         self.state_machine.update()
@@ -61,8 +62,9 @@ class Player(GameObject):
 
     # player 렌더링. player_Anim 리스트를 기준으로 렌더링 한다.
     def render(self):
-        bActive = super().get_object_var('bActive')
-        if bActive is False: return
+        active = super().get_object_var('bActive')
+        if not active:
+            return
 
         frame = int(self.frame)
         pos = super().get_object_var('pos')

@@ -167,19 +167,19 @@ class GameSystem:
             self.is_home_run = True
             self.start_hit(False, True)
             print('홈런!')
-        elif offset <= 30:
+        elif offset <= 50:
             self.is_hit = True
             self.start_hit(False, False)
             print('안타!')
-        elif offset <= FLYING_HIT_MAX_OFFSET:
-            self.is_hit = True
-            self.start_hit(True, False)
-            print('뜬 볼')
+        # elif offset <= FLYING_HIT_MAX_OFFSET:
+        #     self.is_hit = True
+        #     self.start_hit(True, False)
+        #     print('뜬 볼')
         else:
             self.is_hit = False
             print('헛 스윙!')
 
-            # hit 할 시, 야구공 랜덤으로 위치 설정. 설정된 변수 대로 scene_01, scene_02 진행
+    # hit 할 시, 야구공 랜덤으로 위치 설정. 설정된 변수 대로 scene_01, scene_02 진행
     def start_hit(self, is_flying, is_home_run):
         # 랜덤으로 이동 방향, 높이, 깊이 설정
         # scene_01에서 보여줄 위치
@@ -270,7 +270,6 @@ class GameSystem:
         # 타켓 위치로 왔을 때 종료
         # scene_02로 change
         if distance < 5.0 or (self.base_camera_target_y - self.camera_pos_y) ** 2 < 5:
-            print("끝")
             self.is_hit_anim2 = False
             # 홈런이면 홈런 표시하고 넘어가기
 
@@ -306,6 +305,7 @@ class GameSystem:
     def generate_random_throw_target(self):
         # hit 변수 초기회
         self.is_hit = False
+        self.is_throw_Done = False
 
         # 던진 공 위치는 게임 내 사각 박스 내에 랜덤으로 생성
         pos_x = random.randint(THROW_MIN_X, THROW_MAX_X)
@@ -378,7 +378,6 @@ class GameSystem:
 
         # 타켓 위치로 왔을 때 종료
         if distance < 5:
-            self.is_throw_Done = True
             self.is_throw_ball_to_target_anim = False
             return
 
@@ -479,25 +478,25 @@ class GameSystem:
             #     self.ui_out[GameSystem.OUT].bActive = True
 
             # 스트라이크 / 볼 모두 비활성화
-            for strike in self.ui_strike: strike.bActvie = False
-            for ball in self.ui_ball: ball.bActvie = False
+            #for strike in self.ui_strike: strike.bActvie = False
+            #for ball in self.ui_ball: ball.bActvie = False
 
             # 쓰리 아웃으로 공수 교대인지 체크
             if GameSystem.OUT >= 3:
                 GameSystem.BALL = 0
                 GameSystem.OUT = 0
                 # 스트라이크 / 볼 / 아웃 모두 비활성화
-                for strike in self.ui_strike: strike.bActvie = False
-                for ball in self.ui_ball: ball.bActvie = False
-                for out in self.ui_out: out.bActvie = False
+                #for strike in self.ui_strike: strike.bActvie = False
+                #for ball in self.ui_ball: ball.bActvie = False
+                #for out in self.ui_out: out.bActvie = False
 
     def check_ball_four(self):
         if GameSystem.BALL >= 4:
             GameSystem.BALL = 0
             GameSystem.STRIKE = 0
             # 스트라이크 / 볼 모두 비활성화
-            for strike in self.ui_strike: strike.bActvie = False
-            for ball in self.ui_ball: ball.bActvie = False
+            #for strike in self.ui_strike: strike.bActvie = False
+            #for ball in self.ui_ball: ball.bActvie = False
             pass
 
     def check_three_out(self):

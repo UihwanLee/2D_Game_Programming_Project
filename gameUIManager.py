@@ -185,6 +185,14 @@ class UIManager:
 
         return True
 
+    # 마우스를 버튼 위에 올려놓을 시 버튼 사이즈 크기 조정 함수
+    def mouse_on_button(self, button, size):
+        button.size = size
+
+    # 마우스를 버튼 위치를 벗어났을 시 버튼 사이즈 크기 조정 함수
+    def mouse_off_button(self, button, size):
+        button.size = size
+
     # ui Fade in 애니메이션
     def start_fade_in(self, ui, in_duration=100.0, scene = None):
         ui.start_fade_in(ui, in_duration, scene)

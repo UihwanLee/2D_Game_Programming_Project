@@ -9,6 +9,10 @@ class Scene01(Scene):
         self.touch_screen_ui = None
         self.mouse_point = [1000.0, 1000.0]
 
+        self.button_gamestart = None
+        self.button_return = None
+        self.button_quit = None
+
     # scene에서 초기 오브젝트 세팅
     def init(self):
         # GameOjbect
@@ -29,6 +33,11 @@ class Scene01(Scene):
                           button_quit_ui_size)
         super().create_ui(button_return_name, [620, 210], button_return_img, [210, 100], DYNAMIC, 3, False,
                           button_return_ui_size)
+
+        # button 조정
+        self.button_gamestart = self.ui_manager.find_ui(button_gamestart_name)
+        self.button_return = self.ui_manager.find_ui(button_return_name)
+        self.button_quit = self.ui_manager.find_ui(button_quit_name)
 
         # touch_screen 반짝이기
         self.touch_screen_ui = self.ui_manager.find_ui(touch_screen_name)
@@ -54,6 +63,20 @@ class Scene01(Scene):
                     self.return_start()
             elif event.type == SDL_MOUSEMOTION:
                 self.mouse_point[0], self.mouse_point[1] = event.x, WINDOW_HEIGHT - 1 - event.y
+                # 마우스가 버튼 위에 올려놓여져 있는 체크
+                if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0],self.mouse_point[1]):
+                    self.ui_manager.mouse_on_button(self.button_gamestart, [230, 120])
+                else:
+                    self.ui_manager.mouse_off_button(self.button_gamestart, [210, 100])
+                if self.ui_manager.check_click_button(button_quit_name, self.mouse_point[0], self.mouse_point[1]):
+                    self.ui_manager.mouse_on_button(self.button_quit, [230, 120])
+                else:
+                    self.ui_manager.mouse_off_button(self.button_quit, [210, 100])
+                if self.ui_manager.check_click_button(button_return_name, self.mouse_point[0],self.mouse_point[1]):
+                    self.ui_manager.mouse_on_button(self.button_return, [230, 120])
+                else:
+                    self.ui_manager.mouse_off_button(self.button_return, [210, 100])
+
             elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:  # 마우스 왼쪽 버튼 클릭
                 if self.touch_screen is False:
                     self.start_option()

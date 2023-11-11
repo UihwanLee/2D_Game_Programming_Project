@@ -10,6 +10,9 @@ class Scene02(Scene):
         self.fade_bg = None
         # self.font = load_font(FONT_STYLE_01, 16)
 
+        self.button_gamestart = None
+        self.button_return = None
+
     # scene에서 초기 오브젝트 세팅
     def init(self):
         # GameOjbect
@@ -35,6 +38,10 @@ class Scene02(Scene):
         super().create_ui(button_return_name, [520, 40], button_return_img, [250, 100], DYNAMIC, 1, True,
                           button_return_ui_size)
 
+        # button 초기화
+        self.button_gamestart = self.ui_manager.find_ui(button_gamestart_name)
+        self.button_return = self.ui_manager.find_ui(button_return_name)
+
         # Fade BG
         super().create_ui(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 3, False, bg_black_ui_size)
         self.fade_bg = self.ui_manager.find_ui(bg_black_name)
@@ -56,6 +63,14 @@ class Scene02(Scene):
                 super().change_scene(SCENE_01)
             elif event.type == SDL_MOUSEMOTION:
                 self.mouse_point[0], self.mouse_point[1] = event.x, WINDOW_HEIGHT - 1 - event.y
+                if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0], self.mouse_point[1]):
+                    self.ui_manager.mouse_on_button(self.button_gamestart, [270, 120])
+                else:
+                    self.ui_manager.mouse_off_button(self.button_gamestart, [250, 100])
+                if self.ui_manager.check_click_button(button_return_name, self.mouse_point[0], self.mouse_point[1]):
+                    self.ui_manager.mouse_on_button(self.button_return, [270, 120])
+                else:
+                    self.ui_manager.mouse_off_button(self.button_return, [250, 100])
             elif event.type == SDL_MOUSEBUTTONDOWN and event.button == SDL_BUTTON_LEFT:  # 마우스 왼쪽 버튼 클릭
                 # 팀 선택 체크
                 if self.ui_manager.check_click_button(team_01_name, self.mouse_point[0], self.mouse_point[1]): self.select_team(team_01_name)

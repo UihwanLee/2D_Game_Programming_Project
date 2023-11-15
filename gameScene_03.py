@@ -11,8 +11,8 @@ class Scene03(Scene):
         # GameOjbect
         super().create_object(background_name, background_pos, background_img, background_size, background_type, 0,
                               True)
-        super().create_player(player_name, Hitter, 3, True, 0)
-        super().create_playerAI(playerAI_name, Pitcher, 1, True, 0)
+        super().create_player(player_name, Hitter_Info, 3, True, 0)
+        super().create_playerAI(playerAI_name, Pitcher_Info, 1, True, 0)
         super().create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 2, False)
 
         # UI

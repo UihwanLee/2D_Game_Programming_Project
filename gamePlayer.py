@@ -1,7 +1,7 @@
 from sdl2 import SDL_KEYDOWN, SDLK_s
 
 from gameObject import *
-from gameStateMachine import StateMachine_Player
+from gameStateMachine import StateMachine_Hitter
 from gameTime import Time
 
 '''
@@ -19,7 +19,7 @@ from gameTime import Time
 '''
 
 
-class Player(GameObject):
+class Hitter(GameObject):
 
     # Player 클래스 초기화. 상속 받은 GameObject 클래스 초기화.
     # player의 playMode를 통해 GameObject, play_Anim 등을 초기화 한다.
@@ -30,7 +30,7 @@ class Player(GameObject):
         self.play_anim = playMode.anim
         self.frame = frame
         self.action = 0
-        self.state_machine = StateMachine_Player(self)
+        self.state_machine = StateMachine_Hitter(self)
         self.max_frame = len(playMode.anim[self.action].posX)
 
         self.game_system = None

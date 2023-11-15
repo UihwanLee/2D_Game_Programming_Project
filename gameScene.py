@@ -1,6 +1,6 @@
 from gameObject import GameObject
-from gamePlayer import Player
-from gameAI import GamePlayerAI
+from gamePlayer import Hitter
+from gameAI import Pitcher
 from gameUIManager import UIManager
 
 from Define import *
@@ -36,11 +36,11 @@ class Scene:
 
     # Player 생성. game_objects 리스트에 Player 추가한다.
     def create_player(self, name, playMode, layer, bActive, frame):
-        self.game_objects[layer].append(Player(self.order, name, playMode, layer, bActive, frame))
+        self.game_objects[layer].append(Hitter(self.order, name, playMode, layer, bActive, frame))
 
     # PlayerAI 생성. game_objects 리스트에 PlayerAI 추가한다.
     def create_playerAI(self, name, playMode, layer, bActive, frame):
-        self.game_objects[layer].append(GamePlayerAI(self.order, name, playMode, layer, bActive, frame))
+        self.game_objects[layer].append(Pitcher(self.order, name, playMode, layer, bActive, frame))
 
     # ui를 생성하는 함수. scene에서 사용할 ui 오브젝트를 관리하는 클래스를 생성한다
     def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):

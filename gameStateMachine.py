@@ -114,7 +114,7 @@ class Throw:
         pass
 
 
-class StateMachine_Player:
+class StateMachine_Hitter:
     def __init__(self, player):
         self.player = player
         self.cur_state = Idle_Hitter
@@ -139,7 +139,7 @@ class StateMachine_Player:
 
         return False
 
-class StateMachine_PlayerAI:
+class StateMachine_Pitcher:
     def __init__(self, player_AI):
         self.playerAI = player_AI
         self.cur_state = Idle_Pitcher

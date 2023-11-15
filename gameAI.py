@@ -1,5 +1,5 @@
 from gameObject import GameObject
-from gameStateMachine import StateMachine_PlayerAI
+from gameStateMachine import StateMachine_Pitcher
 from gameTime import Time
 import random
 
@@ -18,7 +18,7 @@ import random
 '''
 
 
-class GamePlayerAI(GameObject):
+class Pitcher(GameObject):
 
     # 게임에서 활용될 GamePlayerAI 클래스 초기화:
     def __init__(self, scene, name, playMode, layer, bActive, frame):
@@ -27,7 +27,7 @@ class GamePlayerAI(GameObject):
         self.action = 0
         self.play_mode = playMode
         self.play_anim = playMode.anim
-        self.state_machine = StateMachine_PlayerAI(self)
+        self.state_machine = StateMachine_Pitcher(self)
         self.max_frame = len(playMode.anim[self.action].posX)
 
         self.game_system = None

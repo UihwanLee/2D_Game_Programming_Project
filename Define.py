@@ -332,12 +332,12 @@ Hitter_Anim.append(Hitter_IDLE)
 Hitter_Anim.append(Hitter_HIT)
 
 # Hitter 구조체
-Hitter = PlayMode_Info()
-Hitter.pos = [275, 200]
-Hitter.size = [300, 300]
-Hitter.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
-Hitter.type = DYNAMIC
-Hitter.anim = Hitter_Anim
+Hitter_Info = PlayMode_Info()
+Hitter_Info.pos = [275, 200]
+Hitter_Info.size = [300, 300]
+Hitter_Info.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
+Hitter_Info.type = DYNAMIC
+Hitter_Info.anim = Hitter_Anim
 
 ''' Pitcher '''
 
@@ -361,18 +361,18 @@ Pitcher_Anim.append(Pitcher_IDLE)
 Pitcher_Anim.append(Picher_THROW)
 
 # Pitcher 구조체
-Pitcher = PlayMode_Info()
-Pitcher.pos = [400, 270]
-Pitcher.size = [100, 100]
-Pitcher.sprite_sheet = 'Sprites/Pitcher/Sprite_Sheet_Pitcher.png'
-Pitcher.type = DYNAMIC
-Pitcher.anim = Pitcher_Anim
+Pitcher_Info = PlayMode_Info()
+Pitcher_Info.pos = [400, 270]
+Pitcher_Info.size = [100, 100]
+Pitcher_Info.sprite_sheet = 'Sprites/Pitcher/Sprite_Sheet_Pitcher.png'
+Pitcher_Info.type = DYNAMIC
+Pitcher_Info.anim = Pitcher_Anim
 
 
 ''' PlayMode'''
 HITTER = 0
 PITCHER = 1
-PlayMode = {HITTER: Hitter, PITCHER: Pitcher}
+PlayMode = {HITTER: Hitter_Info, PITCHER: Pitcher_Info}
 
 
 

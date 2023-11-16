@@ -24,7 +24,7 @@ class GameEngine:
         self.scene_04 = Scene04(4, self)
 
         # 현재 게임 엔진에서 첫번째로 불러올 씬
-        self.game_world = self.scene_01
+        self.game_world = self.scene_03
 
         # 게임에서 사용할 player
         self.player = None
@@ -55,6 +55,7 @@ class GameEngine:
         self.playerAI.game_system = self.game_system
 
         # scene04
+        self.game_system.scene04 = self.scene_04
         self.game_system.base = self.scene_04.find_object(background_base_02_name)
         self.game_system.base_ball_base = self.scene_04.find_object(base_ball_name)
 

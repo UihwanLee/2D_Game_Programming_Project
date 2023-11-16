@@ -100,6 +100,8 @@ class GameSystem:
         self.game_engine = None
         self.ui_manager = None
 
+        self.scene04 = None
+
         self.temp = 0
         self.throw_event_rate = 0
 
@@ -258,7 +260,7 @@ class GameSystem:
         self.base_camera_angle = math.atan2(background_base_02_pos[1] - self.base_camera_target_y,
                                             self.base_camera_target_x - background_base_02_pos[0])
 
-            # scene_02에서 공이 홈런/안타/뜬볼 처리 애니메이션
+    # scene_04에서 공이 홈런/안타/뜬볼 처리 애니메이션
     def hit_ball_to_target_anim_in_base(self):
         # 설정된 hit_target_pos에 따라 base_ball_base, camera 이동
         camera_speed = 1.0
@@ -277,6 +279,7 @@ class GameSystem:
 
             # 변수 초기화
             self.reset_throw()
+            self.scene04.reset_all_defender()
 
             # 씬 변경
             self.game_engine.change_scene(SCENE_03)
@@ -286,6 +289,12 @@ class GameSystem:
 
         self.base_ball_base.pos[0] -= self.base_ball_base_speed * math.cos(angle)
         self.base_ball_base.pos[1] += self.base_ball_base_speed * math.sin(angle)
+
+        # scene04에 있는 모든 오브젝트 위치 갱신
+        if self.camera_pos_x <= 600 and self.camera_pos_x >= 200:
+            self.scene04.move_all_defender(math.cos(angle) , (-1.0 * math.sin(angle)))
+        else:
+            self.scene04.move_all_defender(0, (-1.0 * math.sin(angle)))
 
         if self.camera_pos_x > 600:
             self.camera_pos_x = 600

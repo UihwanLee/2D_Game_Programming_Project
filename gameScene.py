@@ -1,6 +1,7 @@
 from gameObject import GameObject
-from gamePlayer import Hitter
-from gameAI import Pitcher, Defender
+from gameHitter import Hitter
+from gamePitcher import Pitcher
+from gameDefender import Defender
 from gameUIManager import UIManager
 
 from Define import *

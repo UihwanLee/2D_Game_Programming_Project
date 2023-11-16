@@ -423,6 +423,23 @@ DEFENDER = 2
 PlayMode = {HITTER: Hitter_Info, PITCHER: Pitcher_Info, DEFENDER: Defender_Info}
 
 
+''' Defender 위치 '''
+Base_1st = [630, 330]  # 1루수
+Base_2st = [400, 580]  # 2루수
+Base_3st = [170, 330]  # 3루수
+
+Defender_Pitcher = [400, 330]           # 투수
+Defender_Catcher = [400, 10]            # 포수
+Defender_1st = [630, 330]               # 1루수
+Defender_2st = [400, 580]               # 2루수
+Defender_3st = [170, 330]               # 3루수
+Defender_shortstop = [100, 100]         # 유격수
+Defender_right_fielder = [700, 700]     # 우익수
+Defender_center_fielder = [400, 700]    # 중견수
+Defender_left_fielder = [100, 700]      # 좌익수
+
+
+
 
 '''///////////////////////////////////////////////////////////////////////////////'''
 

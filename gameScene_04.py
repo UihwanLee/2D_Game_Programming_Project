@@ -14,11 +14,17 @@ class Scene04(Scene):
         super().create_object(base_ball_name, base_ball_pos, base_ball_img, base_ball_size, DYNAMIC, 1, True)
 
         # Defender
+        super().create_defender(Defender_name+'0', [400, 330], Defender_Info, 1, True, 0)   # 투수
         super().create_defender(Defender_name+'1', [630, 330], Defender_Info, 1, True, 0)   # 1루수
-        super().create_defender(Defender_name+'2', [400, 580], Defender_Info, 1, True, 0)   # 2루수
+        super().create_defender(Defender_name+'2', [500, 650], Defender_Info, 1, True, 0)   # 2루수
         super().create_defender(Defender_name+'3', [170, 330], Defender_Info, 1, True, 0)   # 3루수
 
-        for idx in range(1, 4):
+        super().create_defender(Defender_name + '4', [300, 650], Defender_Info, 1, True, 0)  # 유격수
+        super().create_defender(Defender_name + '5', [800, 900], Defender_Info, 1, True, 0)  # 우익수
+        super().create_defender(Defender_name + '6', [400, 900], Defender_Info, 1, True, 0)  # 중견수
+        super().create_defender(Defender_name + '7', [0, 900], Defender_Info, 1, True, 0)  # 좌익수
+
+        for idx in range(0, 8):
             self.Defender_List.append(super().find_object(Defender_name + str(idx)))
 
 
@@ -46,6 +52,13 @@ class Scene04(Scene):
 
     # Scene04에 있는 모든 defender 위치 리셋
     def reset_all_defender(self):
-        self.Defender_List[0].pos = [630, 330]  # 1루수
-        self.Defender_List[1].pos = [400, 580]  # 2루수
-        self.Defender_List[2].pos = [170, 330]  # 3루수
+        self.Defender_List[0].pos = [400, 330]
+        self.Defender_List[1].pos = [630, 330]
+        self.Defender_List[2].pos = [500, 650]
+        self.Defender_List[3].pos = [170, 330]
+
+        self.Defender_List[4].pos = [300, 650]
+        self.Defender_List[5].pos = [800, 900]
+        self.Defender_List[6].pos = [400, 900]
+        self.Defender_List[7].pos = [0, 900]
+

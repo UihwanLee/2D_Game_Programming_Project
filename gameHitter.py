@@ -5,16 +5,9 @@ from gameStateMachine import StateMachine_Hitter
 from gameTime import Time
 
 '''
-    Player 클래스 : GameObject 상속
+    Hitter 클래스 : GameObject 상속
     
-    2DGP 야구 게임에서 사용자가 플레이할 Player.
-    Player 객체는 2가지로 수행 된다.
-
-    <class Player>
-     - 야구 게임에서 scene_01에서 타자/투수를 수행
-
-    <class SystemPlayer>
-     - 안타/홈런을 치고 scene_02 에서 수행될 Player 객체
+    2DGP 야구 게임 사용자가 플레이 할 Hitter.
     
 '''
 

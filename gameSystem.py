@@ -1,7 +1,7 @@
 import math
 
 from Define import *
-from gameAI import *
+from gamePitcher import *
 from Define import BOTTOM
 import random
 
@@ -249,7 +249,9 @@ class GameSystem:
 
         # 카메라 깊이
         self.base_camera_target_y = random.randint(CAMERA_DEPTH_MAX, CAMERA_DEPTH_MIN)        # (MAX : -100 ~ MIN : 350)
-        print(self.base_camera_target_y)
+
+        # defender 위치 초기화
+        self.scene04.reset_all_defender()
 
         # 홈런 -> depth: -100 고정, base_ball speed: 0.8
         # 그 외 -> depth: (-100 ~ 350), base_ball speed: 0.5
@@ -279,10 +281,10 @@ class GameSystem:
 
             # 변수 초기화
             self.reset_throw()
-            self.scene04.reset_all_defender()
 
             # 씬 변경
             self.game_engine.change_scene(SCENE_03)
+            return
 
         self.camera_pos_x += 1.0 * math.cos(angle)
         self.camera_pos_y -= 1.0 * math.sin(angle)

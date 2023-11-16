@@ -25,6 +25,7 @@ class Defender(GameObject):
         super().__init__(scene, name, pos, playMode.sprite_sheet, playMode.size, playMode.type, layer, bActive)
         self.frame = frame
         self.action = 0
+        self.dir = 1.0
         self.play_mode = playMode
         self.play_anim = playMode.anim
         self.state_machine = StatMachine_Defender(self)
@@ -71,14 +72,19 @@ class Defender(GameObject):
         pos = super().get_object_var('pos')
         sprite = super().get_object_var('sprite')
         sizeX, sizeY = self.play_mode.size[0], self.play_mode.size[1]
-        sprite.clip_draw(frame * 100, self.action * 100, 100, 100, pos[0], pos[1], sizeX, sizeY)
+        if self.dir == 1.0:
+            sprite.clip_draw(frame * 100, self.action * 100, 100, 100, pos[0], pos[1], sizeX, sizeY)
+        elif self.dir == -1.0:
+            sprite.clip_composite_draw(frame * 100, self.action * 100, 100, 100, 0, 'h', pos[0], pos[1], sizeX, sizeY)
 
     def set_game_system(self, game_system):
         self.game_system = game_system
 
     def do_IDLE(self):
         # 아무것도 안하는 statemachine
-        pass
+        self.state_machine.handle_event(('Defender IDLE', 0))
+
+        return BehaviorTree.SUCCESS
 
     # 홈런인지 아닌지 체크 홈런 일 시 아무런 행동을 취하지 않음
     def is_home_run(self):
@@ -91,6 +97,7 @@ class Defender(GameObject):
         # 모든 defender 중 가장 가까운 defender만 SUCCESS 할 수 있도록 변경
         name = self.game_system.find_defender_shortest_distance_from_baseball()
         if self.name == name:
+            print(name)
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.FAIL
@@ -105,14 +112,18 @@ class Defender(GameObject):
         return distance2 < (r * PIXEL_PER_METER) ** 2
 
     def move_slightly_to(self, tx, ty):
-        self.dir = math.atan2(ty-self.pos[1], tx-self.pos[0])
+        self.angle = math.atan2(ty-self.pos[1], tx-self.pos[0])
         self.speed = RUN_SPEED_PPS
-        self.pos[0] += self.speed * math.cos(self.dir) * Time.frame_time
-        self.pos[1] += self.speed * math.sin(self.dir) * Time.frame_time
+        self.pos[0] += self.speed * math.cos(self.angle) * Time.frame_time
+        self.pos[1] += self.speed * math.sin(self.angle) * Time.frame_time
 
     # 설정된 공 위치로 이동
     def move_to_baseball(self, r = 0.5):
         # 움직임에 따라 stateMachine 업데이트
+        if self.pos[0] <= self.base_posX:
+            self.state_machine.handle_event(('Defender Run Right', 0))
+        else:
+            self.state_machine.handle_event(('Defender Run Left', 0))
 
         # 이동
         self.move_slightly_to(self.base_posX, self.base_posY)
@@ -121,15 +132,26 @@ class Defender(GameObject):
         else:
             return BehaviorTree.RUNNING
 
+    # 잡은 공을 상황에 따라 1루, 2루, 3루, 홈으로 던짐
+    def throw_baseball_to_defender(self):
+        self.state_machine.handle_event(('Defender Throw', 0))
+        print("액션")
+        print(self.action)
+
+        self.throw_done = False
+
+        return BehaviorTree.SUCCESS
+
     def build_behavior_tree(self):
+        a0 = Action('Do nothing', self.do_IDLE)
         c1 = Condition('Is baseball nearby', self.is_baseball_nearby, 10)
-        a1 = Action('Find chase defender', self.set_baseball_location, self.base_posX, self.base_posY)
+        a1 = Action('Set baseball location', self.set_baseball_location, self.base_posX, self.base_posY)
         a2 = Action('Move to baseball', self.move_to_baseball, 0.5)
+        a3 = Action('Throw baseball to Defender', self.throw_baseball_to_defender)
 
-        a3 = Action('Do nothing', self.do_IDLE)
 
-        SEQ_chase_baseball = Sequence('chase baseball', c1, a1, a2)
-        root = SEL_actionORnoting = Selector('action or noting', SEQ_chase_baseball, a3)
+        SEQ_chase_baseball = Sequence('chase baseball', c1, a1, a2, a3)
+        root = SEL_actionORnoting = Selector('action or noting', SEQ_chase_baseball, a0)
 
         self.bt = BehaviorTree(root)
 

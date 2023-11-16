@@ -28,6 +28,18 @@ def AI_throw(e):
 def defender_throw(e):
     return e[0] == 'Defender Throw'
 
+def defender_idle(e):
+    return e[0] == 'Defender IDLE'
+
+def defender_run_right(e):
+    return e[0] == 'Defender Run Right'
+
+def defender_run_left(e):
+    return e[0] == 'Defender Run Left'
+
+def defender_throw(e):
+    return e[0] == 'Defender Throw'
+
 
 ''' Player StateMachine '''
 
@@ -170,6 +182,7 @@ class StateMachine_Pitcher:
 class Idle_Defender:
     @staticmethod
     def enter(defender, e):
+        defender.dir = 1.0
         defender.frame = 0
         defender.action = 0
         defender.time = 0
@@ -183,17 +196,55 @@ class Idle_Defender:
     def exit(player, e):
         pass
 
-class Throw_Defender:
+class RunRight_Defender:
     @staticmethod
     def enter(defender, e):
+        defender.dir = 1.0
         defender.frame = 0
-        defender.action = 0
+        defender.action = 2
         defender.time = 0
         defender.max_frame = len(defender.play_mode.anim[defender.action].posX)  # max_frame 수정
 
     @staticmethod
     def do(player):
         pass
+
+    @staticmethod
+    def exit(player, e):
+        pass
+
+class RunLeft_Defender:
+    @staticmethod
+    def enter(defender, e):
+        defender.dir = -1.0
+        defender.frame = 0
+        defender.action = 2
+        defender.time = 0
+        defender.max_frame = len(defender.play_mode.anim[defender.action].posX)  # max_frame 수정
+
+    @staticmethod
+    def do(player):
+        pass
+
+    @staticmethod
+    def exit(player, e):
+        pass
+
+
+class Throw_Defender:
+    @staticmethod
+    def enter(defender, e):
+        defender.frame = 0
+        defender.action = 3
+        defender.time = 0
+        defender.max_frame = len(defender.play_mode.anim[defender.action].posX)  # max_frame 수정
+        defender.start_time = get_time()
+
+    @staticmethod
+    def do(defender):
+        if get_time() - defender.start_time > defender.play_anim[defender.action].total_delay:
+            print('컷')
+            defender.state_machine.handle_event(('TIME_OUT', 0))
 
     @staticmethod
     def exit(player, e):
@@ -204,7 +255,10 @@ class StatMachine_Defender:
         self.defender = defender
         self.cur_state = Idle_Defender
         self.transitions = {
-            Idle_Defender: { }
+            Idle_Defender: {defender_run_right: RunRight_Defender, defender_run_left: RunLeft_Defender, defender_throw: Throw_Defender},
+            RunRight_Defender: {defender_idle: Idle_Defender, defender_throw: Throw_Defender},
+            RunLeft_Defender: {defender_idle: Idle_Defender, defender_throw: Throw_Defender},
+            Throw_Defender: {time_out: Idle_Defender}
         }
 
     def start(self):

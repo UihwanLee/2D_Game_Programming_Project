@@ -368,11 +368,59 @@ Pitcher_Info.sprite_sheet = 'Sprites/Pitcher/Sprite_Sheet_Pitcher.png'
 Pitcher_Info.type = DYNAMIC
 Pitcher_Info.anim = Pitcher_Anim
 
+''' Defender '''
+
+Defender_name = 'Defender'
+
+Defender_Anim = []
+
+# IDLE
+Defender_IDLE = anim_frame()
+Defender_IDLE.posX = [0]
+Defender_IDLE.posY = [0]
+Defender_IDLE.delay = [0.1]
+Defender_IDLE.total_delay = 0.1
+
+# Run_Down
+Defender_Run_Down = anim_frame()
+Defender_Run_Down.posX = [0, 0]
+Defender_Run_Down.posY = [0, 0]
+Defender_Run_Down.delay = [0.1, 0.1]
+Defender_Run_Down.total_delay = sum(Defender_Run_Down.delay)
+
+# Run_Left
+Defender_Run_Left = anim_frame()
+Defender_Run_Left.posX = [0, 0, 0, 0]
+Defender_Run_Left.posY = [0, 0, 0, 0]
+Defender_Run_Left.delay = [0.1, 0.1, 0.1, 0.1]
+Defender_Run_Left.total_delay = sum(Defender_Run_Left.delay)
+
+# Throw
+Defender_Throw = anim_frame()
+Defender_Throw.posX = [0, 0, 0]
+Defender_Throw.posY = [0, 0, 0]
+Defender_Throw.delay = [0.1, 0.1, 0.1]
+Defender_Throw.total_delay = sum(Defender_Throw.delay)
+
+Defender_Anim.append(Defender_IDLE)
+Defender_Anim.append(Defender_Run_Down)
+Defender_Anim.append(Defender_Run_Left)
+Defender_Anim.append(Defender_Throw)
+
+# Defender 구조체
+Defender_Info = PlayMode_Info()
+Defender_Info.pos = [400, 300]
+Defender_Info.size = [100, 100]
+Defender_Info.sprite_sheet = 'Sprites/Pitcher/Sprite_Sheet_Picher_System.png'
+Defender_Info.type = DYNAMIC
+Defender_Info.anim = Defender_Anim
+
 
 ''' PlayMode'''
 HITTER = 0
 PITCHER = 1
-PlayMode = {HITTER: Hitter_Info, PITCHER: Pitcher_Info}
+DEFENDER = 2
+PlayMode = {HITTER: Hitter_Info, PITCHER: Pitcher_Info, DEFENDER: Defender_Info}
 
 
 

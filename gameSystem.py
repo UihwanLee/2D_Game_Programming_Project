@@ -72,7 +72,7 @@ class GameSystem:
         self.throw_angle = 0
         self.throw_speed = 0
 
-        # scene_02 글로벌 변수
+        # scene_04 글로벌 변수
 
         # base
         self.base = None
@@ -280,10 +280,10 @@ class GameSystem:
             # 안타 / 아웃은 수비 선수들의 움직임으로 판단하여 구현
 
             # 변수 초기화
-            self.reset_throw()
+            # self.reset_throw()
 
             # 씬 변경
-            self.game_engine.change_scene(SCENE_03)
+            # self.game_engine.change_scene(SCENE_03)
             return
 
         self.camera_pos_x += 1.0 * math.cos(angle)
@@ -513,3 +513,19 @@ class GameSystem:
     def check_three_out(self):
         if GameSystem.OUT >= 3:
             pass
+
+
+    # Defender 중 BaseBall과의 거리가 가장 짧은 Defender 이름 반환
+    def find_defender_shortest_distance_from_baseball(self):
+        cur_name = ""
+        cur_dist = 100000000
+        for defender in self.scene04.Defender_List:
+            posX = defender.pos[0]
+            posY = defender.pos[1]
+
+            distance2 = (self.base_ball_base.pos[0] - posX) ** 2 + (self.base_ball_base.pos[1] - posY) ** 2
+            if cur_dist > distance2:
+                cur_dist = distance2
+                cur_name = defender.name
+
+        return cur_name

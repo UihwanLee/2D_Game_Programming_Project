@@ -33,6 +33,11 @@ class Scene04(Scene):
         # 초기 세팅
         pass
 
+    # defender에 game_system 넘기기
+    def set_game_system(self, game_system):
+        for defender in self.Defender_List:
+            defender.set_game_system(game_system)
+
     # Scene에서 handle_event 처리
     def handle_event(self):
         events = get_events()

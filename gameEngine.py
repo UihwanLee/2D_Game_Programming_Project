@@ -56,6 +56,7 @@ class GameEngine:
 
         # scene04
         self.game_system.scene04 = self.scene_04
+        self.scene_04.set_game_system(self.game_system)
         self.game_system.base = self.scene_04.find_object(background_base_02_name)
         self.game_system.base_ball_base = self.scene_04.find_object(base_ball_name)
 

@@ -14,6 +14,7 @@ class GameObject:
         self.type = type
         self.layer = layer
         self.bActive = bActive
+        self.alpha = 1.0
 
     # 게임 오브젝트 업데이트. 활성화 된 오브젝트만 업데이트 한다.
     def update(self):
@@ -35,6 +36,7 @@ class GameObject:
 
     # 오브젝트 Sprite 투명도 조정
     def set_alpha(self, alpha):
+        self.alpha = alpha
         self.sprite.opacify(alpha)
 
     # 게임 오브젝트 멤버변수 get 함수. GameObject 클래스를 상속 받은 클래스가 GameObject 멤버 변수에 접근할 때 사용 한다.

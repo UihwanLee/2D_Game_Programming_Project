@@ -88,7 +88,10 @@ class Defender(GameObject):
 
     # 홈런인지 아닌지 체크 홈런 일 시 아무런 행동을 취하지 않음
     def is_home_run(self):
-        pass
+        if self.game_system.is_home_run:
+            return BehaviorTree.FAIL
+        else:
+            return BehaviorTree.SUCCESS
 
 
     # Defender 중 공을 찾으러 갈 사람 찾기
@@ -144,13 +147,14 @@ class Defender(GameObject):
 
     def build_behavior_tree(self):
         a0 = Action('Do nothing', self.do_IDLE)
-        c1 = Condition('Is baseball nearby', self.is_baseball_nearby, 10)
+        c1 = Condition('Check Hitter Home Run', self.is_home_run)
+        c2 = Condition('Is baseball nearby', self.is_baseball_nearby, 10)
         a1 = Action('Set baseball location', self.set_baseball_location, self.base_posX, self.base_posY)
         a2 = Action('Move to baseball', self.move_to_baseball, 0.5)
         a3 = Action('Throw baseball to Defender', self.throw_baseball_to_defender)
 
 
-        SEQ_chase_baseball = Sequence('chase baseball', c1, a1, a2, a3)
+        SEQ_chase_baseball = Sequence('chase baseball', c1, c2, a1, a2, a3)
         root = SEL_actionORnoting = Selector('action or noting', SEQ_chase_baseball, a0)
 
         self.bt = BehaviorTree(root)

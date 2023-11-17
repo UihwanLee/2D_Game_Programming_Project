@@ -1,4 +1,4 @@
-from sdl2 import SDL_KEYDOWN, SDLK_s, SDLK_e
+from sdl2 import SDL_KEYDOWN, SDLK_s, SDLK_e, SDLK_SPACE
 
 from Define import *
 from gameObject import *
@@ -34,14 +34,33 @@ class Hitter(GameObject):
     def handle_event(self, event):
         self.state_machine.handle_event(('INPUT', event))
 
-        # 임시
         if self.game_system:
+            # Hit
+            if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+                # SKILL 이나 홈런 체크
+                self.game_system.check_hit()
+
+                if self.game_system.is_home_run:
+                    self.state_machine.handle_event(('HOME_RUN', 0))
+                elif self.game_system.is_hit:
+                    self.game_system.do_hit()
+                    self.state_machine.handle_event(('SPACE_DOWN', 0))
+                else:
+                    self.state_machine.handle_event(('SPACE_DOWN', 0))
+
             # 스킬
             if event.type == SDL_KEYDOWN and event.key == SDLK_e:
+                ui_skill = self.game_system.ui_manager.find_ui(ui_skill_name)
+                # 이미 한번 썼으면 사용 불가
+                if ui_skill.alpha == 0.5:
+                    return
+
+                # HOME_RUN OFFSET 늘리기
+                self.game_system.home_run_max_offset = 50
+
                 self.state_machine.handle_event(('SKILL', 0))
 
                 # 스킬 UI 투명도 조정
-                ui_skill = self.game_system.ui_manager.find_ui(ui_skill_name)
                 ui_skill.set_alpha(0.5)
 
                 # cover on

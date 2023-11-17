@@ -280,9 +280,6 @@ THROW_POWER_HIGH = 3
 
 # 타자 hit 시 판단 변수
 HIT_EXACT_SIZE = 100
-FLYING_HIT_MAX_OFFSET = 14  # 뜬볼 최소 offset 값
-HIT_MAX_OFFSET = 10         # 안타 최소 offset 값
-HOME_RUN_MAX_OFFSET = 1.0   # 홈런 최소 offset 값
 
 HIT_DIR_MIN_X = 200         # hit 시 야구공 이동 방향 최소 x값
 HIT_DIR_MAX_X = 800         # hit 시 야구공 이동 방향 최대 x값
@@ -339,7 +336,7 @@ Hitter_HIT.max_frame = 6
 Hitter_HOME_RUN = anim_frame()
 Hitter_HOME_RUN.posX = [275, 275, 275, 345, 345, 275]
 Hitter_HOME_RUN.posY = [200, 200, 200, 200, 200, 200]
-Hitter_HOME_RUN.delay = [0.01, 0.1, 0.1, 0.05, 10.0, 0.2]
+Hitter_HOME_RUN.delay = [0.01, 0.05, 0.05, 0.05, 3.0, 0.2]
 Hitter_HOME_RUN.total_delay = sum(Hitter_HOME_RUN.delay)
 
 # SKILL

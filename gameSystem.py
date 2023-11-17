@@ -96,6 +96,10 @@ class GameSystem:
         self.ui_ball = []
         self.ui_out = []
 
+        # 타자 hit 시 판단 변수
+        self.home_run_max_offset = 3.0
+        self.hit_max_offset = 50
+
         # 클래스
         self.game_engine = None
         self.ui_manager = None
@@ -149,6 +153,11 @@ class GameSystem:
         self.is_hit_anim = False
         self.is_hit_anim2 = False
 
+        self.home_run_max_offset = 3.0
+
+        if self.scene03.cover.bActive:
+            self.scene03.cover.bActive = False
+
 
     # Player 공/수 선택 공->타자 / 수->투수로 시스템 설정 하기
     def SetPlayMode(self):
@@ -165,22 +174,29 @@ class GameSystem:
 
         # system에서 설정한 범위 값대로 홈런/안타/뜬볼/스트라이크 체크
         # 홈런이나 안타 시 IS_HIT 변수 변경
-        if offset <= HOME_RUN_MAX_OFFSET:
+        if offset <= self.home_run_max_offset:
             self.is_hit = True
             self.is_home_run = True
-            self.start_hit(False, True)
             print('홈런!')
-        elif offset <= 50:
+        elif offset <= self.hit_max_offset:
             self.is_hit = True
-            self.start_hit(False, False)
             print('안타!')
-        # elif offset <= FLYING_HIT_MAX_OFFSET:
-        #     self.is_hit = True
-        #     self.start_hit(True, False)
-        #     print('뜬 볼')
         else:
             self.is_hit = False
             print('헛 스윙!')
+
+    def do_home_run(self):
+        # 투수가 이미 던져서 스트라이크/볼 처리 된 경우 예외처리
+        if self.is_throw_Done:
+            return
+
+        self.start_hit(False, True)
+
+    def do_hit(self):
+        # 투수가 이미 던져서 스트라이크/볼 처리 된 경우 예외처리
+        if self.is_throw_Done:
+            return
+        self.start_hit(False, False)
 
     # hit 할 시, 야구공 랜덤으로 위치 설정. 설정된 변수 대로 scene_01, scene_02 진행
     def start_hit(self, is_flying, is_home_run):
@@ -202,7 +218,6 @@ class GameSystem:
         self.hit_angle = math.atan2(self.hit_target_pos[1] - self.base_ball_pos_y, self.hit_target_pos[0] - self.base_ball_pos_x)
         self.is_hit_anim = True
 
-    # scene_01, scene_02에서
     def hit_ball_to_target_anim(self):
         hit_speed = 1.0
         angle = self.hit_angle
@@ -221,7 +236,7 @@ class GameSystem:
             self.base_ball.size[1] += 1.0 * Time.frame_rate
 
         # 타켓 위치로 왔을 때 종료
-        # scene_02로 change
+        # scene_04로 change
         if distance < 5:
             self.is_hit_anim = False
             self.set_hit_ball_to_target_anim_in_base()
@@ -257,7 +272,7 @@ class GameSystem:
         # 홈런 -> depth: -100 고정, base_ball speed: 0.8
         # 그 외 -> depth: (-100 ~ 350), base_ball speed: 0.5
         if self.is_home_run:
-            self.base_camera_target_y
+            self.base_camera_target_y = -100
             self.base_ball_base_speed = 0.8
 
         self.base_camera_angle = math.atan2(background_base_02_pos[1] - self.base_camera_target_y,

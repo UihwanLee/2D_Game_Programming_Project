@@ -49,11 +49,6 @@ class UI(GameObject):
     def change_sprite(self, new_sprite):
         super().change_sprite(new_sprite)
 
-    # ui Sprite 투명도 조정
-    def set_alpha(self, alpha):
-        sprite = super().get_object_var('sprite')
-        sprite.opacify(alpha)
-
     def is_fade_done(self):
         return self.is_fade_anim
 

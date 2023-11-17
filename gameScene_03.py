@@ -5,6 +5,7 @@ class Scene03(Scene):
     def __init__(self, order, engine):
         super().__init__(order, engine)
         self.player = None
+        self.cover = None
 
     # scene에서 초기 오브젝트 / UI 세팅
     def init(self):
@@ -28,6 +29,12 @@ class Scene03(Scene):
                           DYNAMIC, 2, False, message_strike_out_ui_size)
         super().create_ui(message_ball, message_ball_pos, message_ball_img, message_ball_size, DYNAMIC, 2, False,
                           message_ball_ui_size)
+
+        # SKILL
+        super().create_ui(ui_skill_name, ui_skill_pos, ui_skill_img, ui_skill_size, DYNAMIC, 2, True, ui_strike_ui_size)
+        super().create_object(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 0, False)
+        self.cover = super().find_object(bg_black_name)
+        self.cover.set_alpha(0.5)
 
         # 스트라이크 2개 / 볼 3개 / 아웃 2개
         super().create_ui(ui_strike_name + '1', ui_strike_pos, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)

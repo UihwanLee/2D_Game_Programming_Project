@@ -1,5 +1,6 @@
-from sdl2 import SDL_KEYDOWN, SDLK_s
+from sdl2 import SDL_KEYDOWN, SDLK_s, SDLK_e
 
+from Define import *
 from gameObject import *
 from gameStateMachine import StateMachine_Hitter
 from gameTime import Time
@@ -25,6 +26,7 @@ class Hitter(GameObject):
         self.action = 0
         self.state_machine = StateMachine_Hitter(self)
         self.max_frame = len(playMode.anim[self.action].posX)
+        self.is_skill = False
 
         self.game_system = None
 
@@ -34,6 +36,19 @@ class Hitter(GameObject):
 
         # 임시
         if self.game_system:
+            # 스킬
+            if event.type == SDL_KEYDOWN and event.key == SDLK_e:
+                self.state_machine.handle_event(('SKILL', 0))
+
+                # 스킬 UI 투명도 조정
+                ui_skill = self.game_system.ui_manager.find_ui(ui_skill_name)
+                ui_skill.set_alpha(0.5)
+
+                # cover on
+                self.game_system.scene03.cover.bActive = True
+
+                self.is_skill = True
+
             if event.type == SDL_KEYDOWN and event.key == SDLK_s:
                 self.game_system.throw_ball()
 

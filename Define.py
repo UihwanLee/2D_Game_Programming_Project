@@ -219,6 +219,13 @@ ui_out_size = [30, 40]
 ui_out_img = 'Sprites/UI/UI_OUT.png'
 ui_out_ui_size = [100, 100]
 
+#UI_SKILL
+ui_skill_name = 'UI_SKILL'
+ui_skill_pos = [600, 250]
+ui_skill_size = [150, 150]
+ui_skill_img = 'Sprites/UI/UI_SKILL.png'
+ui_skill_ui_size = [100, 100]
+
 #Message_Strike
 message_strike = 'Message_Strike'
 message_strike_pos = [400, 300]
@@ -328,14 +335,30 @@ Hitter_HIT.delay = [0.01, 0.1, 0.1, 0.05, 0.05, 0.2]
 Hitter_HIT.total_delay = sum(Hitter_HIT.delay)
 Hitter_HIT.max_frame = 6
 
+# HOME_RUN
+Hitter_HOME_RUN = anim_frame()
+Hitter_HOME_RUN.posX = [275, 275, 275, 345, 345, 275]
+Hitter_HOME_RUN.posY = [200, 200, 200, 200, 200, 200]
+Hitter_HOME_RUN.delay = [0.01, 0.1, 0.1, 0.05, 10.0, 0.2]
+Hitter_HOME_RUN.total_delay = sum(Hitter_HOME_RUN.delay)
+
+# SKILL
+Hitter_SKILL = anim_frame()
+Hitter_SKILL.posX = [275, 275, 275]
+Hitter_SKILL.posY = [200, 200, 200]
+Hitter_SKILL.delay = [0.5, 0.5, 0.5]
+Hitter_SKILL.total_delay = sum(Hitter_SKILL.delay)
+
 Hitter_Anim.append(Hitter_IDLE)
 Hitter_Anim.append(Hitter_HIT)
+Hitter_Anim.append(Hitter_HOME_RUN)
+Hitter_Anim.append(Hitter_SKILL)
 
 # Hitter 구조체
 Hitter_Info = PlayMode_Info()
 Hitter_Info.pos = [275, 200]
 Hitter_Info.size = [300, 300]
-Hitter_Info.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter.png'
+Hitter_Info.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter_02.png'
 Hitter_Info.type = DYNAMIC
 Hitter_Info.anim = Hitter_Anim
 

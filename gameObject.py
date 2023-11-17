@@ -33,6 +33,10 @@ class GameObject:
     def change_sprite(self, new_sprite):
         self.sprite = load_image(new_sprite)
 
+    # 오브젝트 Sprite 투명도 조정
+    def set_alpha(self, alpha):
+        self.sprite.opacify(alpha)
+
     # 게임 오브젝트 멤버변수 get 함수. GameObject 클래스를 상속 받은 클래스가 GameObject 멤버 변수에 접근할 때 사용 한다.
     def get_object_var(self, var):
         if hasattr(self, var):

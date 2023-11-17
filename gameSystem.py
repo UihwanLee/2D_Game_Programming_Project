@@ -100,6 +100,7 @@ class GameSystem:
         self.game_engine = None
         self.ui_manager = None
 
+        self.scene03 = None
         self.scene04 = None
 
         self.temp = 0

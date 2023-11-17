@@ -18,6 +18,8 @@ from pico2d import SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, get_time
 def space_down(e):
     return e[0] == 'INPUT' and e[1].type == SDL_KEYDOWN and e[1].key == SDLK_SPACE
 
+def skill_on(e):
+    return e[0] == 'SKILL'
 
 def time_out(e):
     return e[0] == 'TIME_OUT'
@@ -49,6 +51,23 @@ class Idle_Hitter:
     def enter(player, e):
         player.frame = 0
         player.action = 0
+        player.time = 0
+        player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
+
+    @staticmethod
+    def do(player):
+        pass
+
+    @staticmethod
+    def exit(player, e):
+        pass
+
+
+class Skill_Hitter:
+    @staticmethod
+    def enter(player, e):
+        player.frame = 0
+        player.action = 3
         player.time = 0
         player.max_frame = len(player.play_mode.anim[player.action].posX)  # max_frame 수정
 
@@ -134,8 +153,9 @@ class StateMachine_Hitter:
         self.player = player
         self.cur_state = Idle_Hitter
         self.transitions = {
-            Idle_Hitter: {space_down: Hit},
-            Hit: {time_out: Idle_Hitter}
+            Idle_Hitter: {space_down: Hit, skill_on:Skill_Hitter},
+            Hit: {time_out: Idle_Hitter},
+            Skill_Hitter: {space_down: Hit}
         }
 
     def start(self):

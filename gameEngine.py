@@ -35,6 +35,7 @@ class GameEngine:
 
     # 게임 내에서 사용할 game_system, player, playerAI 등을 초기화
     def init_setting(self):
+
         # scene03
         self.game_system.playerAI = self.scene_03.find_object(playerAI_name)
         self.game_system.base_ball = self.scene_03.find_object(base_ball_name)
@@ -53,6 +54,8 @@ class GameEngine:
         self.player.game_system = self.game_system
         self.playerAI = self.game_system.playerAI
         self.playerAI.game_system = self.game_system
+
+        self.game_system.scene03 = self.scene_03
 
         # scene04
         self.game_system.scene04 = self.scene_04

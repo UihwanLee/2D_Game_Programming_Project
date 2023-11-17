@@ -134,6 +134,8 @@ class Homr_Run:
         # HOME_RUN 이펙트가 끝나고 홈런 진행
         if get_time() - hitter.start_time > hitter.play_anim[hitter.action].total_delay:
             hitter.state_machine.handle_event(('TIME_OUT', 0))
+            hitter.game_system.ui_manager.is_effect_home_run = False
+            hitter.game_system.ui_manager.start_show_home_run_message(hitter.game_system.scene04.home_run_msg)
             hitter.game_system.do_home_run()
 
 

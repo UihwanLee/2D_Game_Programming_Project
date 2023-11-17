@@ -272,6 +272,7 @@ class GameSystem:
         # 홈런 -> depth: -100 고정, base_ball speed: 0.8
         # 그 외 -> depth: (-100 ~ 350), base_ball speed: 0.5
         if self.is_home_run:
+            self.scene04.cover.bActive = True
             self.base_camera_target_y = -100
             self.base_ball_base_speed = 0.8
 

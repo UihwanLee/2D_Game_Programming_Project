@@ -1,4 +1,5 @@
 from gameObject import *
+from Define import *
 
 '''
     2DGP 게임에서 UI를 관리하는 모듈
@@ -87,7 +88,7 @@ class UI(GameObject):
         if self.fade_ui.alpha >= 1.0:
             if self.is_fade_in_anim:
                 if self.scene is not None:
-                    self.scene.fade_done()
+                    self.scene.fade_done(self)
                 self.is_fade_anim = False
             else:
                 self.fade_in_done = True
@@ -109,7 +110,7 @@ class UI(GameObject):
 
             # scene이 존재하면 fade가 끝났음을 알린다.
             if self.scene is not None:
-                self.scene.fade_done()
+                self.scene.fade_done(self)
             return
 
         self.fade_ui.alpha -= self.fade_out_alpha
@@ -128,6 +129,11 @@ class UIManager:
         self.fade_ui = None
         self.fade_sprite = None
         self.fade_in_done = False
+
+        # effect_home_run
+        self.is_effect_home_run = False
+        self.cur_home_run_msg_idx = 0
+        self.home_run_msg = None
 
     # ui 생성하는 함수, ui_list에 담는다.
     def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):
@@ -199,7 +205,34 @@ class UIManager:
     def check_fade_anim_done(self, ui):
         return ui.is_fade_anim
 
-    # 반짝반짝 애니메이션
-    def start_twincle(self, name, in_duration, out_duration):
-        pass
+    # 반짝반짝 애니메이션(홈런 이펙트)
+    def start_effect_home_run(self):
+        self.is_effect_home_run = True
+        ui1 = self.find_ui(effect_home_run_01_name)
+        ui2 = self.find_ui(effect_home_run_02_name)
+        self.start_fade(ui1, 0.1, 150, self)
+        self.start_fade(ui2, 150, 0.1, self)
+
+    # scene04에서 홈런 이펙트
+    def start_show_home_run_message(self, home_run_msg):
+        self.home_run_msg = home_run_msg
+
+        # 한 글자 씩 보이게 하기
+        self.start_fade_in(self.home_run_msg[0], 200, self)
+
+
+    def fade_done(self, ui):
+        if ui.name == effect_home_run_01_name and self.is_effect_home_run:
+            self.start_fade(ui, 0.1, 150)
+        elif ui.name == effect_home_run_02_name and self.is_effect_home_run:
+            self.start_fade(ui, 150, 0.1)
+        elif 'UI_MSG_' in ui.name and self.cur_home_run_msg_idx < 7:
+            self.cur_home_run_msg_idx += 1
+
+            if self.cur_home_run_msg_idx >= 7:
+                self.cur_home_run_msg_idx = 0
+                return
+
+            self.start_fade_in(self.home_run_msg[self.cur_home_run_msg_idx], 200, self)
+
 

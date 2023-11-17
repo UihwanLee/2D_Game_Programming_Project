@@ -226,6 +226,57 @@ ui_skill_size = [150, 150]
 ui_skill_img = 'Sprites/UI/UI_SKILL.png'
 ui_skill_ui_size = [100, 100]
 
+#UI_HOME_RUN_H
+ui_msg_H = 'UI_MSG_H'
+ui_msg_H_pos = [100, 350]
+ui_msg_H_size = [100, 100]
+ui_msg_H_img = 'Sprites/UI/HOME_RUN/UI_H.png'
+ui_msg_H_ui_size = [100, 100]
+
+#UI_HOME_RUN_O
+ui_msg_O = 'UI_MSG_O'
+ui_msg_O_pos = [200, 350]
+ui_msg_O_size = [100, 100]
+ui_msg_O_img = 'Sprites/UI/HOME_RUN/UI_O.png'
+ui_msg_O_ui_size = [100, 100]
+
+#UI_HOME_RUN_M
+ui_msg_M = 'UI_MSG_M'
+ui_msg_M_pos = [300, 350]
+ui_msg_M_size = [100, 100]
+ui_msg_M_img = 'Sprites/UI/HOME_RUN/UI_M.png'
+ui_msg_M_ui_size = [100, 100]
+
+#UI_HOME_RUN_E
+ui_msg_E = 'UI_MSG_E'
+ui_msg_E_pos = [400, 350]
+ui_msg_E_size = [100, 100]
+ui_msg_E_img = 'Sprites/UI/HOME_RUN/UI_E.png'
+ui_msg_E_ui_size = [100, 100]
+
+#UI_HOME_RUN_R
+ui_msg_R = 'UI_MSG_R'
+ui_msg_R_pos = [500, 350]
+ui_msg_R_size = [100, 100]
+ui_msg_R_img = 'Sprites/UI/HOME_RUN/UI_R.png'
+ui_msg_R_ui_size = [100, 100]
+
+#UI_HOME_RUN_U
+ui_msg_U = 'UI_MSG_U'
+ui_msg_U_pos = [600, 350]
+ui_msg_U_size = [100, 100]
+ui_msg_U_img = 'Sprites/UI/HOME_RUN/UI_U.png'
+ui_msg_U_ui_size = [100, 100]
+
+
+#UI_HOME_RUN_N
+ui_msg_N = 'UI_MSG_N'
+ui_msg_N_pos = [700, 350]
+ui_msg_N_size = [100, 100]
+ui_msg_N_img = 'Sprites/UI/HOME_RUN/UI_N.png'
+ui_msg_N_ui_size = [100, 100]
+
+
 #Message_Strike
 message_strike = 'Message_Strike'
 message_strike_pos = [400, 300]
@@ -246,6 +297,21 @@ message_ball_pos = [400, 300]
 message_ball_size = [400, 200]
 message_ball_img = 'Sprites/UI/Msg_Ball.png'
 message_ball_ui_size = [400, 200]
+
+# EFFECT_HOME_RUN_01
+effect_home_run_01_name = 'Effect_Home_Run_01'
+effect_home_run_01_pos = [400, 300]
+effect_home_run_01_size = [800, 600]
+effect_home_run_01_img = 'Sprites/BG/EFFECT_HOME_RUN_01.png'
+effect_home_run_01_ui_size = [800, 600]
+
+# EFFECT_HOME_RUN_02
+effect_home_run_02_name = 'Effect_Home_Run_02'
+effect_home_run_02_pos = [400, 300]
+effect_home_run_02_size = [800, 600]
+effect_home_run_02_img = 'Sprites/BG/EFFECT_HOME_RUN_02.png'
+effect_home_run_02_ui_size = [800, 600]
+
 
 # Hit_Box
 hit_box = 'Hit_Box'

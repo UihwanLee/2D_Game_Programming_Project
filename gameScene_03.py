@@ -36,6 +36,12 @@ class Scene03(Scene):
         self.cover = super().find_object(bg_black_name)
         self.cover.set_alpha(0.5)
 
+        # EFFECT
+        super().create_ui(effect_home_run_01_name, effect_home_run_01_pos, effect_home_run_01_img, effect_home_run_01_size, DYNAMIC, 3, False,
+                          effect_home_run_01_ui_size)
+        super().create_ui(effect_home_run_02_name, effect_home_run_02_pos, effect_home_run_02_img, effect_home_run_02_size, DYNAMIC, 3, False,
+                          effect_home_run_02_ui_size)
+
         # 스트라이크 2개 / 볼 3개 / 아웃 2개
         super().create_ui(ui_strike_name + '1', ui_strike_pos, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)
         super().create_ui(ui_strike_name + '2', ui_strike_pos, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)

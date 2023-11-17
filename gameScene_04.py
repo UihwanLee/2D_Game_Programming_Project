@@ -4,8 +4,10 @@ from gameScene import *
 class Scene04(Scene):
     def __init__(self, order, engine):
         super().__init__(order, engine)
-
+        self.ui_manager = super().get_object_var('ui_manager')
+        self.cover = None
         self.Defender_List = []
+        self.home_run_msg = []
 
     # scene에서 초기 오브젝트 세팅
     def init(self):
@@ -23,6 +25,27 @@ class Scene04(Scene):
         super().create_defender(Defender_name + '5', [800, 900], Defender_Info, 1, True, 0)  # 우익수
         super().create_defender(Defender_name + '6', [400, 900], Defender_Info, 1, True, 0)  # 중견수
         super().create_defender(Defender_name + '7', [0, 900], Defender_Info, 1, True, 0)  # 좌익수
+
+        # cover
+        super().create_object(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 0, False)
+        self.cover = super().find_object(bg_black_name)
+        self.cover.set_alpha(0.7)
+
+        # HOME_RUN_MESSAGE
+        super().create_ui(ui_msg_H, ui_msg_H_pos, ui_msg_H_img, ui_msg_H_size, DYNAMIC, 2, False, ui_msg_H_ui_size)
+        super().create_ui(ui_msg_O, ui_msg_O_pos, ui_msg_O_img, ui_msg_O_size, DYNAMIC, 2, False, ui_msg_O_ui_size)
+        super().create_ui(ui_msg_M, ui_msg_M_pos, ui_msg_M_img, ui_msg_M_size, DYNAMIC, 2, False, ui_msg_M_ui_size)
+        super().create_ui(ui_msg_E, ui_msg_E_pos, ui_msg_E_img, ui_msg_E_size, DYNAMIC, 2, False, ui_msg_E_ui_size)
+        super().create_ui(ui_msg_R, ui_msg_R_pos, ui_msg_R_img, ui_msg_R_size, DYNAMIC, 2, False, ui_msg_R_ui_size)
+        super().create_ui(ui_msg_U, ui_msg_U_pos, ui_msg_U_img, ui_msg_U_size, DYNAMIC, 2, False, ui_msg_U_ui_size)
+        super().create_ui(ui_msg_N, ui_msg_N_pos, ui_msg_N_img, ui_msg_N_size, DYNAMIC, 2, False, ui_msg_N_ui_size)
+        self.home_run_msg.append(super().find_ui(ui_msg_H))
+        self.home_run_msg.append(super().find_ui(ui_msg_O))
+        self.home_run_msg.append(super().find_ui(ui_msg_M))
+        self.home_run_msg.append(super().find_ui(ui_msg_E))
+        self.home_run_msg.append(super().find_ui(ui_msg_R))
+        self.home_run_msg.append(super().find_ui(ui_msg_U))
+        self.home_run_msg.append(super().find_ui(ui_msg_N))
 
         for idx in range(0, 8):
             self.Defender_List.append(super().find_object(Defender_name + str(idx)))

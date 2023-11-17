@@ -112,5 +112,5 @@ class Scene01(Scene):
         self.ui_manager.set_bActive(button_quit_name, False)
         self.ui_manager.set_bActive(button_return_name, False)
 
-    def fade_done(self):
-        self.ui_manager.start_fade(self.touch_screen_ui, 200, 200, self)
+    def fade_done(self, ui):
+        self.ui_manager.start_fade(ui, 200, 200, self)

@@ -41,6 +41,10 @@ class Defender(GameObject):
         self.bt = None
         self.build_behavior_tree()
 
+        # 자기가 한 역할이 모두 수행됐는지 체크하는 변수
+        # 다른 수비수에게 공을 던지면 자기의 할 일을 끝나는 것을 알리는 변수
+        self.is_play_done = False
+
     def update(self):
         active = super().get_object_var('bActive')
         if not active:
@@ -96,9 +100,15 @@ class Defender(GameObject):
 
     # Defender 중 공을 찾으러 갈 사람 찾기
     def is_baseball_nearby(self, r):
+
+        # 자기의 할 일이 모두 끝나면 시행 안함
+        if self.is_play_done:
+            return BehaviorTree.FAIL
+
         # 거리 체크 후
         # 모든 defender 중 가장 가까운 defender만 SUCCESS 할 수 있도록 변경
         name = self.game_system.find_defender_shortest_distance_from_baseball()
+
         if self.name == name:
             print(name)
             return BehaviorTree.SUCCESS
@@ -142,6 +152,9 @@ class Defender(GameObject):
         print(self.action)
 
         self.throw_done = False
+
+        # 공을 던진 후에는 자기에 할일이 모두 끝나는 것을 알림
+        self.is_play_done = True
 
         return BehaviorTree.SUCCESS
 

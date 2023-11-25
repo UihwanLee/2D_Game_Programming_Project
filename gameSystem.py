@@ -91,6 +91,9 @@ class GameSystem:
         self.base_ball_base_angle = 0.0
         self.base_ball_base_dir = 1.0
 
+        # Defender move_offset
+        self.defender_move_offset = [0.0, 0.0]
+
         # 스트라이크, 볼, 아웃 전등
         self.ui_strike = []
         self.ui_ball = []
@@ -311,9 +314,12 @@ class GameSystem:
 
         # scene04에 있는 모든 오브젝트 위치 갱신
         if self.camera_pos_x <= 600 and self.camera_pos_x >= 200:
-            self.scene04.move_all_defender(math.cos(angle) , (-1.0 * math.sin(angle)))
+            self.scene04.move_all_defender(math.cos(angle), (-1.0 * math.sin(angle)))
+            self.defender_move_offset[0] += math.cos(angle)
+            self.defender_move_offset[1] += -1.0 * math.sin(angle)
         else:
             self.scene04.move_all_defender(0, (-1.0 * math.sin(angle)))
+            self.defender_move_offset[1] += -1.0 * math.sin(angle)
 
         if self.camera_pos_x > 600:
             self.camera_pos_x = 600
@@ -546,3 +552,8 @@ class GameSystem:
                 cur_name = defender.name
 
         return cur_name
+
+    # Defender 중 야구공 받을 Defender 찾아서 위치 반환
+    def find_defender_receive_baseball(self):
+        # TEST : 1루수 위치 보내기
+        return self.scene04.Defender_List[1].pos

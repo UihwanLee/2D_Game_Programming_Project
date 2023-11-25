@@ -18,6 +18,12 @@ RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
 RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
 RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
 
+# BASEBALL SPEED
+THROW_SPEED_KMPH = 15.0  # Km / Hour
+THROW_SPEED_MPM = (THROW_SPEED_KMPH * 1000.0 / 60.0)
+THROW_SPEED_MPS = (THROW_SPEED_MPM / 60.0)
+THROW_SPEED_PPS = (THROW_SPEED_KMPH * PIXEL_PER_METER)
+
 class Defender(GameObject):
 
     # 게임에서 활용될 Defender 클래스 초기화:
@@ -31,15 +37,14 @@ class Defender(GameObject):
         self.state_machine = StatMachine_Defender(self)
         self.max_frame = len(playMode.anim[self.action].posX)
 
-        self.game_system = None
-
         self.tx, self.ty = 1000, 1000
 
         self.game_system = None
 
+        self.base = None
+        self.base_ball = None
         self.base_posX, self.base_posY = 0.0, 0.0
         self.bt = None
-        self.build_behavior_tree()
 
         # 자기가 한 역할이 모두 수행됐는지 체크하는 변수
         # 다른 수비수에게 공을 던지면 자기의 할 일을 끝나는 것을 알리는 변수
@@ -61,10 +66,6 @@ class Defender(GameObject):
         # BehaviorTree 작동
         if self.bt:
             self.bt.run()
-
-        if self.game_system:
-            self.base_posX = self.game_system.base_ball_base.pos[0]
-            self.base_posY = self.game_system.base_ball_base.pos[1]
 
     # 렌더링
     def render(self):
@@ -110,7 +111,6 @@ class Defender(GameObject):
         name = self.game_system.find_defender_shortest_distance_from_baseball()
 
         if self.name == name:
-            print(name)
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.FAIL
@@ -139,35 +139,62 @@ class Defender(GameObject):
             self.state_machine.handle_event(('Defender Run Left', 0))
 
         # 이동
-        self.move_slightly_to(self.base_posX, self.base_posY)
-        if self.distance_less_than(self.base_posX, self.base_posY, self.pos[0], self.pos[1], r):
+        self.move_slightly_to(self.base_ball.pos[0], self.base_ball.pos[1])
+        if self.distance_less_than(self.base_ball.pos[0], self.base_ball.pos[1], self.pos[0], self.pos[1], r):
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.RUNNING
 
     # 잡은 공을 상황에 따라 1루, 2루, 3루, 홈으로 던짐
-    def throw_baseball_to_defender(self):
+    def find_defender_to_throw(self):
+        # 1루수로 세팅
         self.state_machine.handle_event(('Defender Throw', 0))
-        print("액션")
-        print(self.action)
+        pos = self.game_system.find_defender_receive_baseball()
+        return self.set_baseball_location(pos[0], pos[1])
 
-        self.throw_done = False
+    def throw_slightly_to(self, tx, ty):
+        self.angle = math.atan2(ty-self.base_ball.pos[1], tx-self.base_ball.pos[0])
+        self.speed = THROW_SPEED_PPS
 
-        # 공을 던진 후에는 자기에 할일이 모두 끝나는 것을 알림
-        self.is_play_done = True
+        # base 이동
+        self.base.pos[0] -= 1.0 * math.cos(self.angle)
+        self.base.pos[1] -= 1.0 * math.sin(self.angle)
 
-        return BehaviorTree.SUCCESS
+        # 야구공 이동
+        self.base_ball.pos[0] += self.speed * math.cos(self.angle) * Time.frame_time
+        self.base_ball.pos[1] += self.speed * math.sin(self.angle) * Time.frame_time
+
+        # 씬 Defender 이동
+        if self.base.pos[0] <= 600 and self.base.pos[0] >= 200:
+            self.game_system.scene04.move_all_defender(-1.0 * math.cos(self.angle), (-1.0 * math.sin(self.angle)))
+        else:
+            self.game_system.scene04.move_all_defender(0, (-1.0 * math.sin(self.angle)))
+
+    def throw_baseball_to_defender(self):
+        # 이동
+        # print(self.tx, self.ty)
+        self.throw_slightly_to(self.tx, self.ty)
+        if self.distance_less_than(self.tx, self.ty, self.base_ball.pos[0], self.base_ball.pos[1], 0.5):
+            self.throw_done = False
+            # 공을 던진 후에는 자기에 할일이 모두 끝나는 것을 알림
+            self.is_play_done = True
+            return BehaviorTree.SUCCESS
+        else:
+            return BehaviorTree.RUNNING
+
+        # return BehaviorTree.SUCCESS
 
     def build_behavior_tree(self):
         a0 = Action('Do nothing', self.do_IDLE)
         c1 = Condition('Check Hitter Home Run', self.is_home_run)
         c2 = Condition('Is baseball nearby', self.is_baseball_nearby, 10)
-        a1 = Action('Set baseball location', self.set_baseball_location, self.base_posX, self.base_posY)
+        a1 = Action('Set baseball location', self.set_baseball_location, self.base_ball.pos[0], self.base_ball.pos[1])
         a2 = Action('Move to baseball', self.move_to_baseball, 0.5)
-        a3 = Action('Throw baseball to Defender', self.throw_baseball_to_defender)
+        a3 = Action('Find receive Defender', self.find_defender_to_throw)
+        a4 = Action('Throw baseball to Defender', self.throw_baseball_to_defender)
 
 
-        SEQ_chase_baseball = Sequence('chase baseball', c1, c2, a1, a2, a3)
+        SEQ_chase_baseball = Sequence('chase baseball', c1, c2, a1, a2, a3, a4)
         root = SEL_actionORnoting = Selector('action or noting', SEQ_chase_baseball, a0)
 
         self.bt = BehaviorTree(root)

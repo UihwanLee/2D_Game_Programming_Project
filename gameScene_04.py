@@ -6,6 +6,8 @@ class Scene04(Scene):
         super().__init__(order, engine)
         self.ui_manager = super().get_object_var('ui_manager')
         self.cover = None
+        self.base = None
+        self.base_ball = None
         self.Defender_List = []
         self.home_run_msg = []
 
@@ -50,6 +52,9 @@ class Scene04(Scene):
         for idx in range(0, 8):
             self.Defender_List.append(super().find_object(Defender_name + str(idx)))
 
+        self.base = super().find_object(background_base_02_name)
+        self.base_ball = super().find_object(base_ball_name)
+
 
     # scene 전환 시 초기 함수
     def start(self):
@@ -60,6 +65,9 @@ class Scene04(Scene):
     def set_game_system(self, game_system):
         for defender in self.Defender_List:
             defender.set_game_system(game_system)
+            defender.base = self.base
+            defender.base_ball = self.base_ball
+            defender.build_behavior_tree()
 
     # Scene에서 handle_event 처리
     def handle_event(self):

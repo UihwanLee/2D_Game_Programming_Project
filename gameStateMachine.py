@@ -388,11 +388,100 @@ class Run_1st_Striker:
             striker.running = False
             striker.state_machine.handle_event(('Striker IDLE', 0))
 
+            # 홈런이면 2 -> 3 -> 4
+
 
     @staticmethod
     def exit(striker, e):
         pass
 
+
+class Run_2st_Striker:
+    @staticmethod
+    def enter(striker, e):
+        striker.dir = 1.0
+        striker.frame = 0
+        striker.action = 2
+        striker.time = 0
+        striker.max_frame = len(striker.play_mode.anim[striker.action].posX)  # max_frame 수정
+
+    @staticmethod
+    def do(striker):
+        striker.angle = math.atan2(striker.base_list[1].pos[1] - striker.pos[1],
+                                   striker.base_list[1].pos[0] - striker.pos[0])
+        striker.speed = RUN_SPEED_PPS
+        striker.pos[0] += striker.speed * math.cos(striker.angle) * Time.frame_time
+        striker.pos[1] += striker.speed * math.sin(striker.angle) * Time.frame_time
+        distance2 = (striker.base_list[1].pos[0] - striker.pos[0]) ** 2 + (
+                    striker.base_list[1].pos[1] - striker.pos[1]) ** 2
+        striker.running = True
+        if distance2 < 0.001:
+            striker.running = False
+            striker.state_machine.handle_event(('Striker IDLE', 0))
+
+            # 홈런이면 2 -> 3 -> 4
+
+    @staticmethod
+    def exit(striker, e):
+        pass
+
+class Run_3st_Striker:
+    @staticmethod
+    def enter(striker, e):
+        striker.dir = 1.0
+        striker.frame = 0
+        striker.action = 3
+        striker.time = 0
+        striker.max_frame = len(striker.play_mode.anim[striker.action].posX)  # max_frame 수정
+
+    @staticmethod
+    def do(striker):
+        striker.angle = math.atan2(striker.base_list[2].pos[1] - striker.pos[1],
+                                   striker.base_list[2].pos[0] - striker.pos[0])
+        striker.speed = RUN_SPEED_PPS
+        striker.pos[0] += striker.speed * math.cos(striker.angle) * Time.frame_time
+        striker.pos[1] += striker.speed * math.sin(striker.angle) * Time.frame_time
+        distance2 = (striker.base_list[2].pos[0] - striker.pos[0]) ** 2 + (
+                    striker.base_list[2].pos[1] - striker.pos[1]) ** 2
+        striker.running = True
+        if distance2 < 0.001:
+            striker.running = False
+            striker.state_machine.handle_event(('Striker IDLE', 0))
+
+            # 홈런이면 2 -> 3 -> 4
+
+    @staticmethod
+    def exit(striker, e):
+        pass
+
+class Run_4st_Striker:
+    @staticmethod
+    def enter(striker, e):
+        striker.dir = 1.0
+        striker.frame = 0
+        striker.action = 4
+        striker.time = 0
+        striker.max_frame = len(striker.play_mode.anim[striker.action].posX)  # max_frame 수정
+
+    @staticmethod
+    def do(striker):
+        striker.angle = math.atan2(striker.base_list[3].pos[1] - striker.pos[1],
+                                   striker.base_list[3].pos[0] - striker.pos[0])
+        striker.speed = RUN_SPEED_PPS
+        striker.pos[0] += striker.speed * math.cos(striker.angle) * Time.frame_time
+        striker.pos[1] += striker.speed * math.sin(striker.angle) * Time.frame_time
+        distance2 = (striker.base_list[3].pos[0] - striker.pos[0]) ** 2 + (
+                    striker.base_list[3].pos[1] - striker.pos[1]) ** 2
+        striker.running = True
+        if distance2 < 0.001:
+            striker.running = False
+            striker.state_machine.handle_event(('Striker IDLE', 0))
+
+            # 홈런이면 2 -> 3 -> 4
+
+    @staticmethod
+    def exit(striker, e):
+        pass
 
 class StatMachine_Striker:
     def __init__(self, striker):

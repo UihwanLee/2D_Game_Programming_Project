@@ -9,6 +9,7 @@ class Scene04(Scene):
         self.base = None
         self.base_ball = None
         self.Defender_List = []
+        self.striker = None
         self.home_run_msg = []
 
     # scene에서 초기 오브젝트 세팅
@@ -27,6 +28,9 @@ class Scene04(Scene):
         super().create_defender(Defender_name + '5', [800, 900], Defender_Info, 1, True, 0)  # 우익수
         super().create_defender(Defender_name + '6', [400, 900], Defender_Info, 1, True, 0)  # 중견수
         super().create_defender(Defender_name + '7', [0, 900], Defender_Info, 1, True, 0)  # 좌익수
+
+        # Striker
+        super().create_striker(Striker_name, [400, 70], Striker_Info, 1, True, 0)
 
         # cover
         super().create_object(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 0, False)
@@ -54,6 +58,8 @@ class Scene04(Scene):
 
         self.base = super().find_object(background_base_02_name)
         self.base_ball = super().find_object(base_ball_name)
+
+        self.striker = super().find_object(Striker_name)
 
 
     # scene 전환 시 초기 함수
@@ -85,6 +91,10 @@ class Scene04(Scene):
         for defender in self.Defender_List:
             defender.pos[0] += move_x
             defender.pos[1] += move_y
+
+        self.striker.pos[0] += move_x
+        self.striker.pos[1] += move_y
+
 
     # Scene04에 있는 모든 defender 위치 리셋
     def reset_all_defender(self):

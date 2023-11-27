@@ -139,7 +139,7 @@ class Defender(GameObject):
     # 설정된 공 위치로 이동
     def move_to_baseball(self, r = 0.5):
         # 움직임에 따라 stateMachine 업데이트
-        if self.pos[0] <= self.base_posX:
+        if self.pos[0] <= self.base_ball.pos[0]:
             self.state_machine.handle_event(('Defender Run Right', 0))
         else:
             self.state_machine.handle_event(('Defender Run Left', 0))
@@ -183,14 +183,11 @@ class Defender(GameObject):
 
     def throw_baseball_to_defender(self):
         # 이동
-        # print(self.tx, self.ty)
-        # print(self.base_ball.pos[0], self.base_ball.pos[1])
         self.is_throwing = True
         self.throw_slightly_to(self.tx, self.ty)
         if self.distance_less_than(self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[0],
                                    self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[1],
                                    self.base_ball.pos[0], self.base_ball.pos[1], 0.5):
-            # print((self.tx - self.base_ball.pos[0]) ** 2 + (self.ty - self.base_ball.pos[1]) ** 2)
             self.throw_done = False
 
             # 공을 던진 후에는 자기에 할일이 모두 끝나는 것을 알림

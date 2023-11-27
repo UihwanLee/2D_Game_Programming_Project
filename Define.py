@@ -501,12 +501,68 @@ Defender_Info.sprite_sheet = 'Sprites/Pitcher/Sprite_Sheet_Picher_System.png'
 Defender_Info.type = DYNAMIC
 Defender_Info.anim = Defender_Anim
 
+''' Striker '''
+
+Striker_name = 'Striker'
+
+Striker_Anim = []
+
+# IDLE
+Striker_IDLE = anim_frame()
+Striker_IDLE.posX = [0]
+Striker_IDLE.posY = [0]
+Striker_IDLE.delay = [0.1]
+Striker_IDLE.total_delay = 0.1
+
+# Run 1st Base
+Striker_Run_Base_1st = anim_frame()
+Striker_Run_Base_1st.posX = [0, 0, 0, 0]
+Striker_Run_Base_1st.posY = [0, 0, 0, 0]
+Striker_Run_Base_1st.delay = [0.1, 0.1, 0.1, 0.1]
+Striker_Run_Base_1st.total_delay = sum(Striker_Run_Base_1st.delay)
+
+# Run 2st Base
+Striker_Run_Base_2st = anim_frame()
+Striker_Run_Base_2st.posX = [0, 0, 0, 0]
+Striker_Run_Base_2st.posY = [0, 0, 0, 0]
+Striker_Run_Base_2st.delay = [0.1, 0.1, 0.1, 0.1]
+Striker_Run_Base_2st.total_delay = sum(Striker_Run_Base_2st.delay)
+
+# Run 3st Base
+Striker_Run_Base_3st = anim_frame()
+Striker_Run_Base_3st.posX = [0, 0, 0, 0]
+Striker_Run_Base_3st.posY = [0, 0, 0, 0]
+Striker_Run_Base_3st.delay = [0.1, 0.1, 0.1, 0.1]
+Striker_Run_Base_3st.total_delay = sum(Striker_Run_Base_3st.delay)
+
+# Run 4st Base
+Striker_Run_Base_4st = anim_frame()
+Striker_Run_Base_4st.posX = [0, 0, 0, 0]
+Striker_Run_Base_4st.posY = [0, 0, 0, 0]
+Striker_Run_Base_4st.delay = [0.1, 0.1, 0.1, 0.1]
+Striker_Run_Base_4st.total_delay = sum(Striker_Run_Base_4st.delay)
+
+Striker_Anim.append(Striker_IDLE)
+Striker_Anim.append(Striker_Run_Base_1st)
+Striker_Anim.append(Striker_Run_Base_2st)
+Striker_Anim.append(Striker_Run_Base_3st)
+Striker_Anim.append(Striker_Run_Base_4st)
+
+# Striker 구조체
+Striker_Info = PlayMode_Info()
+Striker_Info.pos = [400, 300]
+Striker_Info.size = [100, 100]
+Striker_Info.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter_Run.png'
+Striker_Info.type = DYNAMIC
+Striker_Info.anim = Striker_Anim
+
 
 ''' PlayMode'''
 HITTER = 0
 PITCHER = 1
 DEFENDER = 2
-PlayMode = {HITTER: Hitter_Info, PITCHER: Pitcher_Info, DEFENDER: Defender_Info}
+STRIKER = 3
+PlayMode = {HITTER: Hitter_Info, PITCHER: Pitcher_Info, DEFENDER: Defender_Info, STRIKER: Striker_Info}
 
 
 ''' Defender 위치 '''

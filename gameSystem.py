@@ -556,4 +556,4 @@ class GameSystem:
     # Defender 중 야구공 받을 Defender 찾아서 위치 반환
     def find_defender_receive_baseball(self):
         # TEST : 1루수 위치 보내기
-        return self.scene04.Defender_List[1].pos
+        return 1

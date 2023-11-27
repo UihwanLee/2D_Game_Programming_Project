@@ -48,6 +48,8 @@ class Defender(GameObject):
 
         # 자기가 한 역할이 모두 수행됐는지 체크하는 변수
         # 다른 수비수에게 공을 던지면 자기의 할 일을 끝나는 것을 알리는 변수
+        self.idx_receive_defender = 0
+        self.is_throwing = False
         self.is_play_done = False
 
     def update(self):
@@ -106,6 +108,10 @@ class Defender(GameObject):
         if self.is_play_done:
             return BehaviorTree.FAIL
 
+        # 던지는 중이면 넘어감
+        if self.is_throwing:
+            return BehaviorTree.SUCCESS
+
         # 거리 체크 후
         # 모든 defender 중 가장 가까운 defender만 SUCCESS 할 수 있도록 변경
         name = self.game_system.find_defender_shortest_distance_from_baseball()
@@ -122,7 +128,7 @@ class Defender(GameObject):
 
     def distance_less_than(self, x1, y1, x2, y2, r):
         distance2 = (x1 - x2) ** 2 + (y1 - y2) ** 2
-        return distance2 < (r * PIXEL_PER_METER) ** 2
+        return distance2 < 0.001
 
     def move_slightly_to(self, tx, ty):
         self.angle = math.atan2(ty-self.pos[1], tx-self.pos[0])
@@ -138,6 +144,10 @@ class Defender(GameObject):
         else:
             self.state_machine.handle_event(('Defender Run Left', 0))
 
+        # 던지는 중이면 넘어감
+        if self.is_throwing:
+            return BehaviorTree.SUCCESS
+
         # 이동
         self.move_slightly_to(self.base_ball.pos[0], self.base_ball.pos[1])
         if self.distance_less_than(self.base_ball.pos[0], self.base_ball.pos[1], self.pos[0], self.pos[1], r):
@@ -149,11 +159,12 @@ class Defender(GameObject):
     def find_defender_to_throw(self):
         # 1루수로 세팅
         self.state_machine.handle_event(('Defender Throw', 0))
-        pos = self.game_system.find_defender_receive_baseball()
-        return self.set_baseball_location(pos[0], pos[1])
+        self.idx_receive_defender = self.game_system.find_defender_receive_baseball()
+        return self.idx_receive_defender
 
     def throw_slightly_to(self, tx, ty):
-        self.angle = math.atan2(ty-self.base_ball.pos[1], tx-self.base_ball.pos[0])
+        self.angle = math.atan2(self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[1]-self.base_ball.pos[1],
+                                self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[0]-self.base_ball.pos[0])
         self.speed = THROW_SPEED_PPS
 
         # base 이동
@@ -173,11 +184,18 @@ class Defender(GameObject):
     def throw_baseball_to_defender(self):
         # 이동
         # print(self.tx, self.ty)
+        # print(self.base_ball.pos[0], self.base_ball.pos[1])
+        self.is_throwing = True
         self.throw_slightly_to(self.tx, self.ty)
-        if self.distance_less_than(self.tx, self.ty, self.base_ball.pos[0], self.base_ball.pos[1], 0.5):
+        if self.distance_less_than(self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[0],
+                                   self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[1],
+                                   self.base_ball.pos[0], self.base_ball.pos[1], 0.5):
+            # print((self.tx - self.base_ball.pos[0]) ** 2 + (self.ty - self.base_ball.pos[1]) ** 2)
             self.throw_done = False
+
             # 공을 던진 후에는 자기에 할일이 모두 끝나는 것을 알림
             self.is_play_done = True
+            self.is_throwing = False
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.RUNNING

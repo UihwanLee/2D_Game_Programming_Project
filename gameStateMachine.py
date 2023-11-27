@@ -287,7 +287,6 @@ class Throw_Defender:
     @staticmethod
     def do(defender):
         if get_time() - defender.start_time > defender.play_anim[defender.action].total_delay:
-            print('컷')
             defender.state_machine.handle_event(('TIME_OUT', 0))
 
     @staticmethod

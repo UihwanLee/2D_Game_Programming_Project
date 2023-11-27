@@ -9,7 +9,8 @@ class GameObject:
         self.scene = scene
         self.name = name
         self.pos = pos
-        self.sprite = load_image(sprite)
+        self.sprite = None
+        if sprite: self.sprite = load_image(sprite)
         self.size = size
         self.type = type
         self.layer = layer
@@ -25,9 +26,9 @@ class GameObject:
     def render(self):
         if self.bActive is False: return
 
-        if self.type == STATIC:
+        if self.type == STATIC and self.sprite:
             self.sprite.draw(self.pos[0], self.pos[1])
-        elif self.type == DYNAMIC:
+        elif self.type == DYNAMIC and self.sprite:
             self.sprite.clip_draw(0, 0, 100, 100, self.pos[0], self.pos[1], self.size[0], self.size[1])
 
     # 게임 오브젝트 sprite 변경

@@ -4,6 +4,7 @@ from gameObject import *
 from gameStateMachine import StatMachine_Defender
 from gameBehaviorTree import BehaviorTree, Action, Sequence, Condition, Selector
 from gameTime import Time
+from Define import *
 
 '''
   <class Defender>
@@ -46,6 +47,10 @@ class Defender(GameObject):
         self.base_posX, self.base_posY = 0.0, 0.0
         self.bt = None
 
+        # Base
+        self.base_list = []
+        self.own_base_idx = -1
+
         # 자기가 한 역할이 모두 수행됐는지 체크하는 변수
         # 다른 수비수에게 공을 던지면 자기의 할 일을 끝나는 것을 알리는 변수
         self.idx_receive_defender = 0
@@ -86,6 +91,9 @@ class Defender(GameObject):
 
     def set_game_system(self, game_system):
         self.game_system = game_system
+
+    def set_base_list(self, base_list):
+        self.base_list = base_list
 
     def do_IDLE(self):
         # 아무것도 안하는 statemachine
@@ -159,7 +167,7 @@ class Defender(GameObject):
     def find_defender_to_throw(self):
         # 1루수로 세팅
         self.state_machine.handle_event(('Defender Throw', 0))
-        self.idx_receive_defender = self.game_system.find_defender_receive_baseball()
+        self.idx_receive_defender = self.game_system.find_defender_receive_baseball(self.pos)
         return self.idx_receive_defender
 
     def throw_slightly_to(self, tx, ty):
@@ -178,8 +186,10 @@ class Defender(GameObject):
         # 씬 Defender 이동
         if self.base.pos[0] <= 600 and self.base.pos[0] >= 200:
             self.game_system.scene04.move_all_defender(-1.0 * math.cos(self.angle), (-1.0 * math.sin(self.angle)))
+            self.game_system.scene04.move_all_striker(-1.0 * math.cos(self.angle), (-1.0 * math.sin(self.angle)))
         else:
             self.game_system.scene04.move_all_defender(0, (-1.0 * math.sin(self.angle)))
+            self.game_system.scene04.move_all_striker(0, (-1.0 * math.sin(self.angle)))
 
     def throw_baseball_to_defender(self):
         # 이동
@@ -199,6 +209,41 @@ class Defender(GameObject):
 
         # return BehaviorTree.SUCCESS
 
+    def is_base_defender(self):
+        # 자기 위치가 아닐 때만 행동
+
+        if self.name == Defender_name + '1':
+            self.own_base_idx = 0
+        elif self.name == Defender_name + '2':
+            self.own_base_idx = 1
+        elif self.name == Defender_name + '3':
+            self.own_base_idx = 2
+
+        if self.own_base_idx != -1:
+            if self.distance_less_than(self.base_list[self.own_base_idx].pos[0], self.base_list[self.own_base_idx].pos[1], self.pos[0], self.pos[1], 0.5):
+                return BehaviorTree.FAIL
+            else:
+                return BehaviorTree.SUCCESS
+
+    def move_own_base(self):
+        if self.own_base_idx == -1:
+            return BehaviorTree.FAIL
+
+        # 움직임에 따라 stateMachine 업데이트
+        if self.pos[0] <= self.base_list[self.own_base_idx].pos[0]:
+            self.state_machine.handle_event(('Defender Run Right', 0))
+        else:
+            self.state_machine.handle_event(('Defender Run Left', 0))
+
+        # 이동
+        self.move_slightly_to(self.base_list[self.own_base_idx].pos[0], self.base_list[self.own_base_idx].pos[1])
+        if self.distance_less_than(self.base_list[self.own_base_idx].pos[0], self.base_list[self.own_base_idx].pos[1], self.pos[0], self.pos[1], 0.5):
+            return BehaviorTree.SUCCESS
+        else:
+            return BehaviorTree.RUNNING
+
+
+
     def build_behavior_tree(self):
         a0 = Action('Do nothing', self.do_IDLE)
         c1 = Condition('Check Hitter Home Run', self.is_home_run)
@@ -210,7 +255,13 @@ class Defender(GameObject):
 
 
         SEQ_chase_baseball = Sequence('chase baseball', c1, c2, a1, a2, a3, a4)
-        root = SEL_actionORnoting = Selector('action or noting', SEQ_chase_baseball, a0)
+
+        c3 = Condition('Is Base Defender', self.is_base_defender)
+        a5 = Action('Move Own Base', self.move_own_base)
+
+        SEQ_move_own_base = Sequence('move own base', c3, a5)
+
+        root = SEL_actionORnoting = Selector('action or noting', SEQ_chase_baseball, SEQ_move_own_base, a0)
 
         self.bt = BehaviorTree(root)
 

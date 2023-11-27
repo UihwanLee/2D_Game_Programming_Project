@@ -272,6 +272,9 @@ class GameSystem:
         # defender 위치 초기화
         self.scene04.reset_all_defender()
 
+        # striker 정리
+        self.scene04.reset_all_striker()
+
         # 홈런 -> depth: -100 고정, base_ball speed: 0.8
         # 그 외 -> depth: (-100 ~ 350), base_ball speed: 0.5
         if self.is_home_run:
@@ -315,10 +318,12 @@ class GameSystem:
         # scene04에 있는 모든 오브젝트 위치 갱신
         if self.camera_pos_x <= 600 and self.camera_pos_x >= 200:
             self.scene04.move_all_defender(math.cos(angle), (-1.0 * math.sin(angle)))
+            self.scene04.move_all_striker(math.cos(angle), (-1.0 * math.sin(angle)))
             self.defender_move_offset[0] += math.cos(angle)
             self.defender_move_offset[1] += -1.0 * math.sin(angle)
         else:
             self.scene04.move_all_defender(0, (-1.0 * math.sin(angle)))
+            self.scene04.move_all_striker(0, (-1.0 * math.sin(angle)))
             self.defender_move_offset[1] += -1.0 * math.sin(angle)
 
         if self.camera_pos_x > 600:
@@ -554,6 +559,19 @@ class GameSystem:
         return cur_name
 
     # Defender 중 야구공 받을 Defender 찾아서 위치 반환
-    def find_defender_receive_baseball(self):
-        # TEST : 1루수 위치 보내기
+    def find_defender_receive_baseball(self, cur_pos):
+        # striker 수 세기
+        num = 0
+        for striker in self.scene04.Striker_List:
+            if striker.bActive:
+                num += 1
+
+        if num == 1:
+            return 1
+        elif num == 2:
+            # 가장 가까운 base 부터 던짐
+            return 2
+        elif num == 3:
+            return 3
+
         return 1

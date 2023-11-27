@@ -7,9 +7,10 @@ class Scene04(Scene):
         self.ui_manager = super().get_object_var('ui_manager')
         self.cover = None
         self.base = None
+        self.base_list = []
         self.base_ball = None
         self.Defender_List = []
-        self.striker = None
+        self.Striker_List = []
         self.home_run_msg = []
 
     # scene에서 초기 오브젝트 세팅
@@ -30,7 +31,16 @@ class Scene04(Scene):
         super().create_defender(Defender_name + '7', [0, 900], Defender_Info, 1, True, 0)  # 좌익수
 
         # Striker
-        super().create_striker(Striker_name, [400, 70], Striker_Info, 1, True, 0)
+        super().create_striker(Striker_name+'0', [400, 70], Striker_Info, 1, True, 0)
+        super().create_striker(Striker_name+'1', [630, 330], Striker_Info, 1, False, 0)
+        super().create_striker(Striker_name+'2', [400, 580], Striker_Info, 1, False, 0)
+        super().create_striker(Striker_name+'3', [170, 330], Striker_Info, 1, False, 0)
+
+        # Base
+        super().create_object('Base 1st', [630, 330], None, 0, STATIC, 1, True)
+        super().create_object('Base 2st', [400, 580], None, 0, STATIC, 1, True)
+        super().create_object('Base 3st', [170, 330], None, 0, STATIC, 1, True)
+        super().create_object('Base 4st', [400, 70], None, 0, STATIC, 1, True)
 
         # cover
         super().create_object(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 0, False)
@@ -53,13 +63,21 @@ class Scene04(Scene):
         self.home_run_msg.append(super().find_ui(ui_msg_U))
         self.home_run_msg.append(super().find_ui(ui_msg_N))
 
-        for idx in range(0, 8):
-            self.Defender_List.append(super().find_object(Defender_name + str(idx)))
-
         self.base = super().find_object(background_base_02_name)
         self.base_ball = super().find_object(base_ball_name)
 
-        self.striker = super().find_object(Striker_name)
+        self.base_list.append(super().find_object('Base 1st'))
+        self.base_list.append(super().find_object('Base 2st'))
+        self.base_list.append(super().find_object('Base 3st'))
+        self.base_list.append(super().find_object('Base 4st'))
+
+        for idx in range(0, 8):
+            self.Defender_List.append(super().find_object(Defender_name + str(idx)))
+            self.Defender_List[idx].set_base_list(self.base_list)
+
+        for idx in range(0, 4):
+            self.Striker_List.append(super().find_object(Striker_name + str(idx)))
+            self.Striker_List[idx].set_base_list(self.base_list)
 
 
     # scene 전환 시 초기 함수
@@ -92,19 +110,35 @@ class Scene04(Scene):
             defender.pos[0] += move_x
             defender.pos[1] += move_y
 
-        self.striker.pos[0] += move_x
-        self.striker.pos[1] += move_y
+        for base in self.base_list:
+            base.pos[0] += move_x
+            base.pos[1] += move_y
+
+    def move_all_striker(self, move_x, move_y):
+        for striker in self.Striker_List:
+            striker.pos[0] += move_x
+            striker.pos[1] += move_y
 
 
     # Scene04에 있는 모든 defender 위치 리셋
     def reset_all_defender(self):
         self.Defender_List[0].pos = [400, 330]
         self.Defender_List[1].pos = [630, 330]
-        self.Defender_List[2].pos = [500, 650]
+        self.Defender_List[2].pos = [500, 650] # 2루 : 400, 580
         self.Defender_List[3].pos = [170, 330]
 
         self.Defender_List[4].pos = [300, 650]
         self.Defender_List[5].pos = [800, 900]
         self.Defender_List[6].pos = [400, 900]
         self.Defender_List[7].pos = [0, 900]
+
+    def reset_all_striker(self):
+        self.Striker_List[0].pos = [400, 70]
+        self.Striker_List[1].pos = [630, 330]
+        self.Striker_List[2].pos = [400, 580]  # 2루 : 400, 580
+        self.Striker_List[3].pos = [170, 330]
+
+        # 1루 띄기 시작
+        self.Striker_List[0].bActive = True
+        self.Striker_List[0].state_machine.handle_event(('Striker Run 1st', 0))
 

@@ -551,7 +551,7 @@ Striker_Anim.append(Striker_Run_Base_4st)
 # Striker 구조체
 Striker_Info = PlayMode_Info()
 Striker_Info.pos = [400, 300]
-Striker_Info.size = [100, 100]
+Striker_Info.size = [110, 110]
 Striker_Info.sprite_sheet = 'Sprites/Hitter/Sprite_Sheet_Hitter_Run.png'
 Striker_Info.type = DYNAMIC
 Striker_Info.anim = Striker_Anim

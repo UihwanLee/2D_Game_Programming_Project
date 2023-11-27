@@ -1,4 +1,8 @@
+import math
+
 from pico2d import SDL_KEYDOWN, SDL_KEYUP, SDLK_SPACE, get_time
+
+from gameTime import Time
 
 '''
 
@@ -44,6 +48,21 @@ def defender_run_left(e):
 
 def defender_throw(e):
     return e[0] == 'Defender Throw'
+
+def striker_idle(e):
+    return e[0] == 'Striker IDLE'
+
+def striker_run_1st(e):
+    return e[0] == 'Striker Run 1st'
+
+def striker_run_2st(e):
+    return e[0] == 'Striker Run 2st'
+
+def striker_run_3st(e):
+    return e[0] == 'Striker Run 3st'
+
+def striker_run_4st(e):
+    return e[0] == 'Striker Run 4st'
 
 
 ''' Player StateMachine '''
@@ -293,6 +312,7 @@ class Throw_Defender:
     def exit(player, e):
         pass
 
+
 class StatMachine_Defender:
     def __init__(self, defender):
         self.defender = defender
@@ -316,6 +336,85 @@ class StatMachine_Defender:
                 self.cur_state.exit(self.defender, e)
                 self.cur_state = next_state
                 self.cur_state.enter(self.defender, e)
+                return True
+
+        return False
+
+
+class Idle_Striker:
+    @staticmethod
+    def enter(striker, e):
+        striker.dir = 1.0
+        striker.frame = 0
+        striker.action = 0
+        striker.time = 0
+        striker.max_frame = len(striker.play_mode.anim[striker.action].posX)  # max_frame 수정
+
+        striker.running = False
+
+    @staticmethod
+    def do(player):
+        pass
+
+    @staticmethod
+    def exit(player, e):
+        pass
+
+# Striker Run Speed
+PIXEL_PER_METER = (10.0 / 0.3)  # 10 pixel 30 cm
+RUN_SPEED_KMPH = 10.0  # Km / Hour
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+class Run_1st_Striker:
+    @staticmethod
+    def enter(striker, e):
+        striker.dir = 1.0
+        striker.frame = 0
+        striker.action = 1
+        striker.time = 0
+        striker.max_frame = len(striker.play_mode.anim[striker.action].posX)  # max_frame 수정
+
+    @staticmethod
+    def do(striker):
+        striker.angle = math.atan2(striker.base_list[0].pos[1] - striker.pos[1], striker.base_list[0].pos[0] - striker.pos[0])
+        striker.speed = RUN_SPEED_PPS
+        striker.pos[0] += striker.speed * math.cos(striker.angle) * Time.frame_time
+        striker.pos[1] += striker.speed * math.sin(striker.angle) * Time.frame_time
+        distance2 = (striker.base_list[0].pos[0] - striker.pos[0]) ** 2 + (striker.base_list[0].pos[1] - striker.pos[1]) ** 2
+        striker.running = True
+        if distance2 < 0.001:
+            striker.running = False
+            striker.state_machine.handle_event(('Striker IDLE', 0))
+
+
+    @staticmethod
+    def exit(striker, e):
+        pass
+
+
+class StatMachine_Striker:
+    def __init__(self, striker):
+        self.striker = striker
+        self.cur_state = Idle_Striker
+        self.transitions = {
+            Idle_Striker: {striker_run_1st: Run_1st_Striker},
+            Run_1st_Striker: {striker_idle: Idle_Striker}
+        }
+
+    def start(self):
+        self.cur_state.enter(self.striker, ('NONE', 0))
+
+    def update(self):
+        self.cur_state.do(self.striker)
+
+    def handle_event(self, e):
+        for check_event, next_state in self.transitions[self.cur_state].items():
+            if check_event(e):
+                self.cur_state.exit(self.striker, e)
+                self.cur_state = next_state
+                self.cur_state.enter(self.striker, e)
                 return True
 
         return False

@@ -71,6 +71,12 @@ class Scene04(Scene):
         self.base_list.append(super().find_object('Base 3st'))
         self.base_list.append(super().find_object('Base 4st'))
 
+        # Message
+        super().create_ui(message_out, message_out_pos, message_out_img, message_out_size,
+                          DYNAMIC, 2, False, message_out_ui_size)
+        super().create_ui(message_safe, message_safe_pos, message_safe_img, message_safe_size,
+                          DYNAMIC, 2, False, message_safe_ui_size)
+
         for idx in range(0, 8):
             self.Defender_List.append(super().find_object(Defender_name + str(idx)))
             self.Defender_List[idx].set_base_list(self.base_list)
@@ -132,6 +138,16 @@ class Scene04(Scene):
         self.Defender_List[6].pos = [400, 900]
         self.Defender_List[7].pos = [0, 900]
 
+        self.base_list[0].pos = [630, 330]
+        self.base_list[1].pos = [400, 580]
+        self.base_list[2].pos = [170, 330]
+        self.base_list[3].pos = [400, 70]
+
+        for defender in self.Defender_List:
+            defender.is_throwing = False
+            defender.is_play_done = False
+            defender.having_ball = False
+
     def reset_all_striker(self):
         self.Striker_List[0].pos = [400, 70]
         self.Striker_List[1].pos = [630, 330]
@@ -141,4 +157,8 @@ class Scene04(Scene):
         # 1루 띄기 시작
         self.Striker_List[0].bActive = True
         self.Striker_List[0].state_machine.handle_event(('Striker Run 1st', 0))
+
+    def fade_done(self, ui):
+        # 씬 이동
+        super().change_scene(SCENE_03)
 

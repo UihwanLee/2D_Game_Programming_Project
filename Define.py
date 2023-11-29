@@ -298,6 +298,20 @@ message_ball_size = [400, 200]
 message_ball_img = 'Sprites/UI/Msg_Ball.png'
 message_ball_ui_size = [400, 200]
 
+#Message_Out
+message_out = 'Message_Out'
+message_out_pos = [400, 300]
+message_out_size = [400, 200]
+message_out_img = 'Sprites/UI/Msg_Out.png'
+message_out_ui_size = [400, 200]
+
+#Message_Safe
+message_safe = 'Message_Safe'
+message_safe_pos = [400, 300]
+message_safe_size = [400, 200]
+message_safe_img = 'Sprites/UI/Msg_Safe.png'
+message_safe_ui_size = [400, 200]
+
 # EFFECT_HOME_RUN_01
 effect_home_run_01_name = 'Effect_Home_Run_01'
 effect_home_run_01_pos = [400, 300]

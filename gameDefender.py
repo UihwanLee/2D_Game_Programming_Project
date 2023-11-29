@@ -56,6 +56,7 @@ class Defender(GameObject):
         self.idx_receive_defender = 0
         self.is_throwing = False
         self.is_play_done = False
+        self.having_ball = False
 
     def update(self):
         active = super().get_object_var('bActive')
@@ -159,6 +160,8 @@ class Defender(GameObject):
         # 이동
         self.move_slightly_to(self.base_ball.pos[0], self.base_ball.pos[1])
         if self.distance_less_than(self.base_ball.pos[0], self.base_ball.pos[1], self.pos[0], self.pos[1], r):
+            self.base_ball.bActive = False
+            self.having_ball = True
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.RUNNING
@@ -194,6 +197,8 @@ class Defender(GameObject):
     def throw_baseball_to_defender(self):
         # 이동
         self.is_throwing = True
+        self.base_ball.bActive = True
+        # self.having_ball = False
         self.throw_slightly_to(self.tx, self.ty)
         if self.distance_less_than(self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[0],
                                    self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[1],
@@ -238,6 +243,10 @@ class Defender(GameObject):
         # 이동
         self.move_slightly_to(self.base_list[self.own_base_idx].pos[0], self.base_list[self.own_base_idx].pos[1])
         if self.distance_less_than(self.base_list[self.own_base_idx].pos[0], self.base_list[self.own_base_idx].pos[1], self.pos[0], self.pos[1], 0.5):
+            # 아웃인지 세이프인지 판단하고 scene 전환
+            if self.having_ball:
+                print('1루 도착')
+                self.game_system.check_out_or_safe(self.own_base_idx)
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.RUNNING

@@ -542,6 +542,23 @@ class GameSystem:
         if GameSystem.OUT >= 3:
             pass
 
+    def check_out_or_safe(self, base):
+        # 현재 타자가 베이스에 도착했는지 체크
+        if self.scene04.Striker_List[0].running:
+            self.out()
+        else:
+            self.safe()
+
+
+    def out(self):
+        # scene04에서 out 표시
+        out_ui = self.ui_manager.find_ui(message_out)
+        self.ui_manager.start_fade(out_ui, 200, 400, self.scene04)
+
+    def safe(self):
+        # scene04에서 safe 표시
+        safe_ui = self.ui_manager.find_ui(message_safe)
+        self.ui_manager.start_fade(safe_ui, 200, 400, self.scene04)
 
     # Defender 중 BaseBall과의 거리가 가장 짧은 Defender 이름 반환
     def find_defender_shortest_distance_from_baseball(self):

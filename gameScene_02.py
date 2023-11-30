@@ -102,7 +102,7 @@ class Scene02(Scene):
         self.ui_manager.start_fade_in(fade_ui, 1000, self)
         #super().change_scene(SCENE_03)
 
-    def fade_done(self):
+    def fade_done(self, ui):
         super().change_scene(SCENE_03)
 
     def render(self):

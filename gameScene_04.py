@@ -169,6 +169,7 @@ class Scene04(Scene):
         self.game_engine.game_system.run_striker()
 
     def fade_done(self, ui):
-        # 씬 이동
         super().change_scene(SCENE_03, False)
+        self.game_engine.game_system.reset_hit()
+        self.game_engine.game_system.reset_throw()
 

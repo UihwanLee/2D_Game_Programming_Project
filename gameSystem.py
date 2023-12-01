@@ -595,6 +595,8 @@ class GameSystem:
         else:
             self.safe()
 
+        print(self.cur_max_striker)
+
 
     def out(self):
         # scene04에서 out 표시
@@ -629,8 +631,6 @@ class GameSystem:
         self.ui_manager.start_fade(safe_ui, 200, 400, self.scene04)
 
         self.cur_max_striker += 1
-        print(self.cur_max_striker)
-
         self.calc_striker_base()
 
     # Defender 중 BaseBall과의 거리가 가장 짧은 Defender 이름 반환
@@ -664,7 +664,7 @@ class GameSystem:
         elif num == 3:
             return 3
         elif num == 4:
-            return 8
+            return 2
 
         return 1
 
@@ -675,12 +675,15 @@ class GameSystem:
         self.is_striker_in_3st = False
 
     def calc_striker_base(self):
+
         if self.cur_max_striker >= 1:
             self.is_striker_in_1st = True
-        elif self.cur_max_striker >= 2:
+
+        if self.cur_max_striker >= 2:
             self.is_striker_in_1st = True
             self.is_striker_in_2st = True
-        elif self.cur_max_striker >= 3:
+
+        if self.cur_max_striker >= 3:
             self.is_striker_in_1st = True
             self.is_striker_in_2st = True
             self.is_striker_in_3st = True

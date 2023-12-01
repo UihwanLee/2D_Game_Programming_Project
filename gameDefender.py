@@ -171,7 +171,7 @@ class Defender(GameObject):
         # 1루수로 세팅
         self.state_machine.handle_event(('Defender Throw', 0))
         self.idx_receive_defender = self.game_system.find_defender_receive_baseball(self.pos)
-        return self.idx_receive_defender
+        return BehaviorTree.SUCCESS
 
     def throw_slightly_to(self, tx, ty):
         self.angle = math.atan2(self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[1]-self.base_ball.pos[1],
@@ -198,6 +198,7 @@ class Defender(GameObject):
         # 이동
         self.is_throwing = True
         self.base_ball.bActive = True
+
         # self.having_ball = False
         self.throw_slightly_to(self.tx, self.ty)
         if self.distance_less_than(self.game_system.scene04.Defender_List[self.idx_receive_defender].pos[0],
@@ -249,12 +250,9 @@ class Defender(GameObject):
             if self.having_ball:
                 self.game_system.check_out_or_safe(self.own_base_idx)
 
-                # 아직 남아 있다면 던져서 확인
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.RUNNING
-
-
 
     def build_behavior_tree(self):
         a0 = Action('Do nothing', self.do_IDLE)

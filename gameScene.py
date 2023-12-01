@@ -4,6 +4,7 @@ from gamePitcher import Pitcher
 from gameDefender import Defender
 from gameStriker import Striker
 from gameUIManager import UIManager
+from gameSoundManager import SoundManager
 
 from Define import *
 
@@ -29,12 +30,13 @@ class Scene:
     def __init__(self, order, engine):
         self.order = order
         self.ui_manager = UIManager()
+        self.sound_manager = SoundManager()
         self.game_engine = engine
         self.game_objects = [[] for _ in range(4)]
 
     # GameObject 생성. game_objects 리스트에 GameObject를 추가한다.
     def create_object(self, name, pos, sprite, size, type, layer, bActive):
-        self.game_objects[layer].append(GameObject(self.order, name, pos, sprite, size, type, layer, bActive))
+        self.game_objects[layer].append(GameObject(self.order, name, pos, sprite, size, type, layer, bActive, None, None))
 
     # Player 생성. game_objects 리스트에 Player 추가한다.
     def create_hitter(self, name, playMode, layer, bActive, frame):
@@ -53,6 +55,10 @@ class Scene:
     # ui를 생성하는 함수. scene에서 사용할 ui 오브젝트를 관리하는 클래스를 생성한다
     def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):
         self.ui_manager.create_ui(name, pos, sprite, size, type, layer, bActive, ui_size)
+
+    def create_bgm(self, name , bgm):
+        # self.game_objects[0].append(GameObject(self.order, name, [0, 0], None, [10, 10], STATIC, 0, False, bgm, None))
+        self.sound_manager.create_bgm(name, bgm)
 
     # Scene에서 handle_event 처리(오버라이딩 처리)
     def handle_event(self, event):
@@ -107,3 +113,12 @@ class Scene:
         else:
             print('No var in Object')
             return None
+
+    # BGM 틀기
+    def play_BGM(self):
+        self.sound_manager.playBGM()
+
+    # BGM 바꾸기
+    def set_BGM(self, scene):
+        self.sound_manager.setBGM(scene)
+

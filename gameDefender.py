@@ -29,7 +29,7 @@ class Defender(GameObject):
 
     # 게임에서 활용될 Defender 클래스 초기화:
     def __init__(self, scene, name, pos, playMode, layer, bActive, frame):
-        super().__init__(scene, name, pos, playMode.sprite_sheet, playMode.size, playMode.type, layer, bActive)
+        super().__init__(scene, name, pos, playMode.sprite_sheet, playMode.size, playMode.type, layer, bActive, None, None)
         self.frame = frame
         self.action = 0
         self.dir = 1.0

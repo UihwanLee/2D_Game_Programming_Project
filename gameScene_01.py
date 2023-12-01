@@ -13,6 +13,7 @@ class Scene01(Scene):
         self.button_return = None
         self.button_quit = None
 
+
     # scene에서 초기 오브젝트 세팅
     def init(self):
         # GameOjbect
@@ -43,12 +44,21 @@ class Scene01(Scene):
         self.touch_screen_ui = self.ui_manager.find_ui(touch_screen_name)
         self.ui_manager.start_fade(self.touch_screen_ui, 200, 200, self)
 
+        # sound
+        self.create_bgm(bgm_scene01_name, bgm_scene01_path)
+
+        self.sound_manager.setBGM(bgm_scene01_name)
+        self.sound_manager.playBGM()
+
     # scene 전환 시 초기 함수
     def start(self):
         self.return_start()
         # touch_screen 반짝이기
         self.touch_screen_ui = self.ui_manager.find_ui(touch_screen_name)
         self.ui_manager.start_fade(self.touch_screen_ui, 200, 200, self)
+
+        self.sound_manager.setBGM(bgm_scene01_name)
+        self.sound_manager.playBGM()
 
     # Scene에서 handle_event 처리
     def handle_event(self):

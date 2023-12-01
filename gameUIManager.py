@@ -12,7 +12,7 @@ from Define import *
 
 class UI(GameObject):
     def __init__(self, name, pos, sprite, size, type, layer, bActive, ui_size):
-        super().__init__(-1, name, pos, sprite, size, type, layer, bActive)
+        super().__init__(-1, name, pos, sprite, size, type, layer, bActive, None, None)
         self.ui_size = ui_size
         self.alpha = 1.0  # 투명도
 

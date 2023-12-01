@@ -15,7 +15,7 @@ class Pitcher(GameObject):
 
     # 게임에서 활용될 GamePlayerAI 클래스 초기화:
     def __init__(self, scene, name, playMode, layer, bActive, frame):
-        super().__init__(scene, name, playMode.pos, playMode.sprite_sheet, playMode.size, playMode.type, layer, bActive)
+        super().__init__(scene, name, playMode.pos, playMode.sprite_sheet, playMode.size, playMode.type, layer, bActive,None, None)
         self.frame = frame
         self.action = 0
         self.play_mode = playMode

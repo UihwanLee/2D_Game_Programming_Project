@@ -46,12 +46,18 @@ class Scene02(Scene):
         super().create_ui(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 3, False, bg_black_ui_size)
         self.fade_bg = self.ui_manager.find_ui(bg_black_name)
 
+        # sound
+        self.create_bgm(bgm_scene02_name, bgm_scene02_path)
+
     # scene 전환 시 초기 함수
     def start(self):
         self.select_team(team_03_name)
         # black_BG 지우기
         if self.fade_bg is not None:
             self.fade_bg.bActive = False
+
+        self.sound_manager.setBGM(bgm_scene02_name)
+        self.sound_manager.playBGM()
 
     # Scene에서 handle_event 처리
     def handle_event(self):

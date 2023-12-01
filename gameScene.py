@@ -29,9 +29,9 @@ class Scene:
     # Scene 초기화. scene 번호와 scene 안에 생성할 game_objects 리스트를 초기화.
     def __init__(self, order, engine):
         self.order = order
-        self.ui_manager = UIManager()
-        self.sound_manager = SoundManager()
         self.game_engine = engine
+        self.ui_manager = UIManager(engine.game_system)
+        self.sound_manager = SoundManager()
         self.game_objects = [[] for _ in range(4)]
 
     # GameObject 생성. game_objects 리스트에 GameObject를 추가한다.

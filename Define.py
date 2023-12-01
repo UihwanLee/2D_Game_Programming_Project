@@ -341,6 +341,9 @@ bgm_scene01_path = 'Sounds/scene01_bgm.mp3'
 bgm_scene02_name = 'BGM_SCENE02'
 bgm_scene02_path = 'Sounds/scene02_bgm.mp3'
 
+bgm_scene03_name = 'BGM_SCENE03'
+bgm_scene03_path = 'Sounds/scene03_bgm.mp3'
+
 se_button_click_name = 'SE_BUTTON_CLICK'
 se_button_click_path = 'Sounds/button_click.wav'
 

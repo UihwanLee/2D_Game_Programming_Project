@@ -109,7 +109,6 @@ class Scene02(Scene):
         #super().change_scene(SCENE_03)
 
     def fade_done(self, ui):
-        self.sound_manager.stopBGM(bgm_scene02_name)
         super().change_scene(SCENE_03, True)
 
     def render(self):

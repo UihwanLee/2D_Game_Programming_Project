@@ -118,7 +118,7 @@ class UI(GameObject):
 
 
 class UIManager:
-    def __init__(self):
+    def __init__(self, game_system):
         self.ui_list = [[] for _ in range(4)]
 
         # fade_in/out
@@ -134,6 +134,8 @@ class UIManager:
         self.is_effect_home_run = False
         self.cur_home_run_msg_idx = 0
         self.home_run_msg = None
+
+        self.game_system = game_system
 
     # ui 생성하는 함수, ui_list에 담는다.
     def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):
@@ -207,7 +209,9 @@ class UIManager:
 
     # 반짝반짝 애니메이션(홈런 이펙트)
     def start_effect_home_run(self):
-        self.is_effect_home_run = True
+        if not self.is_effect_home_run:
+            return
+
         ui1 = self.find_ui(effect_home_run_01_name)
         ui2 = self.find_ui(effect_home_run_02_name)
         self.start_fade(ui1, 0.1, 150, self)
@@ -231,6 +235,7 @@ class UIManager:
 
             if self.cur_home_run_msg_idx >= 7:
                 self.cur_home_run_msg_idx = 0
+                self.game_system.return_scene03()
                 return
 
             self.start_fade_in(self.home_run_msg[self.cur_home_run_msg_idx], 200, self)

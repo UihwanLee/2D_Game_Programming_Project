@@ -162,6 +162,17 @@ class GameSystem:
         if self.scene03.cover.bActive:
             self.scene03.cover.bActive = False
 
+    def reset_hit(self):
+        self.is_home_run = False
+        self.is_hit = False
+
+        self.home_run_max_offset = 3.0
+
+        for msg in self.scene04.home_run_msg:
+            msg.bActive = False
+        self.scene04.cover.bActive = False
+        self.scene03.cover.bActive = False
+
 
     # Player 공/수 선택 공->타자 / 수->투수로 시스템 설정 하기
     def SetPlayMode(self):
@@ -221,6 +232,8 @@ class GameSystem:
         self.base_ball_pos_x = 400
         self.base_ball_pos_y = 150
 
+        self.base_ball.bActive = True
+
         self.hit_angle = math.atan2(self.hit_target_pos[1] - self.base_ball_pos_y, self.hit_target_pos[0] - self.base_ball_pos_x)
         self.is_hit_anim = True
 
@@ -246,8 +259,11 @@ class GameSystem:
         if distance < 5:
             self.is_hit_anim = False
             self.set_hit_ball_to_target_anim_in_base()
+            self.base_ball.bActive = False
+            self.ui_manager.is_effect_home_run = False
             self.game_engine.change_scene(SCENE_04, True)
-            self.sound_manager.playSE(se_home_run_name, 64)
+            if self.is_home_run:
+                self.sound_manager.playSE(se_home_run_name, 64)
             return
 
     def set_hit_ball_to_target_anim_in_base(self):
@@ -535,6 +551,8 @@ class GameSystem:
             if GameSystem.OUT >= 3:
                 GameSystem.BALL = 0
                 GameSystem.OUT = 0
+                ui_skill = self.ui_manager.find_ui(ui_skill_name)
+                ui_skill.set_alpha(1.0)
                 # 스트라이크 / 볼 / 아웃 모두 비활성화
                 #for strike in self.ui_strike: strike.bActvie = False
                 #for ball in self.ui_ball: ball.bActvie = False
@@ -574,7 +592,7 @@ class GameSystem:
     def safe(self):
         # scene04에서 safe 표시
         safe_ui = self.ui_manager.find_ui(message_safe)
-        self.sound_manager.playSE(se_safe_path, 64)
+        self.sound_manager.playSE(se_safe_name, 64)
         self.ui_manager.start_fade(safe_ui, 200, 400, self.scene04)
 
     # Defender 중 BaseBall과의 거리가 가장 짧은 Defender 이름 반환
@@ -609,3 +627,7 @@ class GameSystem:
             return 3
 
         return 1
+
+    def return_scene03(self):
+        self.reset_hit()
+        self.game_engine.change_scene(SCENE_03, False)

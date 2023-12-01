@@ -17,6 +17,10 @@ class GameEngine:
     def __init__(self):
         self.running = True
 
+        # 클래스
+        self.game_system = GameSystem()
+        self.time = Time()
+
         # Scene 생성
         self.scene_01 = Scene01(1, self)
         self.scene_02 = Scene02(2, self)
@@ -28,10 +32,6 @@ class GameEngine:
 
         # 게임에서 사용할 player
         self.player = None
-
-        # 클래스
-        self.game_system = GameSystem()
-        self.time = Time()
 
     # 게임 내에서 사용할 game_system, player, playerAI 등을 초기화
     def init_setting(self):

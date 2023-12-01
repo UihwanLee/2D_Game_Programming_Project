@@ -41,6 +41,7 @@ class Hitter(GameObject):
                 self.game_system.check_hit()
 
                 if self.game_system.is_home_run:
+                    self.game_system.ui_manager.is_effect_home_run = True
                     self.game_system.ui_manager.start_effect_home_run()
                     self.state_machine.handle_event(('HOME_RUN', 0))
                 elif self.game_system.is_hit:

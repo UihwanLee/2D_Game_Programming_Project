@@ -56,6 +56,8 @@ class Scene03(Scene):
         self.player = super().find_object(player_name)
 
         # sound
+        self.create_bgm(bgm_scene03_name, bgm_scene03_path)
+
         self.create_sound_effect(se_throw_name, se_throw_path)
         self.create_sound_effect(se_strike_name, se_strike_path)
         self.create_sound_effect(se_ball_name, se_ball_path)
@@ -68,7 +70,15 @@ class Scene03(Scene):
     # scene 전환 시 초기 함수
     def start(self):
         #초기 세팅
+        self.sound_manager.setBGM(bgm_scene03_name)
+        self.sound_manager.playBGM()
         self.game_engine.game_system.reset_system()
+
+        ui_skill = self.ui_manager.find_ui(ui_skill_name)
+        ui_skill.set_alpha(1.0)
+
+        self.game_engine.game_system.reset_hit()
+        self.game_engine.game_system.reset_throw()
 
     # Scene에서 handle_event 처리
     def handle_event(self):

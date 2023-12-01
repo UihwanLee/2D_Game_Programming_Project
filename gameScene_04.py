@@ -85,6 +85,11 @@ class Scene04(Scene):
             self.Striker_List.append(super().find_object(Striker_name + str(idx)))
             self.Striker_List[idx].set_base_list(self.base_list)
 
+        # sound
+        self.sound_manager.create_sound_effect(se_home_run_name, se_home_run_path)
+        self.sound_manager.create_sound_effect(se_out_name, se_out_path)
+        self.sound_manager.create_sound_effect(se_safe_name, se_safe_path)
+
 
     # scene 전환 시 초기 함수
     def start(self):
@@ -160,5 +165,5 @@ class Scene04(Scene):
 
     def fade_done(self, ui):
         # 씬 이동
-        super().change_scene(SCENE_03)
+        super().change_scene(SCENE_03, False)
 

@@ -1,3 +1,5 @@
+from sdl2 import SDLK_s
+
 from gameScene import *
 
 # Scene03 : 경기 플레이 화면 01
@@ -53,10 +55,20 @@ class Scene03(Scene):
 
         self.player = super().find_object(player_name)
 
+        # sound
+        self.create_sound_effect(se_throw_name, se_throw_path)
+        self.create_sound_effect(se_strike_name, se_strike_path)
+        self.create_sound_effect(se_ball_name, se_ball_path)
+        self.create_sound_effect(se_strike_out_name, se_strike_out_path)
+        self.create_sound_effect(se_hit_name, se_hit_path)
+        self.create_sound_effect(se_hit_home_run_name, se_hit_home_run_path)
+
+
+
     # scene 전환 시 초기 함수
     def start(self):
         #초기 세팅
-        pass
+        self.game_engine.game_system.reset_system()
 
     # Scene에서 handle_event 처리
     def handle_event(self):
@@ -65,7 +77,10 @@ class Scene03(Scene):
             if event.type == SDL_QUIT:
                 super().quit()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                super().change_scene(SCENE_02) # 종료 canvas를 띄운다.
+                super().change_scene(SCENE_02, True) # 종료 canvas를 띄운다.
+            elif event.type == SDL_KEYDOWN and event.key == SDLK_s:
+                self.sound_manager.playSE(se_throw_name, 100)
+                self.game_engine.game_system.throw_ball()
             else:
                 if (self.player != None):
                     if (self.player.bActive):

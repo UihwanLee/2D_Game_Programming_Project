@@ -69,9 +69,6 @@ class Hitter(GameObject):
 
                 self.is_skill = True
 
-            if event.type == SDL_KEYDOWN and event.key == SDLK_s:
-                self.game_system.throw_ball()
-
 
     # player 업데이트. time 변수를 기준으로 각족 이벤트를 처리한다.
     def update(self):

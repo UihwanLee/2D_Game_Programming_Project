@@ -47,6 +47,8 @@ class Scene01(Scene):
         # sound
         self.create_bgm(bgm_scene01_name, bgm_scene01_path)
 
+        self.create_sound_effect(se_button_click_name, se_button_click_path)
+
         self.sound_manager.setBGM(bgm_scene01_name)
         self.sound_manager.playBGM()
 
@@ -92,9 +94,15 @@ class Scene01(Scene):
                     self.start_option()
                 else:
                     # UI 버튼 클릭 체크
-                    if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0], self.mouse_point[1]): super().change_scene(SCENE_02)
-                    if self.ui_manager.check_click_button(button_quit_name, self.mouse_point[0], self.mouse_point[1]): super().quit()
-                    if self.ui_manager.check_click_button(button_return_name, self.mouse_point[0], self.mouse_point[1]): self.return_start()
+                    if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0], self.mouse_point[1]):
+                        self.sound_manager.playSE(se_button_click_name, 64)
+                        super().change_scene(SCENE_02, True)
+                    if self.ui_manager.check_click_button(button_quit_name, self.mouse_point[0], self.mouse_point[1]):
+                        self.sound_manager.playSE(se_button_click_name, 64)
+                        super().quit()
+                    if self.ui_manager.check_click_button(button_return_name, self.mouse_point[0], self.mouse_point[1]):
+                        self.sound_manager.playSE(se_button_click_name, 64)
+                        self.return_start()
             else:
                 pass
 

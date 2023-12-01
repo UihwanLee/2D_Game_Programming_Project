@@ -106,6 +106,7 @@ class GameSystem:
         # 클래스
         self.game_engine = None
         self.ui_manager = None
+        self.sound_manager = None
 
         self.scene03 = None
         self.scene04 = None
@@ -180,9 +181,11 @@ class GameSystem:
         if offset <= self.home_run_max_offset:
             self.is_hit = True
             self.is_home_run = True
+            self.sound_manager.playSE(se_hit_home_run_name, 64)
             print('홈런!')
         elif offset <= self.hit_max_offset:
             self.is_hit = True
+            self.sound_manager.playSE(se_hit_name, 64)
             print('안타!')
         else:
             self.is_hit = False
@@ -243,7 +246,8 @@ class GameSystem:
         if distance < 5:
             self.is_hit_anim = False
             self.set_hit_ball_to_target_anim_in_base()
-            self.game_engine.change_scene(SCENE_04)
+            self.game_engine.change_scene(SCENE_04, True)
+            self.sound_manager.playSE(se_home_run_name, 64)
             return
 
     def set_hit_ball_to_target_anim_in_base(self):
@@ -475,8 +479,7 @@ class GameSystem:
     # 스트라이크 판정 시 작동하는 함수
     def strike(self):
         strike_ui = self.ui_manager.find_ui(message_strike)
-
-        self.ui_manager.start_fade(strike_ui, 100, 3000)  # 스트라이크 메세지 띄우기
+        strike_out_ui = self.ui_manager.find_ui(message_strike_out)
 
         # if GameSystem.STRIKE < 2:
         #     for idx in range(0, GameSystem.STRIKE+1):
@@ -489,7 +492,14 @@ class GameSystem:
         GameSystem.STRIKE += 1  # 스트라이크 횟수 증가
 
         # 스트라이크 아웃 체크
-        self.check_strike_out()
+        self.is_out = self.check_strike_out()
+
+        if self.is_out:
+            self.ui_manager.start_fade(strike_out_ui, 100, 3000)  # 스트라이크 메세지 띄우기
+            self.sound_manager.playSE(se_strike_out_name, 64)
+        else:
+            self.ui_manager.start_fade(strike_ui, 100, 3000)  # 스트라이크 메세지 띄우기
+            self.sound_manager.playSE(se_strike_name, 64)
 
     # 볼 판정 시 작동하는 함수
     def ball(self):
@@ -501,6 +511,7 @@ class GameSystem:
         #     self.ui_ball[GameSystem.BALL].bActive = True
 
         self.ui_manager.start_fade(ball_ui, 100, 3000)  # 볼 메세지 띄우기
+        self.sound_manager.playSE(se_ball_name, 64)
         GameSystem.BALL += 1  # 볼 횟수 증가
 
         # 볼 넷으로 1루 진출 체크
@@ -529,6 +540,10 @@ class GameSystem:
                 #for ball in self.ui_ball: ball.bActvie = False
                 #for out in self.ui_out: out.bActvie = False
 
+            return True
+
+        return False
+
     def check_ball_four(self):
         if GameSystem.BALL >= 4:
             GameSystem.BALL = 0
@@ -554,10 +569,12 @@ class GameSystem:
         # scene04에서 out 표시
         out_ui = self.ui_manager.find_ui(message_out)
         self.ui_manager.start_fade(out_ui, 200, 400, self.scene04)
+        self.sound_manager.playSE(se_out_name, 64)
 
     def safe(self):
         # scene04에서 safe 표시
         safe_ui = self.ui_manager.find_ui(message_safe)
+        self.sound_manager.playSE(se_safe_path, 64)
         self.ui_manager.start_fade(safe_ui, 200, 400, self.scene04)
 
     # Defender 중 BaseBall과의 거리가 가장 짧은 Defender 이름 반환

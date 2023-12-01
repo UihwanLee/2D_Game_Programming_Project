@@ -56,9 +56,12 @@ class Scene:
     def create_ui(self, name, pos, sprite, size, type, layer, bActive, ui_size):
         self.ui_manager.create_ui(name, pos, sprite, size, type, layer, bActive, ui_size)
 
-    def create_bgm(self, name , bgm):
+    def create_bgm(self, name, bgm):
         # self.game_objects[0].append(GameObject(self.order, name, [0, 0], None, [10, 10], STATIC, 0, False, bgm, None))
         self.sound_manager.create_bgm(name, bgm)
+
+    def create_sound_effect(self, name, se):
+        self.sound_manager.create_sound_effect(name, se)
 
     # Scene에서 handle_event 처리(오버라이딩 처리)
     def handle_event(self, event):
@@ -98,8 +101,8 @@ class Scene:
                     object.bActive = bActive
 
     # 씬 전환
-    def change_scene(self, scene):
-        self.game_engine.change_scene(scene)
+    def change_scene(self, scene, start):
+        self.game_engine.change_scene(scene, start)
 
     # 게임 종료
     def quit(self):
@@ -121,4 +124,7 @@ class Scene:
     # BGM 바꾸기
     def set_BGM(self, scene):
         self.sound_manager.setBGM(scene)
+
+    def play_SE(self, se):
+        self.sound_manager.playSE(se)
 

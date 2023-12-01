@@ -66,7 +66,7 @@ class Scene02(Scene):
             if event.type == SDL_QUIT:
                 super().quit()
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
-                super().change_scene(SCENE_01)
+                super().change_scene(SCENE_01, True)
             elif event.type == SDL_MOUSEMOTION:
                 self.mouse_point[0], self.mouse_point[1] = event.x, WINDOW_HEIGHT - 1 - event.y
                 if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0], self.mouse_point[1]):
@@ -85,7 +85,7 @@ class Scene02(Scene):
                 if self.ui_manager.check_click_button(team_04_name, self.mouse_point[0], self.mouse_point[1]): self.select_team(team_04_name)
                 if self.ui_manager.check_click_button(team_05_name, self.mouse_point[0], self.mouse_point[1]): self.select_team(team_05_name)
                 if self.ui_manager.check_click_button(button_gamestart_name, self.mouse_point[0], self.mouse_point[1]): self.start_game()
-                if self.ui_manager.check_click_button(button_return_name, self.mouse_point[0],self.mouse_point[1]): super().change_scene(SCENE_01)
+                if self.ui_manager.check_click_button(button_return_name, self.mouse_point[0],self.mouse_point[1]): super().change_scene(SCENE_01, True)
             else:
                 pass
 
@@ -109,7 +109,8 @@ class Scene02(Scene):
         #super().change_scene(SCENE_03)
 
     def fade_done(self, ui):
-        super().change_scene(SCENE_03)
+        self.sound_manager.stopBGM(bgm_scene02_name)
+        super().change_scene(SCENE_03, True)
 
     def render(self):
         # self.font.draw(400, 300, self.player_team, (255, 255, 0))

@@ -341,35 +341,35 @@ bgm_scene01_path = 'Sounds/scene01_bgm.mp3'
 bgm_scene02_name = 'BGM_SCENE02'
 bgm_scene02_path = 'Sounds/scene02_bgm.mp3'
 
-sf_button_click_name = 'SF_BUTTON_CLICK'
-sf_button_click_path = 'Sounds/button_click.wav'
+se_button_click_name = 'SE_BUTTON_CLICK'
+se_button_click_path = 'Sounds/button_click.wav'
 
-sf_out_name = 'SF_OUT'
-sf_out_path = 'Sounds/out.wav'
+se_out_name = 'SE_OUT'
+se_out_path = 'Sounds/out.wav'
 
-sf_safe_name = 'SF_SAFE'
-sf_safe_path = 'Sounds/safe.wav'
+se_safe_name = 'SE_SAFE'
+se_safe_path = 'Sounds/safe.wav'
 
-sf_strike_name = 'SF_STRIKE'
-sf_strike_path = 'Sounds/strike.wav'
+se_strike_name = 'SE_STRIKE'
+se_strike_path = 'Sounds/strike.wav'
 
-sf_strike_out_name = 'SF_STRIKE_OUT'
-sf_strike_out_path = 'Sounds/strike_out.wav'
+se_strike_out_name = 'SE_STRIKE_OUT'
+se_strike_out_path = 'Sounds/strike_out.wav'
 
-sf_ball_name = 'SF_BALL'
-sf_ball_path = 'Sounds/ball.wav'
+se_ball_name = 'SE_BALL'
+se_ball_path = 'Sounds/ball.wav'
 
-sf_throw_name = 'SF_THROW'
-sf_throw_path = 'Sounds/throw.wav'
+se_throw_name = 'SE_THROW'
+se_throw_path = 'Sounds/throw.wav'
 
-sf_hit_name = 'SF_HIT'
-sf_hit_path = 'Sounds/hit.wav'
+se_hit_name = 'SE_HIT'
+se_hit_path = 'Sounds/hit.wav'
 
-sf_hit_home_run_name = 'SF_HIT_HOME_RUN'
-sf_hit_home_run_path = 'Sounds/hit_home_run.wav'
+se_hit_home_run_name = 'SE_HIT_HOME_RUN'
+se_hit_home_run_path = 'Sounds/hit_home_run.wav'
 
-sf_home_run_name = 'SF_HOME_RUN'
-sf_home_run_path = 'Sounds/homerun.wav'
+se_home_run_name = 'SE_HOME_RUN'
+se_home_run_path = 'Sounds/homerun.wav'
 
 
 ''' [ System ] '''

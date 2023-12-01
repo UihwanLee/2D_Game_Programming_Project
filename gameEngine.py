@@ -65,6 +65,7 @@ class GameEngine:
 
         # module
         self.game_system.ui_manager = self.game_world.ui_manager
+        self.game_system.sound_manager = self.game_system.sound_manager
         self.game_system.game_engine = self
 
     # 이벤트 처리 함수. 각 Scene마다 handle_event 처리 방식이 다르다.
@@ -79,11 +80,13 @@ class GameEngine:
         self.scene_04.init()
 
     # 씬 변경 함수
-    def change_scene(self, scene):
+    def change_scene(self, scene, start):
         if hasattr(self, scene):
             self.game_world = getattr(self, scene)
             self.game_system.ui_manager = self.game_world.ui_manager # ui_manager도 바꿔줄 수 있도록 함.
-            self.game_world.start()
+            self.game_system.sound_manager = self.game_world.sound_manager
+            if start:
+                self.game_world.start()
 
     # scene을 렌더링하는 함수. 현재 game_world 리스트 안에 들어있는 모든 객체를 렌더링한다.
     def render_world(self):

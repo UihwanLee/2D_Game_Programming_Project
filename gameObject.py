@@ -6,7 +6,7 @@ from pico2d import *
 class GameObject:
 
     # 게임 오브젝트 초기화 (씬 정보, 위치, 이미지, 타입, 레이어, 활성화) 정보를 초기화 한다.
-    def __init__(self, scene, name, pos, sprite, size, type, layer, bActive, bgm, sf):
+    def __init__(self, scene, name, pos, sprite, size, type, layer, bActive, bgm, se):
         self.scene = scene
         self.name = name
         self.pos = pos
@@ -19,15 +19,15 @@ class GameObject:
         self.alpha = 1.0
 
         self.bgm = None
-        self.sf = None
+        self.se = None
 
         if bgm:
             self.bgm = load_music(bgm)
             self.bgm.set_volume(32)
 
-        if sf:
-            self.sf = load_wav(sf)
-            self.sf.set_volume(32)
+        if se:
+            self.se = load_wav(se)
+            self.se.set_volume(32)
 
 
     # 게임 오브젝트 업데이트. 활성화 된 오브젝트만 업데이트 한다.

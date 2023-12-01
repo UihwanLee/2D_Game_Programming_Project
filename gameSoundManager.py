@@ -21,6 +21,15 @@ class Sound(GameObject):
             self.bgm.set_volume(32)
             self.bgm.repeat_play()
 
+    def stopBGM(self):
+        if self.bgm:
+            self.bgm.stop()
+
+    def playSE(self, volume):
+        if self.se:
+            self.se.set_volume(volume)
+            self.se.play()
+
 class SoundManager:
     def __init__(self):
         self.cur_bgm = None
@@ -33,25 +42,16 @@ class SoundManager:
     def create_sound_effect(self, name, sound_effect):
         self.sound_effect[name] = Sound(name, None, sound_effect)
 
-    def init_sound(self):
-        # BGM
-        self.create_bgm(bgm_scene01_name, bgm_scene01_path)
-        self.create_bgm(bgm_scene02_name, bgm_scene02_path)
-
-        # Sound Effect
-        self.create_sound_effect(sf_button_click_name, sf_button_click_path)
-        self.create_sound_effect(sf_hit_name, sf_hit_path)
-        self.create_sound_effect(sf_hit_home_run_name, sf_hit_home_run_path)
-        self.create_sound_effect(sf_throw_name, sf_throw_path)
-        self.create_sound_effect(sf_out_name, sf_out_path)
-        self.create_sound_effect(sf_safe_name, sf_safe_path)
-        self.create_sound_effect(sf_strike_name, sf_strike_path)
-        self.create_sound_effect(sf_strike_out_name, sf_strike_out_path)
-        self.create_sound_effect(sf_ball_name, sf_ball_path)
-        self.create_sound_effect(sf_home_run_name, sf_home_run_path)
-
     def playBGM(self):
         self.bgm[self.cur_bgm].playBGM()
 
     def setBGM(self, bgm):
         self.cur_bgm = bgm
+
+    def stopBGM(self, bgm):
+        self.bgm[self.cur_bgm].stopBGM()
+
+    def playSE(self, se, volume):
+        if self.sound_effect[se]:
+            self.sound_effect[se].playSE(volume)
+

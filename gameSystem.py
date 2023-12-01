@@ -94,14 +94,15 @@ class GameSystem:
         # Defender move_offset
         self.defender_move_offset = [0.0, 0.0]
 
-        # 스트라이크, 볼, 아웃 전등
-        self.ui_strike = []
-        self.ui_ball = []
-        self.ui_out = []
-
         # 타자 hit 시 판단 변수
         self.home_run_max_offset = 3.0
         self.hit_max_offset = 50
+
+        # striker
+        self.cur_max_striker = 0
+        self.is_striker_in_1st = False
+        self.is_striker_in_2st = False
+        self.is_striker_in_3st = False
 
         # 클래스
         self.game_engine = None
@@ -145,6 +146,12 @@ class GameSystem:
 
         self.throw_event_rate = 0
         self.throw_hit_offset = 0.0
+
+        self.reset_strike()
+        self.reset_ball()
+        self.reset_out()
+
+        self.reset_striker_base()
 
     # 투수가 던지고 나서 안타/홀런/스트라이크 됐을 때 변수 초기화
     def reset_throw(self):
@@ -486,24 +493,28 @@ class GameSystem:
         else:
             self.ball()
 
-    # 히트 시 안타/파울/스트라이크인지 체크하는 함수
-    # 1) 히트 존 안에 있어야 함
-    # 2) 히트 offset에 따라 안타/파울/스트라이크 판정
-    def check_hit_result(self):
-        pass
+    def reset_strike(self):
+        for idx in range(0, 2):
+            if self.scene03.strike_ui[idx]:
+                self.scene03.strike_ui[idx].bActive = False
+
+    def reset_ball(self):
+        for idx in range(0, 3):
+            if self.scene03.ball_ui[idx]:
+                self.scene03.ball_ui[idx].bActive = False
+
+    def reset_out(self):
+        for idx in range(0, 2):
+            self.scene03.out_ui[idx].bActive = False
 
     # 스트라이크 판정 시 작동하는 함수
     def strike(self):
         strike_ui = self.ui_manager.find_ui(message_strike)
         strike_out_ui = self.ui_manager.find_ui(message_strike_out)
 
-        # if GameSystem.STRIKE < 2:
-        #     for idx in range(0, GameSystem.STRIKE+1):
-        #         print(UI_LIGHT_POS_X[idx])
-        #         # 스트라이크 전등 추가
-        #         self.ui_strike[idx].pos[0] = UI_LIGHT_POS_X[idx]
-        #         self.ui_strike[idx].pos[1] = 520
-        #         self.ui_strike[idx].bActive = True
+        if GameSystem.STRIKE < 2:
+             for idx in range(0, GameSystem.STRIKE+1):
+                 self.scene03.strike_ui[idx].bActive = True
 
         GameSystem.STRIKE += 1  # 스트라이크 횟수 증가
 
@@ -511,24 +522,24 @@ class GameSystem:
         self.is_out = self.check_strike_out()
 
         if self.is_out:
-            self.ui_manager.start_fade(strike_out_ui, 100, 3000)  # 스트라이크 메세지 띄우기
+            self.ui_manager.start_fade(strike_out_ui, 100, 500)  # 스트라이크 메세지 띄우기
             self.sound_manager.playSE(se_strike_out_name, 64)
         else:
-            self.ui_manager.start_fade(strike_ui, 100, 3000)  # 스트라이크 메세지 띄우기
+            self.ui_manager.start_fade(strike_ui, 100, 500)  # 스트라이크 메세지 띄우기
             self.sound_manager.playSE(se_strike_name, 64)
 
     # 볼 판정 시 작동하는 함수
     def ball(self):
         ball_ui = self.ui_manager.find_ui(message_ball)
 
-        # if GameSystem.BALL < 3:
-        #     self.ui_ball[GameSystem.BALL].pos[0] = UI_LIGHT_POS_X[GameSystem.BALL]
-        #     self.ui_ball[GameSystem.BALL].pos[1] = 500
-        #     self.ui_ball[GameSystem.BALL].bActive = True
-
-        self.ui_manager.start_fade(ball_ui, 100, 3000)  # 볼 메세지 띄우기
-        self.sound_manager.playSE(se_ball_name, 64)
         GameSystem.BALL += 1  # 볼 횟수 증가
+
+        if GameSystem.BALL < 4:
+            for idx in range(0, GameSystem.BALL):
+                self.scene03.ball_ui[idx].bActive = True
+
+        self.ui_manager.start_fade(ball_ui, 100, 500)  # 볼 메세지 띄우기
+        self.sound_manager.playSE(se_ball_name, 64)
 
         # 볼 넷으로 1루 진출 체크
         self.check_ball_four()
@@ -536,27 +547,19 @@ class GameSystem:
     def check_strike_out(self):
         if GameSystem.STRIKE >= 3:
             GameSystem.STRIKE = 0
+            GameSystem.BALL = 0
             GameSystem.OUT += 1  # 아웃 횟수 증가
 
-            # if GameSystem.OUT < 2:
-            #     self.ui_out[GameSystem.OUT].pos[0] = UI_LIGHT_POS_X[GameSystem.OUT]
-            #     self.ui_out[GameSystem.OUT].pos[1] = 480
-            #     self.ui_out[GameSystem.OUT].bActive = True
+            if GameSystem.OUT < 3:
+                for idx in range(0, GameSystem.OUT):
+                    self.scene03.out_ui[idx].bActive = True
 
             # 스트라이크 / 볼 모두 비활성화
-            #for strike in self.ui_strike: strike.bActvie = False
-            #for ball in self.ui_ball: ball.bActvie = False
+            self.reset_strike()
+            self.reset_ball()
 
             # 쓰리 아웃으로 공수 교대인지 체크
-            if GameSystem.OUT >= 3:
-                GameSystem.BALL = 0
-                GameSystem.OUT = 0
-                ui_skill = self.ui_manager.find_ui(ui_skill_name)
-                ui_skill.set_alpha(1.0)
-                # 스트라이크 / 볼 / 아웃 모두 비활성화
-                #for strike in self.ui_strike: strike.bActvie = False
-                #for ball in self.ui_ball: ball.bActvie = False
-                #for out in self.ui_out: out.bActvie = False
+            self.check_three_out()
 
             return True
 
@@ -567,17 +570,27 @@ class GameSystem:
             GameSystem.BALL = 0
             GameSystem.STRIKE = 0
             # 스트라이크 / 볼 모두 비활성화
-            #for strike in self.ui_strike: strike.bActvie = False
-            #for ball in self.ui_ball: ball.bActvie = False
-            pass
+            self.reset_strike()
+            self.reset_out()
+            self.reset_out()
 
     def check_three_out(self):
         if GameSystem.OUT >= 3:
-            pass
+            GameSystem.BALL = 0
+            GameSystem.OUT = 0
+            ui_skill = self.scene03.ui_manager.find_ui(ui_skill_name)
+            ui_skill.set_alpha(1.0)
+            # 스트라이크 / 볼 / 아웃 모두 비활성화
+            self.reset_strike()
+            self.reset_ball()
+            self.reset_out()
+
+            self.reset_striker_base()
+            self.cur_max_striker = 0
 
     def check_out_or_safe(self, base):
         # 현재 타자가 베이스에 도착했는지 체크
-        if self.scene04.Striker_List[0].running:
+        if self.scene04.Striker_List[self.cur_max_striker].running:
             self.out()
         else:
             self.safe()
@@ -589,11 +602,36 @@ class GameSystem:
         self.ui_manager.start_fade(out_ui, 200, 400, self.scene04)
         self.sound_manager.playSE(se_out_name, 64)
 
+        GameSystem.STRIKE = 0
+        GameSystem.BALL = 0
+        GameSystem.OUT += 1  # 아웃 횟수 증가
+
+        if GameSystem.OUT < 3:
+            for idx in range(0, GameSystem.OUT):
+                self.scene03.out_ui[idx].bActive = True
+
+        # 스트라이크 / 볼 모두 비활성화
+        self.reset_strike()
+        self.reset_ball()
+
+        # 쓰리 아웃으로 공수 교대인지 체크
+        self.check_three_out()
+
+        if self.cur_max_striker > 0:
+            self.cur_max_striker -= 1
+
+        self.calc_striker_base()
+
     def safe(self):
         # scene04에서 safe 표시
         safe_ui = self.ui_manager.find_ui(message_safe)
         self.sound_manager.playSE(se_safe_name, 64)
         self.ui_manager.start_fade(safe_ui, 200, 400, self.scene04)
+
+        self.cur_max_striker += 1
+        print(self.cur_max_striker)
+
+        self.calc_striker_base()
 
     # Defender 중 BaseBall과의 거리가 가장 짧은 Defender 이름 반환
     def find_defender_shortest_distance_from_baseball(self):
@@ -625,8 +663,56 @@ class GameSystem:
             return 2
         elif num == 3:
             return 3
+        elif num == 4:
+            return 8
 
         return 1
+
+    def reset_striker_base(self):
+        self.cur_max_striker = 0
+        self.is_striker_in_1st = False
+        self.is_striker_in_2st = False
+        self.is_striker_in_3st = False
+
+    def calc_striker_base(self):
+        if self.cur_max_striker >= 1:
+            self.is_striker_in_1st = True
+        elif self.cur_max_striker >= 2:
+            self.is_striker_in_1st = True
+            self.is_striker_in_2st = True
+        elif self.cur_max_striker >= 3:
+            self.is_striker_in_1st = True
+            self.is_striker_in_2st = True
+            self.is_striker_in_3st = True
+
+    def run_striker_1st(self):
+        self.scene04.Striker_List[0].bActive = True
+        self.scene04.Striker_List[0].state_machine.handle_event(('Striker Run 1st', 0))
+
+    def run_striker_2st(self):
+        self.scene04.Striker_List[1].bActive = True
+        self.scene04.Striker_List[1].state_machine.handle_event(('Striker Run 2st', 0))
+
+    def run_striker_3st(self):
+        self.scene04.Striker_List[2].bActive = True
+        self.scene04.Striker_List[2].state_machine.handle_event(('Striker Run 3st', 0))
+
+    def run_striker_4st(self):
+        self.scene04.Striker_List[3].bActive = True
+        self.scene04.Striker_List[3].state_machine.handle_event(('Striker Run 4st', 0))
+
+    def run_striker(self):
+        # 현재 상황의 고려해 띄기
+        if self.is_striker_in_1st:
+            self.run_striker_2st()
+
+        if self.is_striker_in_2st:
+            self.run_striker_3st()
+
+        if self.is_striker_in_3st:
+            self.run_striker_4st()
+
+        self.run_striker_1st()
 
     def return_scene03(self):
         self.reset_hit()

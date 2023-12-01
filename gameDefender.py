@@ -223,6 +223,8 @@ class Defender(GameObject):
             self.own_base_idx = 1
         elif self.name == Defender_name + '3':
             self.own_base_idx = 2
+        elif self.name == Defender_name + '8':
+            self.own_base_idx = 3
 
         if self.own_base_idx != -1:
             if self.distance_less_than(self.base_list[self.own_base_idx].pos[0], self.base_list[self.own_base_idx].pos[1], self.pos[0], self.pos[1], 0.5):
@@ -245,8 +247,9 @@ class Defender(GameObject):
         if self.distance_less_than(self.base_list[self.own_base_idx].pos[0], self.base_list[self.own_base_idx].pos[1], self.pos[0], self.pos[1], 0.5):
             # 아웃인지 세이프인지 판단하고 scene 전환
             if self.having_ball:
-                print('1루 도착')
                 self.game_system.check_out_or_safe(self.own_base_idx)
+
+                # 아직 남아 있다면 던져서 확인
             return BehaviorTree.SUCCESS
         else:
             return BehaviorTree.RUNNING

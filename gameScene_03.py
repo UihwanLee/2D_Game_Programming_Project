@@ -8,6 +8,9 @@ class Scene03(Scene):
         super().__init__(order, engine)
         self.player = None
         self.cover = None
+        self.strike_ui = []
+        self.ball_ui = []
+        self.out_ui = []
 
     # scene에서 초기 오브젝트 / UI 세팅
     def init(self):
@@ -45,13 +48,23 @@ class Scene03(Scene):
                           effect_home_run_02_ui_size)
 
         # 스트라이크 2개 / 볼 3개 / 아웃 2개
-        super().create_ui(ui_strike_name + '1', ui_strike_pos, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)
-        super().create_ui(ui_strike_name + '2', ui_strike_pos, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)
-        super().create_ui(ui_ball_name + '1', ui_ball_pos, ui_ball_img, ui_ball_size, DYNAMIC, 2, False, ui_ball_ui_size)
-        super().create_ui(ui_ball_name + '2', ui_ball_pos, ui_ball_img, ui_ball_size, DYNAMIC, 2, False,ui_ball_ui_size)
-        super().create_ui(ui_ball_name + '3', ui_ball_pos, ui_ball_img, ui_ball_size, DYNAMIC, 2, False, ui_ball_ui_size)
-        super().create_ui(ui_out_name + '1', ui_out_pos, ui_out_img, ui_out_size, DYNAMIC, 2, False, ui_out_ui_size)
-        super().create_ui(ui_out_name + '2', ui_out_pos, ui_out_img, ui_out_size, DYNAMIC, 2, False, ui_out_ui_size)
+        super().create_ui(ui_strike_name + '1', ui_strike_pos1, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)
+        super().create_ui(ui_strike_name + '2', ui_strike_pos2, ui_strike_img, ui_strike_size, DYNAMIC, 2, False, ui_strike_ui_size)
+        super().create_ui(ui_ball_name + '1', ui_ball_pos1, ui_ball_img, ui_ball_size, DYNAMIC, 2, False, ui_ball_ui_size)
+        super().create_ui(ui_ball_name + '2', ui_ball_pos2, ui_ball_img, ui_ball_size, DYNAMIC, 2, False,ui_ball_ui_size)
+        super().create_ui(ui_ball_name + '3', ui_ball_pos3, ui_ball_img, ui_ball_size, DYNAMIC, 2, False, ui_ball_ui_size)
+        super().create_ui(ui_out_name + '1', ui_out_pos1, ui_out_img, ui_out_size, DYNAMIC, 2, False, ui_out_ui_size)
+        super().create_ui(ui_out_name + '2', ui_out_pos2, ui_out_img, ui_out_size, DYNAMIC, 2, False, ui_out_ui_size)
+
+        for idx in range(1, 3):
+            ui_strike = self.ui_manager.find_ui(ui_strike_name + str(idx))
+            ui_ball = self.ui_manager.find_ui(ui_ball_name + str(idx))
+            ui_out = self.ui_manager.find_ui(ui_out_name + str(idx))
+            self.strike_ui.append(ui_strike)
+            self.ball_ui.append(ui_ball)
+            self.out_ui.append(ui_out)
+
+        self.ball_ui.append(self.ui_manager.find_ui(ui_strike_name + '3'))
 
         self.player = super().find_object(player_name)
 

@@ -200,21 +200,25 @@ UI_LIGHT_POS_Y = [480, 500, 520]
 
 #UI_STRIKE
 ui_strike_name = 'UI_STRIKE'
-ui_strike_pos = [730, 480]          # (697, 715) (520)
+ui_strike_pos1 = [697, 520]          # (697, 715) (520)
+ui_strike_pos2 = [715, 520]
 ui_strike_size = [30, 40]
 ui_strike_img = 'Sprites/UI/UI_STRIKE.png'
 ui_strike_ui_size = [100, 100]
 
 #UI_BALL
 ui_ball_name = 'UI_BALL'
-ui_ball_pos = [400, 300]            # (697, 715, 730) (500)
+ui_ball_pos1 = [697, 500]            # (697, 715, 730) (500)
+ui_ball_pos2 = [715, 500]
+ui_ball_pos3 = [730, 500]
 ui_ball_size = [30, 40]
 ui_ball_img = 'Sprites/UI/UI_BALL.png'
 ui_ball_ui_size = [100, 100]
 
 #UI_OUT
 ui_out_name = 'UI_OUT'              # (697, 715) (480)
-ui_out_pos = [400, 300]
+ui_out_pos1 = [697, 480]
+ui_out_pos2 = [715, 480]
 ui_out_size = [30, 40]
 ui_out_img = 'Sprites/UI/UI_OUT.png'
 ui_out_ui_size = [100, 100]

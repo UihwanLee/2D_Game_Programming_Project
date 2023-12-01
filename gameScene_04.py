@@ -30,6 +30,8 @@ class Scene04(Scene):
         super().create_defender(Defender_name + '6', [400, 900], Defender_Info, 1, True, 0)  # 중견수
         super().create_defender(Defender_name + '7', [0, 900], Defender_Info, 1, True, 0)  # 좌익수
 
+        super().create_defender(Defender_name + '8', [400, 70], Defender_Info, 1, True, 0)  # 포수
+
         # Striker
         super().create_striker(Striker_name+'0', [400, 70], Striker_Info, 1, True, 0)
         super().create_striker(Striker_name+'1', [630, 330], Striker_Info, 1, False, 0)
@@ -77,7 +79,7 @@ class Scene04(Scene):
         super().create_ui(message_safe, message_safe_pos, message_safe_img, message_safe_size,
                           DYNAMIC, 2, False, message_safe_ui_size)
 
-        for idx in range(0, 8):
+        for idx in range(0, 9):
             self.Defender_List.append(super().find_object(Defender_name + str(idx)))
             self.Defender_List[idx].set_base_list(self.base_list)
 
@@ -143,6 +145,8 @@ class Scene04(Scene):
         self.Defender_List[6].pos = [400, 900]
         self.Defender_List[7].pos = [0, 900]
 
+        self.Defender_List[8].pos = [400, 70]
+
         self.base_list[0].pos = [630, 330]
         self.base_list[1].pos = [400, 580]
         self.base_list[2].pos = [170, 330]
@@ -159,9 +163,10 @@ class Scene04(Scene):
         self.Striker_List[2].pos = [400, 580]  # 2루 : 400, 580
         self.Striker_List[3].pos = [170, 330]
 
-        # 1루 띄기 시작
-        self.Striker_List[0].bActive = True
-        self.Striker_List[0].state_machine.handle_event(('Striker Run 1st', 0))
+        for striker in self.Striker_List:
+            striker.bActive = False
+
+        self.game_engine.game_system.run_striker()
 
     def fade_done(self, ui):
         # 씬 이동

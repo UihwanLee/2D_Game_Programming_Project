@@ -488,8 +488,12 @@ class StatMachine_Striker:
         self.striker = striker
         self.cur_state = Idle_Striker
         self.transitions = {
-            Idle_Striker: {striker_run_1st: Run_1st_Striker},
-            Run_1st_Striker: {striker_idle: Idle_Striker}
+            Idle_Striker: {striker_run_1st: Run_1st_Striker, striker_run_2st: Run_2st_Striker,
+                           striker_run_3st: Run_3st_Striker, striker_run_4st: Run_4st_Striker},
+            Run_1st_Striker: {striker_idle: Idle_Striker},
+            Run_2st_Striker: {striker_idle: Idle_Striker},
+            Run_3st_Striker: {striker_idle: Idle_Striker},
+            Run_4st_Striker: {striker_idle: Idle_Striker}
         }
 
     def start(self):

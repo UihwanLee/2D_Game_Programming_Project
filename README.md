@@ -23,6 +23,7 @@ pico2d 라이브러리를 바탕으로 개발 한 2D 야구 게임이다.
 > 퍼블리싱
 
 *  [게임 다운로드](https://drive.google.com/file/d/1JFLqnAqjAd2cABf6H10pzqmcDKoSQufC/view?usp=sharing)
+*  [게임 압축 파일](https://drive.google.com/file/d/185SItvF8R7kMh4aFpBX7wg3cR5l-cy-8/view?usp=sharing) <- 게임 다운로드 안될 시
   
 > 개발 동기  
 

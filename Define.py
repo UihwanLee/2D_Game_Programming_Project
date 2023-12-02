@@ -367,6 +367,19 @@ ui_cpu_size = [300, 150]
 ui_cpu_img = 'Sprites/UI/UI_CPU.png'
 ui_cpu_ui_size = [200, 100]
 
+# UI_SPACE
+ui_space = 'UI_SPACE'
+ui_space_pos = [550, 120]
+ui_space_size = [150, 150]
+ui_space_img = 'Sprites/UI/UI_SPACE.png'
+ui_space_ui_size = [200, 200]
+
+# UI_S
+ui_s = 'UI_S'
+ui_s_pos = [675, 120]
+ui_s_size = [150, 150]
+ui_s_img = 'Sprites/UI/UI_S.png'
+ui_s_ui_size = [200, 200]
 
 ''' [Sound] '''
 bgm_scene01_name = 'BGM_SCENE01'

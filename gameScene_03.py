@@ -35,6 +35,9 @@ class Scene03(Scene):
         super().create_ui(message_ball, message_ball_pos, message_ball_img, message_ball_size, DYNAMIC, 2, False,
                           message_ball_ui_size)
 
+        super().create_ui(ui_space, ui_space_pos, ui_space_img, ui_space_size, DYNAMIC, 2, True, ui_space_ui_size)
+        super().create_ui(ui_s, ui_s_pos, ui_s_img, ui_s_size, DYNAMIC, 2, True, ui_s_ui_size)
+
         # SKILL
         super().create_ui(ui_skill_name, ui_skill_pos, ui_skill_img, ui_skill_size, DYNAMIC, 2, True, ui_strike_ui_size)
         super().create_object(bg_black_name, bg_black_pos, bg_black_img, bg_black_size, DYNAMIC, 0, False)

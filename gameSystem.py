@@ -95,8 +95,8 @@ class GameSystem:
         self.defender_move_offset = [0.0, 0.0]
 
         # 타자 hit 시 판단 변수
-        self.home_run_max_offset = 3.0
-        self.hit_max_offset = 30
+        self.home_run_max_offset = 1.0
+        self.hit_max_offset = 20
 
         # striker
         self.cur_max_striker = 0
@@ -166,7 +166,7 @@ class GameSystem:
         self.is_hit_anim = False
         self.is_hit_anim2 = False
 
-        self.home_run_max_offset = 3.0
+        self.home_run_max_offset = 1.0
 
         if self.scene03.cover.bActive:
             self.scene03.cover.bActive = False
@@ -175,7 +175,7 @@ class GameSystem:
         self.is_home_run = False
         self.is_hit = False
 
-        self.home_run_max_offset = 3.0
+        self.home_run_max_offset = 1.0
 
         for msg in self.scene04.home_run_msg:
             msg.bActive = False
@@ -363,10 +363,6 @@ class GameSystem:
         if self.base.pos[1] < -100:
             self.base.pos[1] = -100
 
-    # 투수 AI 공 던지기
-    def throw_ball(self):
-        self.playerAI.throw_ball()
-
     def generate_random_throw_target(self):
         # hit 변수 초기회
         self.is_hit = False
@@ -396,6 +392,8 @@ class GameSystem:
         self.base_ball_pos_x = 380
         self.base_ball_pos_y = 300
         self.base_ball.size = [60, 60]
+
+        self.base_ball.bActive = True
 
         self.calculate_throw_angle(pos_x, pos_y)
 
@@ -474,6 +472,8 @@ class GameSystem:
             self.throw_target.bActive = False
             self.is_check_throw_event_by_hit = False
             self.throw_target_effect.bActive = False
+
+            self.base_ball.bActive = False
 
             self.ui_manager.start_fade(self.throw_target_end, 1, 3000)  # throw_target_end 보여줬다가 없애기
             self.check_throw_result()
@@ -627,7 +627,9 @@ class GameSystem:
         self.sound_manager.playSE(se_safe_name, 64)
         self.ui_manager.start_fade(safe_ui, 200, 400, self)
 
-        self.cur_max_striker += 1
+        if self.cur_max_striker < 3:
+            self.cur_max_striker += 1
+
         self.calc_striker_base()
 
     # Defender 중 BaseBall과의 거리가 가장 짧은 Defender 이름 반환
@@ -736,7 +738,12 @@ class GameSystem:
         isChange = self.check_three_out()
         if isChange:
             # 팀 체인지 씬으로 이동
-            print('바꿈')
             self.game_engine.change_scene(SCENE_06, True)
         else:
             self.game_engine.change_scene(SCENE_03, False)
+
+    def set_active_hit_ui(self, alpha):
+        self.scene03.ui_space.set_alpha(alpha)
+
+    def set_active_throw_ui(self, alpha):
+        self.scene03.ui_key_s.set_alpha(alpha)

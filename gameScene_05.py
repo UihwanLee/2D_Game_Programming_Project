@@ -101,7 +101,7 @@ class Scene05(Scene):
 
     def start_game(self):
         fade_ui = self.ui_manager.find_ui(bg_black_name)
-        self.ui_manager.start_fade_in(fade_ui, 3000, self)
+        self.ui_manager.start_fade_in(fade_ui, 2000, self)
 
     def fade_done(self, ui):
         super().change_scene(SCENE_03, True)

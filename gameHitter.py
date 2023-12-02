@@ -30,6 +30,10 @@ class Hitter(GameObject):
 
         self.game_system = None
 
+        self.cool_time = 2.0
+        self.remain_cool_time = self.cool_time
+        self.isCoolTimeExpired = False
+
     # player 이벤트 처리 함수. 이벤트에 따른 애니메이션/동작을 StateMachine을 통해 처리한다.
     def handle_event(self, event):
         self.state_machine.handle_event(('INPUT', event))
@@ -37,6 +41,11 @@ class Hitter(GameObject):
         if self.game_system:
             # Hit
             if event.type == SDL_KEYDOWN and event.key == SDLK_SPACE:
+                can_hit = self.isCoolTimeExpired
+
+                if not can_hit:
+                    return
+
                 # SKILL 이나 홈런 체크
                 self.game_system.check_hit()
 
@@ -49,6 +58,8 @@ class Hitter(GameObject):
                     self.state_machine.handle_event(('SPACE_DOWN', 0))
                 else:
                     self.state_machine.handle_event(('SPACE_DOWN', 0))
+
+                self.reset_cooltime()
 
             # 스킬
             if event.type == SDL_KEYDOWN and event.key == SDLK_e:
@@ -86,6 +97,15 @@ class Hitter(GameObject):
         ACTION_PER_TIME = 1.0 / self.play_anim[self.action].delay[int(self.frame)]
         self.frame = (self.frame + ACTION_PER_TIME * Time.frame_time) % self.max_frame
 
+        # 배트 쿨타임
+        self.remain_cool_time -= Time.frame_time
+        if self.remain_cool_time < 0.0:
+            self.isCoolTimeExpired = True
+            self.game_system.set_active_hit_ui(1.0)
+        else:
+            self.isCoolTimeExpired = False
+            self.game_system.set_active_hit_ui(0.5)
+
     # player 렌더링. player_Anim 리스트를 기준으로 렌더링 한다.
     def render(self):
         active = super().get_object_var('bActive')
@@ -98,3 +118,6 @@ class Hitter(GameObject):
         posX, posY = self.play_anim[self.action].posX[frame], self.play_anim[self.action].posY[frame]
         sizeX, sizeY = self.play_mode.size[0], self.play_mode.size[1]
         sprite.clip_draw(frame * 100, self.action * 100, 100, 100, posX, posY, sizeX, sizeY)
+
+    def reset_cooltime(self):
+        self.remain_cool_time = self.cool_time

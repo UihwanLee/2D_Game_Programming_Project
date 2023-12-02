@@ -7,10 +7,14 @@ class Scene03(Scene):
     def __init__(self, order, engine):
         super().__init__(order, engine)
         self.player = None
+        self.player_AI = None
         self.cover = None
         self.strike_ui = []
         self.ball_ui = []
         self.out_ui = []
+
+        self.ui_space = None
+        self.ui_key_s = None
 
     # scene에서 초기 오브젝트 / UI 세팅
     def init(self):
@@ -37,6 +41,12 @@ class Scene03(Scene):
 
         super().create_ui(ui_space, ui_space_pos, ui_space_img, ui_space_size, DYNAMIC, 2, True, ui_space_ui_size)
         super().create_ui(ui_s, ui_s_pos, ui_s_img, ui_s_size, DYNAMIC, 2, True, ui_s_ui_size)
+
+        self.ui_space = super().find_ui(ui_space)
+        self.ui_key_s = super().find_ui(ui_s)
+
+        self.ui_space.set_alpha(0.5)
+        self.ui_key_s.set_alpha(0.5)
 
         # SKILL
         super().create_ui(ui_skill_name, ui_skill_pos, ui_skill_img, ui_skill_size, DYNAMIC, 2, True, ui_strike_ui_size)
@@ -70,6 +80,7 @@ class Scene03(Scene):
         self.ball_ui.append(self.ui_manager.find_ui(ui_ball_name + '3'))
 
         self.player = super().find_object(player_name)
+        self.player_AI = super().find_object(playerAI_name)
 
         # sound
         self.create_bgm(bgm_scene03_name, bgm_scene03_path)
@@ -100,8 +111,7 @@ class Scene03(Scene):
             elif event.type == SDL_KEYDOWN and event.key == SDLK_ESCAPE:
                 super().change_scene(SCENE_02, True) # 종료 canvas를 띄운다.
             elif event.type == SDL_KEYDOWN and event.key == SDLK_s:
-                self.sound_manager.playSE(se_throw_name, 100)
-                self.game_engine.game_system.throw_ball()
+                self.player_AI.try_throw_ball(self.sound_manager)
             else:
                 if (self.player != None):
                     if (self.player.bActive):

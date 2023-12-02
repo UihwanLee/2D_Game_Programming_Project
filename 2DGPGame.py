@@ -4,7 +4,6 @@ class Game2DGP:
     def __init__(self):
         self.gameEngine = GameEngine()
 
-
     # gameEnigne 모듈의 run() 함수를 호출하여 게임을 실행한다.
     def run(self):
         self.gameEngine.run()

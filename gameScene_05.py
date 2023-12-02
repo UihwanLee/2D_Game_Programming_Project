@@ -2,13 +2,16 @@ import random
 
 from gameScene import *
 
-# Scene01 : 시작 화면/옵션 선택
+# Scene05 : 경기 시작 전 경기 팀 화면
 class Scene05(Scene):
     def __init__(self, order, engine):
         super().__init__(order, engine)
 
         self.Team_Player_List = []
         self.Team_CPU_List = []
+
+        self.player_team_name = ''
+        self.cpu_team_name = ''
 
     def init(self):
         # background
@@ -82,6 +85,7 @@ class Scene05(Scene):
 
         for player in self.Team_Player_List:
             if player.name == player_team + 'player':
+                self.player_team_name = player.name
                 player.bActive = True
 
     def set_team_cpu(self):
@@ -91,6 +95,7 @@ class Scene05(Scene):
         while(True):
             idx = random.randint(0, 4)
             if self.Team_CPU_List[idx].name != player_team + 'cpu':
+                self.cpu_team_name = self.Team_CPU_List[idx].name
                 self.Team_CPU_List[idx].bActive = True
                 break
 

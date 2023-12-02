@@ -20,7 +20,9 @@ pico2d 라이브러리를 바탕으로 개발 한 2D 야구 게임이다.
   
 > 개발 기간 : 8주 (2023-10-14 ~ 2023-12-03)
   
-> 퍼블리싱 : [게임 다운로드](https://drive.google.com/file/d/1v8lngMJSvRFxNfO1MLNTOgG1ef82HXcM/view?usp=sharing)
+> 퍼블리싱
+
+*  [게임 다운로드](https://drive.google.com/file/d/1v8lngMJSvRFxNfO1MLNTOgG1ef82HXcM/view?usp=sharing)
   
 > 개발 동기  
 

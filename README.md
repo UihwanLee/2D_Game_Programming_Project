@@ -3,6 +3,8 @@
 
 > 게임 이름 : '날아라 야구소년'
 
+![01](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/20001fa0-40f4-4eb5-8837-3679268a63d8)
+
 > 게임 개요
 
 pico2d 라이브러리를 바탕으로 개발 한 2D 야구 게임이다.
@@ -36,9 +38,9 @@ open_canvas()
 clear_canvas()
 update_canvas()
 close_canvas()
- 
 </code>
 </pre>
   
 > 게임 이미지
 
+![02](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/fa530aa3-ae2a-4e31-8233-9e9cdccea289)

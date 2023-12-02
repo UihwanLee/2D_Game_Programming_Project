@@ -82,11 +82,6 @@ class Scene03(Scene):
 
     # scene 전환 시 초기 함수
     def start(self):
-        #초기 세팅
-        self.sound_manager.setBGM(bgm_scene03_name)
-        self.sound_manager.playBGM()
-        self.game_engine.game_system.reset_system()
-
         ui_skill = self.ui_manager.find_ui(ui_skill_name)
         ui_skill.set_alpha(1.0)
 

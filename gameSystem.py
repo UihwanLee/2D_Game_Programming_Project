@@ -109,6 +109,7 @@ class GameSystem:
         self.ui_manager = None
         self.sound_manager = None
 
+        self.scene02 = None
         self.scene03 = None
         self.scene04 = None
 
@@ -720,3 +721,7 @@ class GameSystem:
     def return_scene03(self):
         self.reset_hit()
         self.game_engine.change_scene(SCENE_03, False)
+
+    # 선택한 팀 반환
+    def get_choose_team(self):
+        return self.scene02.player_team

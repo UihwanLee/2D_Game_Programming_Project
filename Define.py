@@ -19,6 +19,8 @@ SCENE_01 = 'scene_01'
 SCENE_02 = 'scene_02'
 SCENE_03 = 'scene_03'
 SCENE_04 = 'scene_04'
+SCENE_05 = 'scene_05'
+SCENE_06 = 'scene_06'
 
 #Mouse
 mouse_arrow_img = 'Sprites/hand_arrow.png'
@@ -330,13 +332,41 @@ effect_home_run_02_size = [800, 600]
 effect_home_run_02_img = 'Sprites/BG/EFFECT_HOME_RUN_02.png'
 effect_home_run_02_ui_size = [800, 600]
 
-
 # Hit_Box
 hit_box = 'Hit_Box'
 hit_box_pos = [400, 150]
 hit_box_size = [80, 80]
 hit_box_img = 'Sprites/Hit_Box.png'
 hit_box_ui_size = [100, 100]
+
+# Panel_TeamShow
+panel_team_show = 'Panel_Team_Show'
+panel_team_show_pos = [400, 300]
+panel_team_show_size = [800, 600]
+panel_team_show_img = 'Sprites/Panel/Panel_TeamShow.png'
+panel_team_show_ui_size = [800, 600]
+
+# Panel_Change
+panel_change = 'Panel_Change'
+panel_change_pos = [400, 300]
+panel_change_size = [800, 600]
+panel_change_img = 'Sprites/Panel/Panel_Change.png'
+panel_change_ui_size = [800, 600]
+
+# UI_Player
+ui_player = 'UI_Player'
+ui_player_pos = [200, 450]
+ui_player_size = [300, 150]
+ui_player_img = 'Sprites/UI/UI_Player.png'
+ui_player_ui_size = [200, 100]
+
+# UI_CPU
+ui_cpu = 'UI_CPU'
+ui_cpu_pos = [600, 450]
+ui_cpu_size = [300, 150]
+ui_cpu_img = 'Sprites/UI/UI_CPU.png'
+ui_cpu_ui_size = [200, 100]
+
 
 ''' [Sound] '''
 bgm_scene01_name = 'BGM_SCENE01'
@@ -377,6 +407,9 @@ se_hit_home_run_path = 'Sounds/hit_home_run.wav'
 
 se_home_run_name = 'SE_HOME_RUN'
 se_home_run_path = 'Sounds/homerun.wav'
+
+se_change_team_name = 'SE_CHANGE_TEAM'
+se_change_team_path = 'Sounds/change_team.wav'
 
 
 ''' [ System ] '''

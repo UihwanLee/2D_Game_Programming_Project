@@ -109,7 +109,7 @@ class Scene02(Scene):
         #super().change_scene(SCENE_03)
 
     def fade_done(self, ui):
-        super().change_scene(SCENE_03, True)
+        super().change_scene(SCENE_05, True)
 
     def render(self):
         # self.font.draw(400, 300, self.player_team, (255, 255, 0))

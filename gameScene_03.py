@@ -64,7 +64,7 @@ class Scene03(Scene):
             self.ball_ui.append(ui_ball)
             self.out_ui.append(ui_out)
 
-        self.ball_ui.append(self.ui_manager.find_ui(ui_strike_name + '3'))
+        self.ball_ui.append(self.ui_manager.find_ui(ui_ball_name + '3'))
 
         self.player = super().find_object(player_name)
 

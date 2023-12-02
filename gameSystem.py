@@ -96,7 +96,7 @@ class GameSystem:
 
         # 타자 hit 시 판단 변수
         self.home_run_max_offset = 3.0
-        self.hit_max_offset = 50
+        self.hit_max_offset = 30
 
         # striker
         self.cur_max_striker = 0
@@ -112,6 +112,7 @@ class GameSystem:
         self.scene02 = None
         self.scene03 = None
         self.scene04 = None
+        self.scene05 = None
 
         self.temp = 0
         self.throw_event_rate = 0
@@ -201,14 +202,11 @@ class GameSystem:
             self.is_hit = True
             self.is_home_run = True
             self.sound_manager.playSE(se_hit_home_run_name, 64)
-            print('홈런!')
         elif offset <= self.hit_max_offset:
             self.is_hit = True
             self.sound_manager.playSE(se_hit_name, 64)
-            print('안타!')
         else:
             self.is_hit = False
-            print('헛 스윙!')
 
     def do_home_run(self):
         # 투수가 이미 던져서 스트라이크/볼 처리 된 경우 예외처리
@@ -523,7 +521,7 @@ class GameSystem:
         self.is_out = self.check_strike_out()
 
         if self.is_out:
-            self.ui_manager.start_fade(strike_out_ui, 100, 500)  # 스트라이크 메세지 띄우기
+            self.ui_manager.start_fade(strike_out_ui, 100, 1000, self)  # 스트라이크 메세지 띄우기
             self.sound_manager.playSE(se_strike_out_name, 64)
         else:
             self.ui_manager.start_fade(strike_ui, 100, 500)  # 스트라이크 메세지 띄우기
@@ -533,11 +531,11 @@ class GameSystem:
     def ball(self):
         ball_ui = self.ui_manager.find_ui(message_ball)
 
-        GameSystem.BALL += 1  # 볼 횟수 증가
-
-        if GameSystem.BALL < 4:
-            for idx in range(0, GameSystem.BALL):
+        if GameSystem.BALL < 3:
+            for idx in range(0, GameSystem.BALL+1):
                 self.scene03.ball_ui[idx].bActive = True
+
+        GameSystem.BALL += 1  # 볼 횟수 증가
 
         self.ui_manager.start_fade(ball_ui, 100, 500)  # 볼 메세지 띄우기
         self.sound_manager.playSE(se_ball_name, 64)
@@ -549,18 +547,16 @@ class GameSystem:
         if GameSystem.STRIKE >= 3:
             GameSystem.STRIKE = 0
             GameSystem.BALL = 0
-            GameSystem.OUT += 1  # 아웃 횟수 증가
 
-            if GameSystem.OUT < 3:
-                for idx in range(0, GameSystem.OUT):
+            if GameSystem.OUT < 2:
+                for idx in range(0, GameSystem.OUT+1):
                     self.scene03.out_ui[idx].bActive = True
+
+            GameSystem.OUT += 1  # 아웃 횟수 증가
 
             # 스트라이크 / 볼 모두 비활성화
             self.reset_strike()
             self.reset_ball()
-
-            # 쓰리 아웃으로 공수 교대인지 체크
-            self.check_three_out()
 
             return True
 
@@ -570,6 +566,7 @@ class GameSystem:
         if GameSystem.BALL >= 4:
             GameSystem.BALL = 0
             GameSystem.STRIKE = 0
+
             # 스트라이크 / 볼 모두 비활성화
             self.reset_strike()
             self.reset_out()
@@ -589,6 +586,10 @@ class GameSystem:
             self.reset_striker_base()
             self.cur_max_striker = 0
 
+            return True
+
+        return False
+
     def check_out_or_safe(self, base):
         # 현재 타자가 베이스에 도착했는지 체크
         if self.scene04.Striker_List[self.cur_max_striker].running:
@@ -596,15 +597,8 @@ class GameSystem:
         else:
             self.safe()
 
-        print(self.cur_max_striker)
-
 
     def out(self):
-        # scene04에서 out 표시
-        out_ui = self.ui_manager.find_ui(message_out)
-        self.ui_manager.start_fade(out_ui, 200, 400, self.scene04)
-        self.sound_manager.playSE(se_out_name, 64)
-
         GameSystem.STRIKE = 0
         GameSystem.BALL = 0
         GameSystem.OUT += 1  # 아웃 횟수 증가
@@ -617,19 +611,21 @@ class GameSystem:
         self.reset_strike()
         self.reset_ball()
 
-        # 쓰리 아웃으로 공수 교대인지 체크
-        self.check_three_out()
-
         if self.cur_max_striker > 0:
             self.cur_max_striker -= 1
 
         self.calc_striker_base()
 
+        # scene04에서 out 표시
+        out_ui = self.ui_manager.find_ui(message_out)
+        self.ui_manager.start_fade(out_ui, 200, 400, self)
+        self.sound_manager.playSE(se_out_name, 64)
+
     def safe(self):
         # scene04에서 safe 표시
         safe_ui = self.ui_manager.find_ui(message_safe)
         self.sound_manager.playSE(se_safe_name, 64)
-        self.ui_manager.start_fade(safe_ui, 200, 400, self.scene04)
+        self.ui_manager.start_fade(safe_ui, 200, 400, self)
 
         self.cur_max_striker += 1
         self.calc_striker_base()
@@ -725,3 +721,22 @@ class GameSystem:
     # 선택한 팀 반환
     def get_choose_team(self):
         return self.scene02.player_team
+
+    def get_player_team(self):
+        return self.scene05.player_team_name
+
+    def get_cpu_team(self):
+        return self.scene05.cpu_team_name
+
+    def fade_done(self, ui):
+        self.game_engine.game_system.reset_hit()
+        self.game_engine.game_system.reset_throw()
+
+        # 쓰리 아웃으로 공수 교대인지 체크
+        isChange = self.check_three_out()
+        if isChange:
+            # 팀 체인지 씬으로 이동
+            print('바꿈')
+            self.game_engine.change_scene(SCENE_06, True)
+        else:
+            self.game_engine.change_scene(SCENE_03, False)

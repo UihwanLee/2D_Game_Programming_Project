@@ -7,6 +7,7 @@ from gameScene_02 import Scene02
 from gameScene_03 import Scene03
 from gameScene_04 import Scene04
 from gameScene_05 import Scene05
+from gameScene_06 import Scene06
 from gameSystem import GameSystem
 from gameUIManager import UIManager
 
@@ -28,6 +29,7 @@ class GameEngine:
         self.scene_03 = Scene03(3, self)
         self.scene_04 = Scene04(4, self)
         self.scene_05 = Scene05(5, self)
+        self.scene_06 = Scene06(6, self)
 
         # 현재 게임 엔진에서 첫번째로 불러올 씬
         self.game_world = self.scene_01
@@ -53,6 +55,7 @@ class GameEngine:
         self.game_system.scene02 = self.scene_02
         self.game_system.scene03 = self.scene_03
         self.game_system.scene04 = self.scene_04
+        self.game_system.scene05 = self.scene_05
 
         # scene04
         self.scene_04.set_game_system(self.game_system)
@@ -75,6 +78,7 @@ class GameEngine:
         self.scene_03.init()
         self.scene_04.init()
         self.scene_05.init()
+        self.scene_06.init()
 
     # 씬 변경 함수
     def change_scene(self, scene, start):

@@ -49,6 +49,9 @@ def defender_run_left(e):
 def defender_throw(e):
     return e[0] == 'Defender Throw'
 
+def defender_change(e):
+    return e[0] == 'Defender Change'
+
 def striker_idle(e):
     return e[0] == 'Striker IDLE'
 
@@ -312,16 +315,40 @@ class Throw_Defender:
     def exit(player, e):
         pass
 
+# Defender Run Speed
+PIXEL_PER_METER = (1.0 / 0.3)  # 10 pixel 30 cm
+RUN_SPEED_KMPH = 1.0  # Km / Hour
+RUN_SPEED_MPM = (RUN_SPEED_KMPH * 1000.0 / 60.0)
+RUN_SPEED_MPS = (RUN_SPEED_MPM / 60.0)
+RUN_SPEED_PPS = (RUN_SPEED_MPS * PIXEL_PER_METER)
+
+class Change_Defender:
+    @staticmethod
+    def enter(defender, e):
+        defender.frame = 0
+        defender.action = 2
+        defender.time = 0
+        defender.max_frame = len(defender.play_mode.anim[defender.action].posX)  # max_frame 수정
+
+    @staticmethod
+    def do(defender):
+        defender.pos[0] += RUN_SPEED_PPS * Time.frame_time
+
+    @staticmethod
+    def exit(player, e):
+        pass
+
 
 class StatMachine_Defender:
     def __init__(self, defender):
         self.defender = defender
         self.cur_state = Idle_Defender
         self.transitions = {
-            Idle_Defender: {defender_run_right: RunRight_Defender, defender_run_left: RunLeft_Defender, defender_throw: Throw_Defender},
+            Idle_Defender: {defender_run_right: RunRight_Defender, defender_run_left: RunLeft_Defender, defender_throw: Throw_Defender, defender_change: Change_Defender},
             RunRight_Defender: {defender_idle: Idle_Defender, defender_throw: Throw_Defender},
             RunLeft_Defender: {defender_idle: Idle_Defender, defender_throw: Throw_Defender},
-            Throw_Defender: {time_out: Idle_Defender}
+            Throw_Defender: {time_out: Idle_Defender},
+            Change_Defender: {defender_idle: Idle_Defender}
         }
 
     def start(self):

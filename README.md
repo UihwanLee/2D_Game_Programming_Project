@@ -40,7 +40,21 @@ update_canvas()
 close_canvas()
 </code>
 </pre>
-  
+
+> 수비수 BehaviorTree
+
+![수비수_BehaviorTree drawio](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/ef9b5df0-5b43-480b-b9c6-ff00ba8ca0a1)
+
 > 게임 이미지
 
 ![02](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/fa530aa3-ae2a-4e31-8233-9e9cdccea289)
+
+![03](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/79b859e9-2d77-4c9c-9915-a81594a14677)
+
+![04](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/2f5b147b-82bd-46dd-b0db-0915452d5841)
+
+![05](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/97936a20-af01-4cea-9f2f-1d3f9cfdfa72)
+
+![06](https://github.com/UihwanLee/2D_Game_Programming_Project/assets/36596037/8fe1db68-aad1-4099-ae6b-0d202158bd9a)
+
+

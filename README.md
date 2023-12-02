@@ -30,9 +30,11 @@ pico2d 라이브러리를 바탕으로 게임 월드, 게임 프레임워크, �
 
 > 개발 영상
 
-[1차 발표](https://youtu.be/TWSnwY8wrn0?si=78FPl2OVtfK8IALY)
 
-[2차 발표](https://youtu.be/a2Abnsx1ubY?si=wHQJFvMQjsO0c53W)
+ * [1차 발표](https://youtu.be/TWSnwY8wrn0?si=78FPl2OVtfK8IALY)
+
+ * [2차 발표](https://youtu.be/a2Abnsx1ubY?si=wHQJFvMQjsO0c53W)
+   
   
 > ### 사용기술
  

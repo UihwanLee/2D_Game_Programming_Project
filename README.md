@@ -20,13 +20,18 @@ pico2d 라이브러리를 바탕으로 개발 한 2D 야구 게임이다.
   
 > 개발 기간 : 8주 (2023-10-14 ~ 2023-12-03)
   
-> 퍼블리싱 : [Game Set-up 설치](https://drive.google.com/file/d/1v8lngMJSvRFxNfO1MLNTOgG1ef82HXcM/view?usp=sharing)
+> 퍼블리싱 : [게임 다운로드](https://drive.google.com/file/d/1v8lngMJSvRFxNfO1MLNTOgG1ef82HXcM/view?usp=sharing)
   
 > 개발 동기  
 
 2D 게임 프로그래밍 수업에서 객체지향적으로 게임 개발을 하기 위한 프로젝트이다.
 pico2d 라이브러리를 바탕으로 게임 월드, 게임 프레임워크, 게임 오브젝트, 인공지능, 사운드 등의 개념을 적용하며
 간단하지만 남이 보기 쉬운 코드, 재사용이 가능한 코드를 목표로 개발하기 위해 시작하였다.
+
+> 개발 영상
+
+[1차 발표](https://youtu.be/TWSnwY8wrn0?si=78FPl2OVtfK8IALY)
+[2차 발표](https://youtu.be/a2Abnsx1ubY?si=wHQJFvMQjsO0c53W)
   
 > ### 사용기술
  
